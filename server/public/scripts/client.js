@@ -22,6 +22,24 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
+    .when('/addmembers', {
+      templateUrl: '/views/templates/addmembers.html',
+      controller: 'UserController as uc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/editmembers', {
+      templateUrl: '/views/templates/editmembers.html',
+      controller: 'UserController as uc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
     .when('/info', {
       templateUrl: '/views/templates/info.html',
       controller: 'InfoController',

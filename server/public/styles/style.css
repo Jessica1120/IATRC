@@ -54,6 +54,11 @@ body, html {
     border-radius: 0px;
   }
   
+  .navbar2 {
+    background-color: #8e0808;
+    width: 100%;
+    border-radius: 0px;
+  }
   ul {
     list-style-type: none;
     margin: 0;
