@@ -1,8 +1,11 @@
-<div class="navbar">
+<div class="navbar" ng-controller="UserController as uc">
+ 
     <div class="container">
+        <h1 id="welcome" class="lead">Welcome, {{uc.userObject.userName}}!</h1>
       <ul>
         <li><a href="#/user">User Home</a></li>
         <li><a href="#/info">Info Page</a></li>
+        <li><a href="#/home" ng-click="uc.userService.logout()">Log Out</a></li>
       </ul>
     </div>
   </div>
