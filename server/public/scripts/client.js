@@ -42,7 +42,25 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/info', {
       templateUrl: '/views/templates/info.html',
-      controller: 'InfoController',
+      controller: 'InfoController as ic',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/addmeetings', {
+      templateUrl: '/views/templates/addmeetings.html',
+      controller: 'InfoController as ic',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/queries', {
+      templateUrl: '/views/templates/queries.html',
+      controller: 'InfoController as ic',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();
