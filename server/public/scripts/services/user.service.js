@@ -2,7 +2,24 @@ myApp.service('UserService', function($http, $location){
     console.log('UserService Loaded');
     var self = this;
     self.userObject = {};
-  
+    self.allMembers = {data: []} //object for viewMembers get
+
+  //view members Get on page load
+  self.viewMembers = function(){
+    console.log('viewMembers in Service running')
+    return $http({
+      method: 'GET',
+      url: '/members/view'
+    })
+      .then(function (res) {
+        self.allMembers.data = res.data;
+       console.log('allMembers in Service', self.allMembers)
+      }) //end call back function
+    }// end view Members
+
+
+
+  //passport authentication
     self.getuser = function(){
       console.log('UserService -- getuser');
       $http.get('/user').then(function(response) {
