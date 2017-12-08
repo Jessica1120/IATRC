@@ -2,5 +2,10 @@
 
 <div ng-include="'views/partials/membersNav.html'"></div>
 
-In add Members
+
+<form>
+    <input type="text" placeholder="First Name" ng-model="uc.firstIn"><br>
+    <input type="text" placeholder="Last Name" ng-model="uc.lastIn"><br>
+    <button type="button" ng-click="uc.addMember()">Add</button>
+</form>
 

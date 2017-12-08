@@ -10,6 +10,17 @@ myApp.controller('UserController', function(UserService) {
       console.log ('in controller viewMembers running')
     }; //end viewMembers
 
+    vm.addMember = function() {
+      console.log ('in controller addMember running')
+      var objToSend = {
+        first_name: vm.firstIn,
+        last_name: vm.lastIn
+      };
+      UserService.addMember(objToSend);
+      vm.firstIn = '',
+      vm.lastIn = ''  
+    }; //end addMember
+
   }); //end controller function
 
   
