@@ -3,8 +3,8 @@ myApp.service('UserService', function($http, $location){
     var self = this;
     self.userObject = {};
     self.allMembers = {data: []} //object for viewMembers get
-    self.membertoEdit = {data: []} // object for findMember
-
+    self.memberToEdit = {data:[]} // object for findMember
+   
   //view members Get on page load
   self.viewMembers = function(){
     console.log('viewMembers in Service running')
@@ -31,15 +31,17 @@ self.addMember = function(objToSend) {
   }); //end then
 }; //end addMember
 
-self.findMember = function(searchLastIn) {
-  console.log('In findMember', searchLastIn);
+
+//get member to edit
+self.getMember = function(member) {
+  console.log('In findMember', member);
    //$http call to get all data from existing form
   return $http({
     method: 'GET',
-    url: '/members/find/' + searchLastIn
-  }).then(function (response) {
-    console.log('Response', response);
-    self.membertoEdit = response;
+    url: '/members/get/' + member
+  }).then(function (res) {
+    console.log('Response', res);
+    self.memberToEdit.data = res.data;
   })
 };
 

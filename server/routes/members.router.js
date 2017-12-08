@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
       if (conErr) {
         res.sendStatus(500);
       } else {
-        client.query('SELECT * FROM members', function (queryErr, resultObj) {
+        client.query('SELECT id, first_name, last_name FROM members', function (queryErr, resultObj) {
           done();
           if (queryErr) {
             res.sendStatus(500);
@@ -60,7 +60,7 @@ router.post('/', function(req, res) {
       }
 }) //end game post
 
-router.get('/find/:id', function (req, res) {
+router.get('/get/:id', function (req, res) {
   var memberToEdit = req.params.id
   console.log('In get for memberToEdit', memberToEdit);
   if (req.isAuthenticated()) {
@@ -72,7 +72,7 @@ router.get('/find/:id', function (req, res) {
       } else {
         var valueArray = [memberToEdit]
         console.log('valueArray', valueArray)
-        editQuery = 'SELECT * FROM members WHERE last_name = $1;' 
+        editQuery = 'SELECT * FROM members WHERE id = $1;' 
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();
           if (queryErr) {
@@ -93,6 +93,6 @@ router.get('/find/:id', function (req, res) {
   } //end else
 }); //end editForm get call
 
-
+router.put('/')
 module.exports = router;
 
