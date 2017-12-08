@@ -9,7 +9,7 @@ myApp.service('UserService', function($http, $location){
     console.log('viewMembers in Service running')
     return $http({
       method: 'GET',
-      url: '/members/view'
+      url: '/members'
     })
       .then(function (res) {
         self.allMembers.data = res.data;
@@ -17,9 +17,22 @@ myApp.service('UserService', function($http, $location){
       }) //end call back function
     }// end view Members
 
+//addMember post Call 
+
+self.addMember = function(objToSend) {
+  $http({
+      method: 'POST',
+      url:    '/members',
+      data:   objToSend
+  }).then(function(res) {
+      console.log('addMember response:', res );
+    //need a confirmation alert or something here
+  }); //end then
+}; //end addGame
 
 
-  //passport authentication
+  
+    //passport authentication
     self.getuser = function(){
       console.log('UserService -- getuser');
       $http.get('/user').then(function(response) {
