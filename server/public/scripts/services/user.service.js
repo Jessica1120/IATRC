@@ -3,6 +3,7 @@ myApp.service('UserService', function($http, $location){
     var self = this;
     self.userObject = {};
     self.allMembers = {data: []} //object for viewMembers get
+    self.membertoEdit = {data: []} // object for findMember
 
   //view members Get on page load
   self.viewMembers = function(){
@@ -28,8 +29,19 @@ self.addMember = function(objToSend) {
       console.log('addMember response:', res );
     //need a confirmation alert or something here
   }); //end then
-}; //end addGame
+}; //end addMember
 
+self.findMember = function(searchLastIn) {
+  console.log('In findMember', searchLastIn);
+   //$http call to get all data from existing form
+  return $http({
+    method: 'GET',
+    url: '/members/find/' + searchLastIn
+  }).then(function (response) {
+    console.log('Response', response);
+    self.membertoEdit = response;
+  })
+};
 
   
     //passport authentication

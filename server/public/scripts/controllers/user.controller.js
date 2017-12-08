@@ -21,6 +21,19 @@ myApp.controller('UserController', function(UserService) {
       vm.lastIn = ''  
     }; //end addMember
 
+    //search
+    vm.findMember = function(searchLastIn) {
+        console.log('In getData');
+        console.log('Last name', searchLastIn);
+        if (searchLastIn != undefined) {
+          UserService.findMember(searchLastIn).then(function () {
+          }).then(function () {
+            vm.membertoEdit = UserService.membertoEdit;
+    })
+  } else {
+    console.log('member doesnt exist')
+  }
+} //end findMember
   }); //end controller function
 
   

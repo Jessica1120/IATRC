@@ -60,6 +60,39 @@ router.post('/', function(req, res) {
       }
 }) //end game post
 
+router.get('/find/:id', function (req, res) {
+  var memberToEdit = req.params.id
+  console.log('In get for memberToEdit', memberToEdit);
+  if (req.isAuthenticated()) {
+    console.log('isAuthentication')
+    pool.connect(function (conErr, client, done) {
+      console.log('poolconnect')
+      if (conErr) {
+        res.sendStatus(500);
+      } else {
+        var valueArray = [memberToEdit]
+        console.log('valueArray', valueArray)
+        editQuery = 'SELECT * FROM members WHERE last_name = $1;' 
+        client.query(editQuery, valueArray, function (queryErr, resultObj) {
+          done();
+          if (queryErr) {
+            console.log('done 500', queryErr)
+            res.sendStatus(500);
+          } else {
+            res.send(resultObj.rows);
+            console.log('resultobj', resultObj.rows)
+          }
+        }) // end query
+      } // end pool else
+    }) // end pool connect
+  } else {
+    // failure best handled on the server. do redirect here.
+    console.log('not logged in');
+    // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
+    res.send(false);
+  } //end else
+}); //end editForm get call
+
 
 module.exports = router;
 
