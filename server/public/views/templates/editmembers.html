@@ -2,5 +2,7 @@
 
 <div ng-include="'views/partials/membersNav.html'"></div>
 
-In edit
- Members
+<div>
+        <input type="search" ng-model="uc.searchLastIn" id="mySearch" name="q">
+        <button type="button" ng-click="uc.findMember(uc.searchLastIn)"> Search</button>
+</div>
