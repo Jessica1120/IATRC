@@ -4,6 +4,7 @@ myApp.controller('UserController', function(UserService) {
     vm.userService = UserService;
     vm.userObject = UserService.userObject;
     vm.allMembers = UserService.allMembers;
+    vm.memberToEdit = UserService.memberToEdit;
 
     vm.viewMembers = function() {
       UserService.viewMembers();
@@ -22,18 +23,10 @@ myApp.controller('UserController', function(UserService) {
     }; //end addMember
 
     //search
-    vm.findMember = function(searchLastIn) {
-        console.log('In getData');
-        console.log('Last name', searchLastIn);
-        if (searchLastIn != undefined) {
-          UserService.findMember(searchLastIn).then(function () {
-          }).then(function () {
-            vm.membertoEdit = UserService.membertoEdit;
-    })
-  } else {
-    console.log('member doesnt exist')
-  }
-} //end findMember
-  }); //end controller function
+    vm.getMember = function(member) {
+       console.log('in controller get member', member)
+       UserService.getMember(member);
 
-  
+    }
+
+  }); //end controller
