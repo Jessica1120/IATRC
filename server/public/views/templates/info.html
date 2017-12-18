@@ -1,7 +1,21 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div ng-include="'views/partials/meetingsNav.html'"></div>
 <div class="container">
-  <p>
-    In View meetings
-  </p>
+<div ng-init="ic.viewMeetings()">
+        <div ng-repeat="meeting in ic.allMeetings.data">
+                <p ng-click="ic.getMeeting(meeting.id)">
+                        {{meeting.month}} {{meeting.topic}} 
+              
+            <!-- </p>
+        </div>
+        <div ng-hide="member">
+            <p>In member response {{uc.memberToEdit.data[0].last_name}}</p>
+            <button ng-click="member=!member">Edit</button>
+        </div>
+        <div ng-hide="!member">
+            <input type="text" placeholder="First Name" ng-model="uc.firstEditIn"><br>
+            <input type="text" placeholder="Last Name" ng-model="uc.lastEditIn"><br>
+            <p ng-click="member=!member"><button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].id)">Save</button></p> -->
+        </div>
+  
 </div>

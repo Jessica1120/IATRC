@@ -2,9 +2,15 @@ myApp.service('UserService', function($http, $location){
     console.log('UserService Loaded');
     var self = this;
     self.userObject = {};
+    //members objects
     self.allMembers = {data: []} //object for viewMembers get
     self.memberToEdit = {data:[]} // object for findMember
-   
+   //meetings objects
+    self.allMeetings = {data: []} //object for ViewMeetings get
+    self.meetingToEdit = {data:[]} // object for findMember
+
+//MEMBER PAGE FUNCTIONS
+
   //view members Get on page load
   self.viewMembers = function(){
     console.log('viewMembers in Service running')
@@ -19,7 +25,6 @@ myApp.service('UserService', function($http, $location){
     }// end view Members
 
 //addMember post Call 
-
 self.addMember = function(objToSend) {
   $http({
       method: 'POST',
@@ -60,8 +65,40 @@ self.saveEditMember = function(objToSend) {
   }); //end then
 }; //end addMember
 
+//MEETINGS PAGE FUNCTIONS
+
+//view meetings GET on page load
+self.viewMeetings = function(){
+  console.log('viewMeeting in Service running')
+  return $http({
+    method: 'GET',
+    url: '/meetings'
+  })
+    .then(function (res) {
+      self.allMeetings.data = res.data;
+     console.log('allMeetings in Service', self.allMeetings)
+    }) //end call back function
+  }// end view Members
+
   
-    //passport authentication
+//get meeting to edit
+
+self.getMember = function(meeting) {
+  console.log('In findMeeting', meeting);
+   //$http call to get all data from existing form
+  return $http({
+    method: 'GET',
+    url: '/meetings/get/' + meeting
+  }).then(function (res) {
+    console.log('Response', res);
+    self.meetingToEdit.data = res.data;
+  })
+};
+
+
+
+//PASSPORT AUTHENTICATION FUNCTIONS
+
     self.getuser = function(){
       console.log('UserService -- getuser');
       $http.get('/user').then(function(response) {
