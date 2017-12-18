@@ -12,7 +12,16 @@
           
         </p>
     </div>
+    <div ng-hide="member">
         <p>In member response {{uc.memberToEdit.data[0].last_name}}</p>
+        <button ng-click="member=!member">Edit</button>
+    </div>
+    <div ng-hide="!member">
+        <input type="text" placeholder="First Name" ng-model="uc.firstEditIn"><br>
+        <input type="text" placeholder="Last Name" ng-model="uc.lastEditIn"><br>
+        <p ng-click="member=!member"><button type="button" ng-click="uc.saveEditMember()">Save</button></p>
+    </div>
+    
 </div>
 
 <div>

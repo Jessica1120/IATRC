@@ -29,4 +29,8 @@ myApp.controller('UserController', function(UserService) {
 
     }
 
+    vm.saveEditMember = function() {
+      console.log('in saveEditMember')
+    }
+
   }); //end controller
