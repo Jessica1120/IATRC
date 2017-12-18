@@ -19,7 +19,7 @@
     <div ng-hide="!member">
         <input type="text" placeholder="First Name" ng-model="uc.firstEditIn"><br>
         <input type="text" placeholder="Last Name" ng-model="uc.lastEditIn"><br>
-        <p ng-click="member=!member"><button type="button" ng-click="uc.saveEditMember()">Save</button></p>
+        <p ng-click="member=!member"><button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].id)">Save</button></p>
     </div>
     
 </div>

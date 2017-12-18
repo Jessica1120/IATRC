@@ -29,8 +29,14 @@ myApp.controller('UserController', function(UserService) {
 
     }
 
-    vm.saveEditMember = function() {
-      console.log('in saveEditMember')
+    vm.saveEditMember = function(editMemberId) {
+        var objToSend = {
+        id: editMemberId,
+        first_name: vm.firstEditIn,
+        last_name: vm.lastEditIn
+      };
+      console.log('in saveEditMember', objToSend)
+      UserService.saveEditMember(objToSend); 
     }
 
   }); //end controller

@@ -93,6 +93,35 @@ router.get('/get/:id', function (req, res) {
   } //end else
 }); //end editForm get call
 
-router.put('/')
+router.put('/', function (req, res) {
+  var editMember = req.body;
+  console.log('In PUT edit Member', req.body);
+  if (req.isAuthenticated()) {
+  pool.connect(function(connectionError, client, done){
+      if(connectionError) {
+          console.log(connectionError);
+          res.sendStatus(500);
+      } else {
+          var gQuery = 'UPDATE members SET first_name=$1, last_name=$2, institution=$3, department=$4, address_1=$5, address_2=$6, address_3=$7, city=$8, state=$9, zipcode=$10, country=$11, phone=$12, email=$13, website=$14, member_status=$15, member_year=$16 WHERE id=$17';
+          var valueArray = [editMember.first_name, editMember.last_name, editMember.institution, editMember.department, editMember.address_1, editMember.address_2, editMember.address_3, editMember.city, editMember.state, editMember.zipcode, editMember.country, editMember.phone, editMember.email, editMember.website, editMember.member_status, editMember.member_year, editMember.id];
+          client.query(gQuery, valueArray, function(queryError, resultObj) {
+              done();
+              if(queryError) {
+                  console.log(queryError);
+                  res.sendStatus(500);
+              } else {
+                  console.log('Update member Put successful');
+                  res.sendStatus(202);
+              } //end result else
+          }); //end query
+      } //end pool else
+  }) //end pool connect 
+} else {
+    console.log('not logged in');
+    res.send(false);//end auth if
+  }
+}) //end game post
+
+
 module.exports = router;
 
