@@ -31,7 +31,6 @@ self.addMember = function(objToSend) {
   }); //end then
 }; //end addMember
 
-
 //get member to edit
 self.getMember = function(member) {
   console.log('In findMember', member);
@@ -44,6 +43,22 @@ self.getMember = function(member) {
     self.memberToEdit.data = res.data;
   })
 };
+
+//save edits to member
+self.saveEditMember = function(objToSend) {
+  console.log('saveEdit running in Service')
+  $http({
+      method: 'PUT',
+      url:    '/members',
+      data:   objToSend
+  }).then(function(res) {
+      console.log('addMember response:', res );
+      console.log('objToSend.id after call:', objToSend.id);
+      self.viewMembers();
+      self.getMember(objToSend.id);
+    //need a confirmation alert or something here
+  }); //end then
+}; //end addMember
 
   
     //passport authentication
