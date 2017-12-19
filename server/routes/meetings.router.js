@@ -30,9 +30,9 @@ router.get('/', function (req, res) {
   });//end view members Get call
   
 //get meeting to Edit
-router.get('/get/:id', function (req, res) {
-    var meetingToEdit = req.params.id
-    console.log('In get for memberToEdit', meetingToEdit);
+router.put('/', function (req, res) {
+    var meetingToEdit = req.body
+    console.log('In PUT for edit Member', meetingToEdit);
     if (req.isAuthenticated()) {
       console.log('isAuthentication')
       pool.connect(function (conErr, client, done) {
@@ -40,9 +40,9 @@ router.get('/get/:id', function (req, res) {
         if (conErr) {
           res.sendStatus(500);
         } else {
-          var valueArray = [meetingToEdit]
+          var valueArray = [meetingToEdit.type, meetingToEdit.topic, meetingToEdit.month, meetingToEdit.year, meetingToEdit.id]
           console.log('valueArray', valueArray)
-          editQuery = 'SELECT * FROM meetings WHERE id = $1;' 
+          editQuery = 'UPDATE meetings SET type=$1, topic=$2, month=$3, year=$4 WHERE id=$5' 
           client.query(editQuery, valueArray, function (queryErr, resultObj) {
             done();
             if (queryErr) {
@@ -61,7 +61,7 @@ router.get('/get/:id', function (req, res) {
       // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
       res.send(false);
     } //end else
-  }); //end get Meeting to Edit get call 
+  }); //end save Edit meeting call 
 
 //Get participants in meeting
 router.get('/getParticipants/:id', function (req, res) {
@@ -124,5 +124,5 @@ router.post('/', function(req, res) {
         console.log('not logged in');
         res.send(false);//end auth if
       }
-}) //end game post
+}) //end meeting post
   module.exports = router;

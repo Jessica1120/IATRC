@@ -7,7 +7,7 @@ myApp.service('UserService', function($http, $location){
     self.memberToEdit = {data:[]} // object for findMember
    //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
-    self.meetingToEdit = {data:[]} // object for findMember
+    self.updatedMeeting = {data:[]} // object for findMember
     self.participantList = {data: []} //object for viewParticipants
 
 //MEMBER PAGE FUNCTIONS
@@ -95,17 +95,18 @@ self.viewParticipants = function(meeting) {
   })
 };
 
-self.getMeeting = function(meeting) {
-  console.log('In findMeeting', meeting);
-   //$http call to get all data from existing form
-  return $http({
-    method: 'GET',
-    url: '/meetings/get/' + meeting
-  }).then(function (res) {
-    console.log('Response', res);
-    self.meetingToEdit.data = res.data;
-  })
-};
+self.saveEditMeeting = function(objToSend) {
+  console.log('saveEdit running in Service')
+  $http({
+      method: 'PUT',
+      url:    '/meetings',
+      data:   objToSend
+  }).then(function(res) {
+      console.log('addMeeting response:', res );
+      self.viewMeetings();
+    //need a confirmation alert or something here
+  }); //end then
+}; //end  saveEdit Meeting
 
 self.addMeeting = function(objToSend) {
   $http({
