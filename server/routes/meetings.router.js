@@ -30,9 +30,9 @@ router.get('/', function (req, res) {
   });//end view members Get call
   
 //get meeting to Edit
-router.get('/get/:id', function (req, res) {
-    var meetingToEdit = req.params.id
-    console.log('In get for memberToEdit', meetingToEdit);
+router.put('/', function (req, res) {
+    var meetingToEdit = req.body
+    console.log('In PUT for edit Member', meetingToEdit);
     if (req.isAuthenticated()) {
       console.log('isAuthentication')
       pool.connect(function (conErr, client, done) {
@@ -40,9 +40,9 @@ router.get('/get/:id', function (req, res) {
         if (conErr) {
           res.sendStatus(500);
         } else {
-          var valueArray = [meetingToEdit]
+          var valueArray = [meetingToEdit.type, meetingToEdit.topic, meetingToEdit.month, meetingToEdit.year, meetingToEdit.id]
           console.log('valueArray', valueArray)
-          editQuery = 'SELECT * FROM meetings WHERE id = $1;' 
+          editQuery = 'UPDATE meetings SET type=$1, topic=$2, month=$3, year=$4 WHERE id=$5' 
           client.query(editQuery, valueArray, function (queryErr, resultObj) {
             done();
             if (queryErr) {
@@ -61,8 +61,9 @@ router.get('/get/:id', function (req, res) {
       // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
       res.send(false);
     } //end else
-  }); //end get Meeting to Edit get call 
+  }); //end save Edit meeting call 
 
+//Get participants in meeting
 router.get('/getParticipants/:id', function (req, res) {
     var participants = req.params.id
     console.log('In get for participants', participants);
@@ -94,4 +95,34 @@ router.get('/getParticipants/:id', function (req, res) {
       res.send(false);
     } //end else
   }); //end get Meeting to Edit get call 
-module.exports = router;
+
+//post new meeting
+router.post('/', function(req, res) {
+  var newMeeting = req.body;
+      console.log('In Post New Meeting', req.body);
+      if (req.isAuthenticated()) {
+      pool.connect(function(connectionError, client, done){
+          if(connectionError) {
+              console.log(connectionError);
+              res.sendStatus(500);
+          } else {
+              var gQuery = 'INSERT INTO meetings (type, topic, month, year) VALUES ($1, $2, $3, $4)';
+              var valueArray = [newMeeting.type, newMeeting.topic, newMeeting.month, newMeeting.year];
+              client.query(gQuery, valueArray, function(queryError, resultObj) {
+                  done();
+                  if(queryError) {
+                      console.log(queryError);
+                      res.sendStatus(500);
+                  } else {
+                      console.log('new Meeting post successful');
+                      res.sendStatus(202);
+                  } //end result else
+              }); //end query
+          } //end pool else
+      }) //end pool connect 
+    } else {
+        console.log('not logged in');
+        res.send(false);//end auth if
+      }
+}) //end meeting post
+  module.exports = router;

@@ -15,11 +15,32 @@ myApp.controller('InfoController', function(UserService) {
       console.log('in view Participants', meeting)
     }
 
-    vm.getMeeting = function(meeting) {
-      console.log('in controller get member', meeting)
-      UserService.getMember(meeting);
+    vm.saveEditMeeting = function(meeting) {
+      var objToSend = {
+      id: meeting,
+      type: vm.editTypeIn,
+      topic: vm.editTopicIn,
+      month: vm.editMonthIn,
+      year: vm.editYearIn
+    };
+    console.log('in saveEditMember', objToSend)
+    UserService.saveEditMeeting(objToSend); 
+  }
 
-   }
+   vm.addMeeting = function() {
+    console.log ('in controller addMeeting running')
+    var objToSend = {
+      type: vm.typeIn,
+      topic: vm.topicIn,
+      month: vm.monthIn,
+      year: vm.yearIn
+    };
+    UserService.addMeeting(objToSend);
+    vm.typeIn = '',
+    vm.topicIn = '',
+    vm.monthIn = '',
+    vm.yearIn = ''
+  }; //end addMeeting
 
   });
 

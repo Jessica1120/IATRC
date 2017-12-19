@@ -2,4 +2,10 @@
 
 <div ng-include="'views/partials/meetingsNav.html'"></div>
 
-In add meetings
+<form>
+        <input type="text" placeholder="Type" ng-model="ic.typeIn"><br>
+        <input type="text" placeholder="Topic" ng-model="ic.topicIn"><br>
+        <input type="text" placeholder="Month" ng-model="ic.monthIn"><br>
+        <input type="text" placeholder="Year" ng-model="ic.yearIn"><br>
+        <button type="button" ng-click="ic.addMeeting()">Add</button>
+    </form>
