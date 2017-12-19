@@ -1,3 +1,16 @@
+/* View Members */
+.memberList {
+  border-bottom: rgb(43, 80, 145) solid 2px;
+}
+
+#membersView {
+  background: rgb(223, 221, 221);
+}
+
+.names:hover {
+  color: blue;
+}
+/* premade css */
 body, html {
     margin: 0;
     padding: 0;
