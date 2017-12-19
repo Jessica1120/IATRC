@@ -21,5 +21,20 @@ myApp.controller('InfoController', function(UserService) {
 
    }
 
+   vm.addMeeting = function() {
+    console.log ('in controller addMeeting running')
+    var objToSend = {
+      type: vm.typeIn,
+      topic: vm.topicIn,
+      month: vm.monthIn,
+      year: vm.yearIn
+    };
+    UserService.addMeeting(objToSend);
+    vm.typeIn = '',
+    vm.topicIn = '',
+    vm.monthIn = '',
+    vm.yearIn = ''
+  }; //end addMeeting
+
   });
 

@@ -63,6 +63,7 @@ router.get('/get/:id', function (req, res) {
     } //end else
   }); //end get Meeting to Edit get call 
 
+//Get participants in meeting
 router.get('/getParticipants/:id', function (req, res) {
     var participants = req.params.id
     console.log('In get for participants', participants);
@@ -94,4 +95,34 @@ router.get('/getParticipants/:id', function (req, res) {
       res.send(false);
     } //end else
   }); //end get Meeting to Edit get call 
-module.exports = router;
+
+//post new meeting
+router.post('/', function(req, res) {
+  var newMeeting = req.body;
+      console.log('In Post New Meeting', req.body);
+      if (req.isAuthenticated()) {
+      pool.connect(function(connectionError, client, done){
+          if(connectionError) {
+              console.log(connectionError);
+              res.sendStatus(500);
+          } else {
+              var gQuery = 'INSERT INTO meetings (type, topic, month, year) VALUES ($1, $2, $3, $4)';
+              var valueArray = [newMeeting.type, newMeeting.topic, newMeeting.month, newMeeting.year];
+              client.query(gQuery, valueArray, function(queryError, resultObj) {
+                  done();
+                  if(queryError) {
+                      console.log(queryError);
+                      res.sendStatus(500);
+                  } else {
+                      console.log('new Meeting post successful');
+                      res.sendStatus(202);
+                  } //end result else
+              }); //end query
+          } //end pool else
+      }) //end pool connect 
+    } else {
+        console.log('not logged in');
+        res.send(false);//end auth if
+      }
+}) //end game post
+  module.exports = router;

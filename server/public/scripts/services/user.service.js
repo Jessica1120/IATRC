@@ -13,7 +13,7 @@ myApp.service('UserService', function($http, $location){
 //MEMBER PAGE FUNCTIONS
 
   //view members Get on page load
-  self.viewMembers = function(){
+self.viewMembers = function(){
     console.log('viewMembers in Service running')
     return $http({
       method: 'GET',
@@ -49,7 +49,6 @@ self.getMember = function(member) {
     self.memberToEdit.data = res.data;
   })
 };
-
 //save edits to member
 self.saveEditMember = function(objToSend) {
   console.log('saveEdit running in Service')
@@ -108,6 +107,16 @@ self.getMeeting = function(meeting) {
   })
 };
 
+self.addMeeting = function(objToSend) {
+  $http({
+      method: 'POST',
+      url:    '/meetings',
+      data:   objToSend
+  }).then(function(res) {
+      console.log('addmeeting response:', res );
+    //need a confirmation alert or something here
+  }); //end then
+}; //end addMember
 
 
 //PASSPORT AUTHENTICATION FUNCTIONS
