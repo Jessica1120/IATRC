@@ -22,11 +22,10 @@ myApp.controller('UserController', function(UserService) {
       vm.lastIn = ''  
     }; //end addMember
 
-    //search
+    //get member to Edit
     vm.getMember = function(member) {
        console.log('in controller get member', member)
        UserService.getMember(member);
-
     }
 
     vm.saveEditMember = function(editMemberId) {
