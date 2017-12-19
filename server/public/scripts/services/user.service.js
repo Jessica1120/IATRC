@@ -8,6 +8,7 @@ myApp.service('UserService', function($http, $location){
    //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
     self.meetingToEdit = {data:[]} // object for findMember
+    self.participantList = {data: []} //object for viewParticipants
 
 //MEMBER PAGE FUNCTIONS
 
@@ -83,7 +84,19 @@ self.viewMeetings = function(){
   
 //get meeting to edit
 
-self.getMember = function(meeting) {
+self.viewParticipants = function(meeting) {
+  console.log('In get participants service', meeting);
+   //$http call to get all data from existing form
+  return $http({
+    method: 'GET',
+    url: '/meetings/getParticipants/' + meeting
+  }).then(function (res) {
+    console.log('Response', res);
+    self.participantList.data = res.data;
+  })
+};
+
+self.getMeeting = function(meeting) {
   console.log('In findMeeting', meeting);
    //$http call to get all data from existing form
   return $http({

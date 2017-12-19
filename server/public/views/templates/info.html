@@ -2,10 +2,13 @@
 <div ng-include="'views/partials/meetingsNav.html'"></div>
 <div class="container">
 <div ng-init="ic.viewMeetings()">
-        <div ng-repeat="meeting in ic.allMeetings.data">
-                <p ng-click="ic.getMeeting(meeting.id)">
-                        {{meeting.month}} {{meeting.topic}} 
-              
+        <div ng-repeat="meeting in ic.allMeetings.data">{{meeting.month}} {{meeting.topic}}
+                <p ng-click="ic.viewParticipants(meeting.id)">View Participants</p>
+                    <!-- <div ng-hide="!participants"><ng-click="!participants">Hide Participants</div> -->
+                
+       
+            
+        </div>
             <!-- </p>
         </div>
         <div ng-hide="member">
@@ -16,6 +19,5 @@
             <input type="text" placeholder="First Name" ng-model="uc.firstEditIn"><br>
             <input type="text" placeholder="Last Name" ng-model="uc.lastEditIn"><br>
             <p ng-click="member=!member"><button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].id)">Save</button></p> -->
-        </div>
   
 </div>
