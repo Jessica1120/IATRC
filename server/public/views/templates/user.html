@@ -3,33 +3,38 @@
 
 <div ng-include="'views/partials/membersNav.html'"></div>
 
-<div ng-init="uc.viewMembers()">
-
+<body class="container">
     
-    <div ng-repeat="member in uc.allMembers.data">
-            <p ng-click="uc.getMember(member.id)">
-                    {{member.first_name}} {{member.last_name}}     
-          
-        </p>
-    </div>
-    <div ng-hide="member">
-        <p>In member response {{uc.memberToEdit.data[0].last_name}}</p>
-        <button ng-click="member=!member">Edit</button>
-    </div>
-    <div ng-hide="!member">
-        <input type="text" placeholder="First Name" ng-model="uc.firstEditIn"><br>
-        <input type="text" placeholder="Last Name" ng-model="uc.lastEditIn"><br>
-        <p ng-click="member=!member"><button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].id)">Save</button></p>
-    </div>
-    
-</div>
+    <div class="row">
+        <div class="col-md-6">
+                <section  ng-init="uc.viewMembers()">
+               
+                    <div ng-repeat="member in uc.allMembers.data">
+                <p ng-click="uc.getMember(member.id)">
+                   
+                {{member.first_name}} {{member.last_name}}  
+                </p> 
+                </div>   
+            
+            </section>
+        </div> <!--end column 1 -->
+        
+        <div class="col-md-6">
+            
+            <div ng-hide="edit">
+                <p>{{uc.memberToEdit.data[0].last_name}}</p>
+                <button ng-click="edit=!edit">Edit</button>
+            </div>
+            <div ng-hide="!edit">
+                <input type="text" placeholder="First Name" ng-model="uc.firstEditIn"><br>
+                <input type="text" placeholder="{{uc.memberToEdit.data[0].last_name}}" ng-model="uc.lastEditIn"><br>
+                <p ng-click="edit=!edit"><button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].id)">Save</button></p>
+            </div>
+        
+        </div> <!--ends column 2-->
+    </div> <!-- ends row 1 -->
 
-<div>
-        <input type="search" ng-model="uc.searchLastIn" id="mySearch" name="q">
-        <button type="button" ng-click="uc.findMember(uc.searchLastIn)"> Search</button>
-
-        {{}}
-</div>
+</body>
 
 
     <!-- {{uc.allMembers.data[0].institution}}, {{uc.allMembers.data[0].department}}
@@ -39,3 +44,6 @@
     {{uc.allMembers.data[0].member_status}}, {{uc.allMembers.data[0].member_year}}
     {{uc.allMembers.data[0].email}}
     {{uc.allMembers.data[0].phone}} -->
+
+    <!-- <input type="search" ng-model="uc.searchLastIn" id="mySearch" name="q">
+        <button type="button" ng-click="uc.findMember(uc.searchLastIn)"> Search</button> -->
