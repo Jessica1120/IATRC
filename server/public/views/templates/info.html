@@ -3,11 +3,15 @@
 <div class="container">
 <div ng-init="ic.viewMeetings()">
         <div ng-repeat="meeting in ic.allMeetings.data">{{meeting.month}} {{meeting.topic}}
-                <p ng-click="ic.viewParticipants(meeting.id)">View Participants</p>
-                    <!-- <div ng-hide="!participants"><ng-click="!participants">Hide Participants</div> -->
-                
-       
+                <div ng-click="participants=!participants"><p ng-click="ic.viewParticipants(meeting.id)">View Participants</p></div>
+                <div ng-hide="!participants">
+                        <p ng-click="participants=!participants">Hide Participants</p>
+                            <div ng-repeat = "participant in ic.participantList.data">
+                                  {{participant.first_name}}
+                            </div>    
             
+        </div>
+        
         </div>
             <!-- </p>
         </div>

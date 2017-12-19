@@ -3,7 +3,8 @@ myApp.controller('InfoController', function(UserService) {
     var vm = this;
     vm.userService = UserService;
     vm.allMeetings = UserService.allMeetings;
-  
+    vm.participantList = UserService.participantList
+
     vm.viewMeetings= function() {
       UserService.viewMeetings();
       console.log('in view Meetings running')
