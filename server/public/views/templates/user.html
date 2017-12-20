@@ -21,24 +21,25 @@
         <!--end column 1 -->
 
         <div class="col-md-6" id="editMembers">
-
             <div ng-hide="edit">
                 <p>{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</p><br>
                 {{uc.memberToEdit.data[0].institution}}<br>
                 {{uc.memberToEdit.data[0].department}}<br>
-                Address: {{uc.memberToEdit.data[0].address_1}}<br>
+                {{uc.memberToEdit.data[0].address_1}}<br>
                 {{uc.memberToEdit.data[0].address_2}}<br>
                 {{uc.memberToEdit.data[0].address_3}}<br>
-                {{uc.memberToEdit.data[0].city}}, {{uc.memberToEdit.data[0].state}} {{uc.memberToEdit.data[0].zipcode}}<br>
+                {{uc.memberToEdit.data[0].city}} {{uc.memberToEdit.data[0].state}} {{uc.memberToEdit.data[0].zipcode}}<br>
                 {{uc.memberToEdit.data[0].country}}<br>
-                Phone: {{uc.memberToEdit.data[0].phone}}<br>
-                Email: {{uc.memberToEdit.data[0].email}}<br>
-                Website: {{uc.memberToEdit.data[0].website}}<br>
-                Member Status: {{uc.memberToEdit.data[0].member_status}}<br>
-                Member Since: {{uc.memberToEdit.data[0].member_year}}<br>
-                Link to Publications: {{uc.memberToEdit.data[0].publications}}<br>
+                {{uc.memberToEdit.data[0].phone}}<br>
+                {{uc.memberToEdit.data[0].email}}<br>
+                {{uc.memberToEdit.data[0].website}}<br>
+                {{uc.memberToEdit.data[0].member_status}}<br>
+                {{uc.memberToEdit.data[0].member_year}}<br>
+                {{uc.memberToEdit.data[0].publications}}<br>
                 <button ng-click="edit=!edit">Edit</button>
+                
             </div>
+            
             <div ng-hide="!edit">
                 First Name: <input type="text" placeholder="{{uc.memberToEdit.data[0].first_name}}" ng-model="uc.firstEditIn">
                 
@@ -57,10 +58,11 @@
                 Member Status: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_status}}" ng-model="uc.memberStatusEditIn"><br>
                 Member Since: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_year}}" ng-model="uc.memberYearEditIn"><br>
                 Publications: <input type="text" placeholder="{{uc.memberToEdit.data[0].publications}}" ng-model="uc.publicationsEditIn"><br>
-                
                 <p ng-click="edit=!edit">
-                    <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].id)">Save</button>
+                     <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].id)">Save</button>
+                     <button type="button">Cancel</button>
                 </p>
+                
             </div>
 
         </div>
