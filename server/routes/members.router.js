@@ -62,25 +62,19 @@ router.post('/', function (req, res) {
 
 router.get('/get/:id', function (req, res) {
   var memberToEdit = req.params.id
-  console.log('In get for memberToEdit', memberToEdit);
   if (req.isAuthenticated()) {
-    console.log('isAuthentication')
     pool.connect(function (conErr, client, done) {
-      console.log('poolconnect')
       if (conErr) {
         res.sendStatus(500);
       } else {
         var valueArray = [memberToEdit]
-        console.log('valueArray', valueArray)
         editQuery = 'SELECT * FROM members WHERE id = $1;'
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();
           if (queryErr) {
-            console.log('done 500', queryErr)
             res.sendStatus(500);
           } else {
             res.send(resultObj.rows);
-            console.log('resultobj', resultObj.rows)
           }
         }) // end query
       } // end pool else
@@ -102,23 +96,20 @@ router.put('/', function (req, res) {
         console.log(connectionError);
         res.sendStatus(500);
       } else {
-        valueArray = []
-        tempvarQuery = []
+        var valueArray = []
+        var tempvarQuery = []
         var bling = 0
         for (var i = 0 in editMember) {
-          if (editMember[i] !== null || editMember[i] !== undefined) {
-            valueArray.push(editMember[i])
+          valueArray.push(editMember[i]);
           }
-        }
         for (const prop in editMember) {
-          if (editMember[i] !== null || editMember[i] !== undefined) {
-            bling++
-            tempvarQuery.push(prop+'=$'+bling)
-          } 
+          bling++
+          var eb = ' = $'
+          tempvarQuery.push(prop+eb+bling)
         }
         var queryFields = tempvarQuery.join(', ')
         var gQuery = 'UPDATE members SET ' + queryFields + ' WHERE id = $1'
-        console.log('query', gQuery)
+        console.log('line 113 query, value arry:', gQuery, valueArray)
         client.query(gQuery, valueArray, function(queryError, resultObj) {
             done();
             if(queryError) {

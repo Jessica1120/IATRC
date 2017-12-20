@@ -51,13 +51,13 @@ self.getMember = function(member) {
 };
 //save edits to member
 self.saveEditMember = function(objToSend) {
-  console.log('saveEdit running in Service')
+  console.log('service Obj', objToSend)
   $http({
       method: 'PUT',
       url:    '/members',
       data:   objToSend
   }).then(function(res) {
-      console.log('addMember response:', res );
+      console.log('editMember response:', res );
       console.log('objToSend.id after call:', objToSend.id);
       self.viewMembers();
       self.getMember(objToSend.id);
