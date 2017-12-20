@@ -1,4 +1,9 @@
 /* View Members */
+#editMembers {
+  background: rgb(183, 222, 155);
+  border: rgb(18, 110, 191) double 2px;
+}
+
 .memberList {
   border-bottom: rgb(43, 80, 145) solid 2px;
 }

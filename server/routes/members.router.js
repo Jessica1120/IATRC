@@ -102,8 +102,8 @@ router.put('/', function (req, res) {
           console.log(connectionError);
           res.sendStatus(500);
       } else {
-          var gQuery = 'UPDATE members SET first_name=$1, last_name=$2, institution=$3, department=$4, address_1=$5, address_2=$6, address_3=$7, city=$8, state=$9, zipcode=$10, country=$11, phone=$12, email=$13, website=$14, member_status=$15, member_year=$16 WHERE id=$17';
-          var valueArray = [editMember.first_name, editMember.last_name, editMember.institution, editMember.department, editMember.address_1, editMember.address_2, editMember.address_3, editMember.city, editMember.state, editMember.zipcode, editMember.country, editMember.phone, editMember.email, editMember.website, editMember.member_status, editMember.member_year, editMember.id];
+          var gQuery = 'UPDATE members SET first_name=$1, last_name=$2, institution=$3, department=$4, address_1=$5, address_2=$6, address_3=$7, city=$8, state=$9, zipcode=$10, country=$11, phone=$12, email=$13, website=$14, member_status=$15, member_year=$16, publications=$17 WHERE id=$18';
+          var valueArray = [editMember.first_name, editMember.last_name, editMember.institution, editMember.department, editMember.address_1, editMember.address_2, editMember.address_3, editMember.city, editMember.state, editMember.zipcode, editMember.country, editMember.phone, editMember.email, editMember.website, editMember.member_status, editMember.member_year, editMember.publications, editMember.id];
           client.query(gQuery, valueArray, function(queryError, resultObj) {
               done();
               if(queryError) {
