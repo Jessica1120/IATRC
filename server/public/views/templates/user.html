@@ -37,6 +37,7 @@
                 {{uc.memberToEdit.data[0].member_year}}<br>
                 {{uc.memberToEdit.data[0].publications}}<br>
                 <button ng-click="edit=!edit">Edit</button>
+                <button ng-click="uc.deleteMember(uc.memberToEdit.data[0].id)">Delete</button>
                 
             </div>
             

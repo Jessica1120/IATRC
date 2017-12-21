@@ -65,6 +65,17 @@ self.saveEditMember = function(objToSend) {
   }); //end then
 }; //end addMember
 
+self.deleteMember = function(deleteMemberId) {
+  console.log('service delete running', deleteMemberId)
+  return $http ({
+    method: 'DELETE',
+    url: '/members/delete/' + deleteMemberId 
+  }).then(function (res) {
+    self.viewMembers()
+    console.log(res)
+  })
+}
+
 //MEETINGS PAGE FUNCTIONS
 
 //view meetings GET on page load

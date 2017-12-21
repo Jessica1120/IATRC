@@ -58,8 +58,9 @@ router.post('/', function (req, res) {
     console.log('not logged in');
     res.send(false);//end auth if
   }
-}) //end game post
+}) //end new member post
 
+//get member to edit
 router.get('/get/:id', function (req, res) {
   var memberToEdit = req.params.id
   if (req.isAuthenticated()) {
@@ -85,8 +86,9 @@ router.get('/get/:id', function (req, res) {
     // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
     res.send(false);
   } //end else
-}); //end editForm get call
+}); //end get member to edit get call
 
+//edit member information
 router.put('/', function (req, res) {
   var editMember = req.body;
   console.log('In PUT edit Member', req.body);
@@ -126,8 +128,36 @@ router.put('/', function (req, res) {
     console.log('not logged in');
     res.send(false);//end auth if
   }
-}) //end game post
+}); //end edit member
 
+//delete member
+router.delete('/delete/:id', function(req, res) {
+  var deleteMember = req.params.id
+  console.log('deleteMember', deleteMember)
+    if (req.isAuthenticated()) {
+      pool.connect(function (conErr, client, done) {
+    if (conErr) {
+      res.sendStatus(500);
+    } else {
+      var valueArray = [deleteMember]
+      pQuery = 'DELETE FROM members WHERE members.id = $1;'
+      client.query(pQuery, valueArray, function (queryErr, resultObj) {
+        done();
+        if (queryErr) {
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(202);
+        }
+      }) // end query
+    } // end pool else
+  }) // end pool connect
+  } else {
+  // failure best handled on the server. do redirect here.
+  console.log('not logged in');
+  // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
+  res.send(false);
+} //end else
+}); //end delete member
 
 module.exports = router;
 

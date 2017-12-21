@@ -27,7 +27,7 @@ myApp.controller('UserController', function(UserService) {
        console.log('in controller get member', member)
        UserService.getMember(member);
     }
-
+    // save edited fields
     vm.saveEditMember = function(editMemberId) {
       
       var objToSend = {id: editMemberId}
@@ -159,8 +159,11 @@ myApp.controller('UserController', function(UserService) {
       vm.publicationsEditIn = ""
       console.log('object after servidce', objToSend) 
     }
-    
-     
+    //delete member
+    vm.deleteMember = function(deleteMemberId) {
+      console.log('in controller delete,', deleteMemberId)
+      UserService.deleteMember(deleteMemberId);
+    }
     
 
   }); //end controller
