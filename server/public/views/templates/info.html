@@ -1,19 +1,44 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div ng-include="'views/partials/meetingsNav.html'"></div>
 <div class="container">
-    <div ng-init="ic.viewMeetings()">
-        <div ng-repeat="meeting in ic.allMeetings.data">
-            <div ng-click="editMeeting=!editMeeting">{{meeting.month}} {{meeting.topic}}</div>
-            <div ng-click="participants=!participants">
-                <p ng-click="ic.viewParticipants(meeting.id)">View Participants</p>
-            </div>
-            <div ng-hide="!participants">
-                <p ng-click="participants=!participants">Hide Participants</p>
-                <div ng-repeat="participant in ic.participantList.data">
-                    {{participant.first_name}}
+    <div class="row">
+        <div class="col-md-6"  ng-init="ic.viewMeetings()" >
+            <div ng-repeat="meeting in ic.allMeetings.data" class="meetingItem">
+                <div ng-click="ic.getMeeting(meeting.id)">{{meeting.month}} {{meeting.topic}}</div>
+                <div ng-click="participants=!participants">
+                    <p ng-click="ic.viewParticipants(meeting.id)">View Participants</p>
                 </div>
-            </div>
-        
+                 <div ng-hide="!participants">
+                    <p ng-click="participants=!participants">Hide Participants</p>
+                    <div ng-repeat="participant in ic.participantList.data">
+                    {{participant.first_name}}
+                    </div>
+                </div>
+            </div> <!-- end ng-repeat meeting -->
+        </div> 
+        <div class="col-md-6">
+            <div ng-hide="edit" id="editMeeting">
+                {{ic.meetingToEdit.data[0].type}}<br>
+                {{ic.meetingToEdit.data[0].topic}}<br>
+                {{ic.meetingToEdit.data[0].month}}<br>
+                {{ic.meetingToEdit.data[0].year}}<br>                      
+                <button ng-click="edit=!edit">Edit</button>
+                <button ng-click="ic.deleteMeeting(ic.meetingToEdit.data[0].id)">Delete</button>
+            </div>   
+                    
+            <div ng-hide="!edit">
+                Type: <input type="text" placeholder="{{ic.meetingToEdit.data[0].type}}" ng-model="ic.editTypeIn"><br>
+                Topic: <input type="text" placeholder="{{ic.meetingToEdit.data[0].topic}}" ng-model="ic.lastTopicIn"><br>
+                Month: <input type="text" placeholder="{{ic.meetingToEdit.data[0].month}}" ng-model="ic.editMonthIn"><br>
+                Year: <input type="text" placeholder="{{ic.meetingToEdit.data[0].year}}" ng-model="ic.editYearIn"><br>
+                <p ng-click="edit=!edit">
+                <button type="button" ng-click="ic.saveEditMeeting(ic.meetinToEdit.data[0].id)">Save</button>
+                <button type="button">Cancel</button>
+                        </p>
+                        
+                    </div>
+<!--         
+
             <div ng-hide="!editMeeting">
                 <form>
                     <input type="text" placeholder="Type" ng-model="ic.editTypeIn">
@@ -25,9 +50,9 @@
                     <input type="text" placeholder="Year" ng-model="ic.editYearIn">
                     <br>
                     <button type="button" ng-click="ic.saveEditMeeting(meeting.id)">Save</button>
-                </form>
-            </div>
-
+                </form> -->
+           </div>
+        </div>
 
         
 

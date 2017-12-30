@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
     }
   });//end view members Get call
   
-//get meeting to Edit
+//
 router.put('/', function (req, res) {
     var meetingToEdit = req.body
     console.log('In PUT for edit Member', meetingToEdit);
@@ -64,6 +64,35 @@ router.put('/', function (req, res) {
   }); //end save Edit meeting call 
 
 //Get participants in meeting
+
+//get Meeting to Edit
+router.get('/get/:id', function (req, res) {
+  var meetingToEdit = req.params.id
+  if (req.isAuthenticated()) {
+    pool.connect(function (conErr, client, done) {
+      if (conErr) {
+        res.sendStatus(500);
+      } else {
+        var valueArray = [meetingToEdit]
+        editQuery = 'SELECT * FROM meetings WHERE id = $1;'
+        client.query(editQuery, valueArray, function (queryErr, resultObj) {
+          done();
+          if (queryErr) {
+            res.sendStatus(500);
+          } else {
+            res.send(resultObj.rows);
+          }
+        }) // end query
+      } // end pool else
+    }) // end pool connect
+  } else {
+    // failure best handled on the server. do redirect here.
+    console.log('not logged in');
+    // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
+    res.send(false);
+  } //end else
+}); //end get member to edit get call
+
 router.get('/getParticipants/:id', function (req, res) {
     var participants = req.params.id
     console.log('In get for participants', participants);

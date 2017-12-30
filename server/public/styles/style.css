@@ -5,6 +5,10 @@
   border: rgb(18, 110, 191) double 2px;
 }
 
+#editMeeting {
+  color: white;
+}
+
 html {
   background-color: #1c4863;
   -webkit-background-size: cover;
@@ -20,6 +24,11 @@ background-image: url("./wheatfield.jpg");
   background-color: #1c4863;
 }
 
+.meetingItem {
+  border: solid 1px;
+  border-color: #a2ba85;
+  color: white;
+ }
 .memberList {
   border-bottom: rgb(43, 80, 145) solid 2px;
 }

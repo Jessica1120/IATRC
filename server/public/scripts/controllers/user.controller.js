@@ -5,6 +5,7 @@ myApp.controller('UserController', function(UserService) {
     vm.userObject = UserService.userObject;
     vm.allMembers = UserService.allMembers;
     vm.memberToEdit = UserService.memberToEdit;
+    
 
     vm.viewMembers = function() {
       UserService.viewMembers();

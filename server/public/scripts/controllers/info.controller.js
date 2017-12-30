@@ -4,6 +4,7 @@ myApp.controller('InfoController', function(UserService) {
     vm.userService = UserService;
     vm.allMeetings = UserService.allMeetings;
     vm.participantList = UserService.participantList
+    vm.meetingToEdit = UserService.meetingToEdit;
 
     vm.viewMeetings= function() {
       UserService.viewMeetings();
@@ -15,6 +16,11 @@ myApp.controller('InfoController', function(UserService) {
       console.log('in view Participants', meeting)
     }
 
+    //get member to Edit
+    vm.getMeeting = function(meeting) {
+      console.log('in controller get meeting', meeting)
+      UserService.getMeeting(meeting);
+   }
     vm.saveEditMeeting = function(meeting) {
       var objToSend = {
       id: meeting,
