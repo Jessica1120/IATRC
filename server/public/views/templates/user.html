@@ -1,76 +1,41 @@
-<div ng-include="'views/partials/nav.html'">
-</div>
+
+<div ng-include="'views/partials/nav.html'"></div>
 
 <div ng-include="'views/partials/membersNav.html'"></div>
 
-<body class="container">
+<div ng-init="uc.viewMembers()">
 
-    <div class="row">
-        <div class="col-md-6"  id="membersView">
-            <section ng-init="uc.viewMembers()">
-                <div class="memberList" ng-repeat="member in uc.allMembers.data">
-                    <h5 ng-click="uc.getMember(member.id)">
-                        <div class="names">
-                            {{member.last_name}}, {{member.first_name}}
-                        </div> 
-                    </h5>
-                </div>
-
-            </section>
-        </div>
-        <!--end column 1 -->
-
-        <div class="col-md-6" id="editMembers">
-            <div ng-hide="edit">
-                <p>{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</p><br>
-                {{uc.memberToEdit.data[0].institution}}<br>
-                {{uc.memberToEdit.data[0].department}}<br>
-                {{uc.memberToEdit.data[0].address_1}}<br>
-                {{uc.memberToEdit.data[0].address_2}}<br>
-                {{uc.memberToEdit.data[0].address_3}}<br>
-                {{uc.memberToEdit.data[0].city}} {{uc.memberToEdit.data[0].state}} {{uc.memberToEdit.data[0].zipcode}}<br>
-                {{uc.memberToEdit.data[0].country}}<br>
-                {{uc.memberToEdit.data[0].phone}}<br>
-                {{uc.memberToEdit.data[0].email}}<br>
-                {{uc.memberToEdit.data[0].website}}<br>
-                {{uc.memberToEdit.data[0].member_status}}<br>
-                {{uc.memberToEdit.data[0].member_year}}<br>
-                {{uc.memberToEdit.data[0].publications}}<br>
-                <button ng-click="edit=!edit">Edit</button>
-                <button ng-click="uc.deleteMember(uc.memberToEdit.data[0].id)">Delete</button>
-                
-            </div>
-            
-            <div ng-hide="!edit">
-                First Name: <input type="text" placeholder="{{uc.memberToEdit.data[0].first_name}}" ng-model="uc.firstEditIn">
-                
-                Last Name: <input type="text" placeholder="{{uc.memberToEdit.data[0].last_name}}" ng-model="uc.lastEditIn">
-                <br>
-                Insitution: <input type="text" placeholder="{{uc.memberToEdit.data[0].institution}}" ng-model="uc.institutionEditIn"> <br>
-                Department: <input type="text" placeholder="{{uc.memberToEdit.data[0].department}}" ng-model="uc.departmentEditIn"> <br>
-                Address 1: <input type="text" placeholder="{{uc.memberToEdit.data[0].address_1}}" ng-model="uc.address_1EditIn"><br>
-                Address 2: <input type="text" placeholder="{{uc.memberToEdit.data[0].address_2}}" ng-model="uc.address_2EditIn"><br>
-                Address 3: <input type="text" placeholder="{{uc.memberToEdit.data[0].address_3}}" ng-model="uc.address_3EditIn"><br>
-                City: <input type="text" placeholder="{{uc.memberToEdit.data[0].city}}" ng-model="uc.cityEditIn"> State: <input type="text" placeholder="{{uc.memberToEdit.data[0].state}}" ng-model="uc.stateEditIn"> Zip: <input type="text" placeholder="{{uc.memberToEdit.data[0].zipcode}}" ng-model="uc.zipcodeEditIn"><br>
-                Country: <input type="text" placeholder="{{uc.memberToEdit.data[0].country}}" ng-model="uc.countryEditIn"><br>
-                Phone: <input type="text" placeholder="{{uc.memberToEdit.data[0].phone}}" ng-model="uc.phoneEditIn"><br>
-                Email: <input type="text" placeholder="{{uc.memberToEdit.data[0].email}}" ng-model="uc.emailEditIn"><br>
-                Website: <input type="text" placeholder="{{uc.memberToEdit.data[0].website}}" ng-model="uc.websiteEditIn"><br>
-                Member Status: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_status}}" ng-model="uc.memberStatusEditIn"><br>
-                Member Since: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_year}}" ng-model="uc.memberYearEditIn"><br>
-                Publications: <input type="text" placeholder="{{uc.memberToEdit.data[0].publications}}" ng-model="uc.publicationsEditIn"><br>
-                <p ng-click="edit=!edit">
-                     <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].id)">Save</button>
-                     <button type="button">Cancel</button>
-                </p>
-                
-            </div>
-
-        </div>
-        <!--ends column 2-->
+    
+    <div ng-repeat="member in uc.allMembers.data">
+            <p ng-click="uc.getMember(member.id)">
+                    {{member.first_name}} {{member.last_name}}     
+          
+        </p>
     </div>
-    <!-- ends row 1 -->
+    <div ng-hide="member">
+        <p>In member response {{uc.memberToEdit.data[0].last_name}}</p>
+        <button ng-click="member=!member">Edit</button>
+    </div>
+    <div ng-hide="!member">
+        <input type="text" placeholder="First Name" ng-model="uc.firstEditIn"><br>
+        <input type="text" placeholder="Last Name" ng-model="uc.lastEditIn"><br>
+        <p ng-click="member=!member"><button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].id)">Save</button></p>
+    </div>
+    
+</div>
 
-</body>
+<div>
+        <input type="search" ng-model="uc.searchLastIn" id="mySearch" name="q">
+        <button type="button" ng-click="uc.findMember(uc.searchLastIn)"> Search</button>
+
+        {{}}
+</div>
 
 
+    <!-- {{uc.allMembers.data[0].institution}}, {{uc.allMembers.data[0].department}}
+    {{uc.allMembers.data[0].address_1}}
+    {{uc.allMembers.data[0].address_2}}
+    {{uc.allMembers.data[0].city}}, {{uc.allMembers.data[0].state}}, {{uc.allMembers.data[0].country}}, {{uc.allMembers.data[0].zipcode}}
+    {{uc.allMembers.data[0].member_status}}, {{uc.allMembers.data[0].member_year}}
+    {{uc.allMembers.data[0].email}}
+    {{uc.allMembers.data[0].phone}} -->
