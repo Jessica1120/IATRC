@@ -2,7 +2,7 @@ var router = require('express').Router();
 var path = require('path');
 var pool = require('../modules/pool.js');
 
-//on View Members Load
+
 
 //Request for view meetings
 router.get('/', function (req, res) {
@@ -29,7 +29,7 @@ router.get('/', function (req, res) {
     }
   });//end view members Get call
   
-//
+
 router.put('/', function (req, res) {
     var meetingToEdit = req.body
     console.log('In PUT for edit Member', meetingToEdit);
@@ -63,8 +63,6 @@ router.put('/', function (req, res) {
     } //end else
   }); //end save Edit meeting call 
 
-//Get participants in meeting
-
 //get Meeting to Edit
 router.get('/get/:id', function (req, res) {
   var meetingToEdit = req.params.id
@@ -74,7 +72,7 @@ router.get('/get/:id', function (req, res) {
         res.sendStatus(500);
       } else {
         var valueArray = [meetingToEdit]
-        editQuery = 'SELECT * FROM meetings WHERE id = $1;'
+        editQuery = 'SELECT * FROM meetings FULL JOIN members_meetings ON meetings.id = members_meetings.meetings_id FULL JOIN members ON members.id = members_meetings.members_id WHERE members_meetings.meetings_id = $1 ORDER BY members.last_name;'
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();
           if (queryErr) {
@@ -93,39 +91,9 @@ router.get('/get/:id', function (req, res) {
   } //end else
 }); //end get member to edit get call
 
-router.get('/getParticipants/:id', function (req, res) {
-    var participants = req.params.id
-    console.log('In get for participants', participants);
-    if (req.isAuthenticated()) {
-      console.log('isAuthentication')
-      pool.connect(function (conErr, client, done) {
-        console.log('poolconnect')
-        if (conErr) {
-          res.sendStatus(500);
-        } else {
-          var valueArray = [participants]
-          console.log('valueArray', valueArray)
-          editQuery = 'SELECT * FROM meetings FULL JOIN members_meetings ON meetings.id = members_meetings.meetings_id FULL JOIN members ON members.id = members_meetings.members_id WHERE members_meetings.meetings_id = $1;' 
-          client.query(editQuery, valueArray, function (queryErr, resultObj) {
-            done();
-            if (queryErr) {
-              console.log('done 500', queryErr)
-              res.sendStatus(500);
-            } else {
-              res.send(resultObj.rows);
-            }
-          }) // end query
-        } // end pool else
-      }) // end pool connect
-    } else {
-      // failure best handled on the server. do redirect here.
-      console.log('not logged in');
-      // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
-      res.send(false);
-    } //end else
-  }); //end get Meeting to Edit get call 
 
-//post new meeting
+
+  //post new meeting
 router.post('/', function(req, res) {
   var newMeeting = req.body;
       console.log('In Post New Meeting', req.body);

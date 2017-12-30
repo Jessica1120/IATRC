@@ -11,10 +11,6 @@ myApp.controller('InfoController', function(UserService) {
       console.log('in view Meetings running')
     }; //end ViewMeetings
 
-    vm.viewParticipants = function(meeting) {
-      UserService.viewParticipants(meeting)
-      console.log('in view Participants', meeting)
-    }
 
     //get member to Edit
     vm.getMeeting = function(meeting) {

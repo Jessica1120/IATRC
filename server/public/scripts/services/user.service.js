@@ -90,18 +90,7 @@ self.viewMeetings = function(){
     }) //end call back function
   }// end view Members
 
-//view Participants per meeting
-self.viewParticipants = function(meeting) {
-  console.log('In get participants service', meeting);
-   //$http call to get all data from existing form
-  return $http({
-    method: 'GET',
-    url: '/meetings/getParticipants/' + meeting
-  }).then(function (res) {
-    console.log('Response', res);
-    self.participantList.data = res.data;
-  })
-};
+
 
 //get Meeting to edit
 self.getMeeting = function(meeting) {
