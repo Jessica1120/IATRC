@@ -163,8 +163,13 @@ myApp.controller('UserController', function(UserService) {
     vm.deleteMember = function(deleteMemberId) {
       console.log('in controller delete,', deleteMemberId)
       UserService.deleteMember(deleteMemberId);
+      
+      
     }
-    
+   
+
+  
+
 
   }); //end controller
   

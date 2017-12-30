@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
       if (conErr) {
         res.sendStatus(500);
       } else {
-        client.query('SELECT id, first_name, last_name FROM members', function (queryErr, resultObj) {
+        client.query('SELECT id, first_name, last_name FROM members ORDER BY last_name', function (queryErr, resultObj) {
           done();
           if (queryErr) {
             res.sendStatus(500);
