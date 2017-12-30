@@ -1,11 +1,31 @@
 /* View Members */
 #editMembers {
-  background: rgb(183, 222, 155);
+  background: #a2ba85;
+  
   border: rgb(18, 110, 191) double 2px;
+}
+
+html {
+  background-color: #1c4863;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+#mainNav {
+background-image: url("./wheatfield.jpg");
+}
+
+#main {
+  background-color: #1c4863;
 }
 
 .memberList {
   border-bottom: rgb(43, 80, 145) solid 2px;
+}
+
+#memberName{
+  
 }
 
 #membersView {
@@ -70,12 +90,18 @@ body, html {
     background-color: #333333;
     width: 100%;
     border-radius: 0px;
+    padding: 0px;
+    margin: 0px;
+    height: 100%
   }
   
   .navbar2 {
     background-color: #8e0808;
     width: 100%;
     border-radius: 0px;
+    padding: 0px;
+    margin: 0px;
+    height: 100%
   }
   ul {
     list-style-type: none;

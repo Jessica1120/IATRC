@@ -71,7 +71,6 @@ self.deleteMember = function(deleteMemberId) {
     method: 'DELETE',
     url: '/members/delete/' + deleteMemberId 
   }).then(function (res) {
-    self.viewMembers()
     console.log(res)
   })
 }

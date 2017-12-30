@@ -1,9 +1,10 @@
-<div ng-include="'views/partials/nav.html'">
-</div>
 
-<div ng-include="'views/partials/membersNav.html'"></div>
 
 <body class="container">
+        <div ng-include="'views/partials/nav.html'">
+        </div>
+        
+        <div ng-include="'views/partials/membersNav.html'"></div>
 
     <div class="row">
         <div class="col-md-6"  id="membersView">
@@ -22,7 +23,7 @@
 
         <div class="col-md-6" id="editMembers">
             <div ng-hide="edit">
-                <p>{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</p><br>
+                <h4 class="memberName">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4><br>
                 {{uc.memberToEdit.data[0].institution}}<br>
                 {{uc.memberToEdit.data[0].department}}<br>
                 {{uc.memberToEdit.data[0].address_1}}<br>
@@ -36,10 +37,11 @@
                 {{uc.memberToEdit.data[0].member_status}}<br>
                 {{uc.memberToEdit.data[0].member_year}}<br>
                 {{uc.memberToEdit.data[0].publications}}<br>
+                                                
                 <button ng-click="edit=!edit">Edit</button>
                 <button ng-click="uc.deleteMember(uc.memberToEdit.data[0].id)">Delete</button>
-                
-            </div>
+            </div>   
+            
             
             <div ng-hide="!edit">
                 First Name: <input type="text" placeholder="{{uc.memberToEdit.data[0].first_name}}" ng-model="uc.firstEditIn">
