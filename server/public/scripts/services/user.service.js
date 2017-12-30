@@ -51,19 +51,30 @@ self.getMember = function(member) {
 };
 //save edits to member
 self.saveEditMember = function(objToSend) {
-  console.log('saveEdit running in Service')
+  console.log('service Obj', objToSend)
   $http({
       method: 'PUT',
       url:    '/members',
       data:   objToSend
   }).then(function(res) {
-      console.log('addMember response:', res );
+      console.log('editMember response:', res );
       console.log('objToSend.id after call:', objToSend.id);
       self.viewMembers();
       self.getMember(objToSend.id);
     //need a confirmation alert or something here
   }); //end then
 }; //end addMember
+
+self.deleteMember = function(deleteMemberId) {
+  console.log('service delete running', deleteMemberId)
+  return $http ({
+    method: 'DELETE',
+    url: '/members/delete/' + deleteMemberId 
+  }).then(function (res) {
+    self.viewMembers()
+    console.log(res)
+  })
+}
 
 //MEETINGS PAGE FUNCTIONS
 
