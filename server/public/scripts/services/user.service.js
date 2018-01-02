@@ -7,6 +7,9 @@ myApp.service('UserService', function($http, $location){
     self.memberToEdit = {data:[]} // object for findMember
    //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
+    self.attended = []
+    self.temp=[]
+    self.unattended = []
     self.updatedMeeting = {data:[]} // object for findMember
     self.participantList = {data: []} //object for viewParticipants
     self.meetingToEdit = {data: []}//object for getMeeting
@@ -63,7 +66,7 @@ self.saveEditMember = function(objToSend) {
       self.getMember(objToSend.id);
     //need a confirmation alert or something here
   }); //end then
-}; //end addMember
+}; //end saveEditmember
 
 self.deleteMember = function(deleteMemberId) {
   console.log('service delete running', deleteMemberId)
@@ -88,7 +91,7 @@ self.viewMeetings = function(){
       self.allMeetings.data = res.data;
      console.log('allMeetings in Service', self.allMeetings)
     }) //end call back function
-  }// end view Members
+  }// end view Meetings
 
 
 
@@ -105,6 +108,35 @@ self.getMeeting = function(meeting) {
   })
 };
 
+self.viewMembersMeeting = function(meeting){
+  return $http({
+    method: 'GET',
+    url: '/members'
+  })
+    .then(function (res) {
+      self.allMembers.data = res.data;
+      console.log('self.allMembers at 118', self.allMembers)
+    }) //end call back function
+     .then(function (res) {
+       console.log('start')
+      for (let i = 0; i < self.allMembers.data.length; i++) {
+        if (self.allMembers.data[i].meetings_id == meeting) {
+          console.log('yes', self.allMembers.data[i].meetings_id, meeting)
+          self.attended.push(self.allMembers.data[i])
+          console.log('self.attended', self.attended )
+          self.allMembers.data.splice(i, 1);
+         
+        } 
+          for(let j = 0; j < self.attended.length; j++) {
+          if (self.allMembers.data[i].id == self.attended[j].id) {
+            self.allMembers.data.splice(i, 1)
+            console.log('spliced', self.allMembers.data)
+          }
+        }
+      
+    } //end for loop
+  }) //end 3rd then
+}   
 //save edited meeting
 
 self.saveEditMeeting = function(objToSend) {
@@ -134,7 +166,7 @@ self.addMeeting = function(objToSend) {
 
 //PASSPORT AUTHENTICATION FUNCTIONS
 
-    self.getuser = function(){
+self.getuser = function(){
       console.log('UserService -- getuser');
       $http.get('/user').then(function(response) {
           if(response.data.username) {
@@ -150,7 +182,7 @@ self.addMeeting = function(objToSend) {
         console.log('UserService -- getuser -- failure: ', response);
         $location.path("/home");
       });
-    },
+    }
   
     self.logout = function() {
       console.log('UserService -- logout');
@@ -159,4 +191,4 @@ self.addMeeting = function(objToSend) {
         $location.path("/home");
       });
     }
-  });
+  }); 

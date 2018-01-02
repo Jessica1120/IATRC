@@ -10,7 +10,7 @@
             </div> <!-- end ng-repeat meeting -->
         </div> 
         <div class="col-md-6">
-            <div ng-hide="edit" id="editMeeting">
+            <div ng-hide="edit" class="editMeeting">
                 {{ic.meetingToEdit.data[0].type}}<br>
                 {{ic.meetingToEdit.data[0].topic}}<br>
                 {{ic.meetingToEdit.data[0].month}}<br>
@@ -18,21 +18,22 @@
                 Participants: <div ng-repeat="participant in ic.meetingToEdit.data">
                         {{participant.last_name}}, {{participant.first_name}}
                         </div>                     
-                <button ng-click="edit=!edit">Edit</button>
-                <button ng-click="ic.deleteMeeting(ic.meetingToEdit.data[0].id)">Delete</button>
+                <div ng-click="edit=!edit"><button ng-click="ic.getMembers(ic.meetingToEdit.data[0].meetings_id)">Edit</button></div>
+                <button ng-click="ic.deleteMeeting(ic.meetingToEdit.data[0].meetings_id)">Delete</button>
             </div>   
                     
-            <div ng-hide="!edit">
+            <div ng-hide="!edit" class="editMeeting">
                 <div>
                 Type: <input type="text" placeholder="{{ic.meetingToEdit.data[0].type}}" ng-model="ic.editTypeIn"><br>
                 Topic: <input type="text" placeholder="{{ic.meetingToEdit.data[0].topic}}" ng-model="ic.lastTopicIn"><br>
                 Month: <input type="text" placeholder="{{ic.meetingToEdit.data[0].month}}" ng-model="ic.editMonthIn"><br>
                 Year: <input type="text" placeholder="{{ic.meetingToEdit.data[0].year}}" ng-model="ic.editYearIn"><br>
                 </div>
-               
-                        <div ng-repeat="participant in ic.meetingToEdit.data">
-                                {{participant.last_name}}
-                                </div>
+                Members: <div ng-repeat="participant in ic.meetingToEdit.data">
+                   <input type="checkbox" id="attended" value="true" checked> 
+                   <label for="attended">{{participant.last_name}}, {{participant.first_name}} </label>                         
+                </div>
+                        <div ng-repeat="unattended in ic.unattended"></div>
                 
                 
                 <p ng-click="edit=!edit">

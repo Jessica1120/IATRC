@@ -3,21 +3,32 @@ myApp.controller('InfoController', function(UserService) {
     var vm = this;
     vm.userService = UserService;
     vm.allMeetings = UserService.allMeetings;
-    vm.participantList = UserService.participantList
     vm.meetingToEdit = UserService.meetingToEdit;
+    vm.allMembers = UserService.allMembers;
+    vm.attended = UserService.attended
+    vm.unattended = UserService.unattended
 
     vm.viewMeetings= function() {
       UserService.viewMeetings();
       console.log('in view Meetings running')
     }; //end ViewMeetings
 
-
-    //get member to Edit
+    //get meeting to Edit
     vm.getMeeting = function(meeting) {
       console.log('in controller get meeting', meeting)
       UserService.getMeeting(meeting);
    }
-    vm.saveEditMeeting = function(meeting) {
+
+   //get list of all members to edit meeting participants
+   vm.getMembers = function(meeting) {
+    UserService.viewMembersMeeting(meeting)
+    console.log ('in info controller getMembersMeeting running', meeting, vm.unattended)
+    
+      
+  }; //end viewMembers
+  
+
+  vm.saveEditMeeting = function(meeting) {
       var objToSend = {
       id: meeting,
       type: vm.editTypeIn,
