@@ -126,16 +126,23 @@ self.viewMembersMeeting = function(meeting){
           console.log('self.attended', self.attended )
           self.allMembers.data.splice(i, 1);
          
-        } 
+        }
           for(let j = 0; j < self.attended.length; j++) {
           if (self.allMembers.data[i].id == self.attended[j].id) {
             self.allMembers.data.splice(i, 1)
             console.log('spliced', self.allMembers.data)
           }
         }
-      
-    } //end for loop
-  }) //end 3rd then
+      } //end for loop
+      for (let i=0; i < self.allMembers.data.length; i++) {
+        for(let j=i+1; j < self.allMembers.data.length; j++) {
+          if(self.allMembers.data[i].id == self.allMembers.data[j].id) {
+            self.allMembers.data.splice(i, 1)
+          }  
+        }
+      }
+    })
+  //end 3rd then 
 }   
 //save edited meeting
 
