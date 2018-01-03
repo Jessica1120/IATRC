@@ -8,8 +8,6 @@ myApp.service('UserService', function($http, $location){
    //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
     self.attended = []
-    self.temp=[]
-    self.unattended = []
     self.updatedMeeting = {data:[]} // object for findMember
     self.participantList = {data: []} //object for viewParticipants
     self.meetingToEdit = {data: []}//object for getMeeting
@@ -115,31 +113,32 @@ self.viewMembersMeeting = function(meeting){
   })
     .then(function (res) {
       self.allMembers.data = res.data;
-      console.log('self.allMembers at 118', self.allMembers)
     }) //end call back function
      .then(function (res) {
-       console.log('start')
       for (let i = 0; i < self.allMembers.data.length; i++) {
         if (self.allMembers.data[i].meetings_id == meeting) {
-          console.log('yes', self.allMembers.data[i].meetings_id, meeting)
           self.attended.push(self.allMembers.data[i])
           console.log('self.attended', self.attended )
           self.allMembers.data.splice(i, 1);
-         
+         }
         }
+        for (let i = 0; i < self.allMembers.data.length; i++) {
           for(let j = 0; j < self.attended.length; j++) {
           if (self.allMembers.data[i].id == self.attended[j].id) {
-            self.allMembers.data.splice(i, 1)
-            console.log('spliced', self.allMembers.data)
+           self.allMembers.data.splice(i, 1)
+            } 
           }
         }
-      } //end for loop
+      
+     
       for (let i=0; i < self.allMembers.data.length; i++) {
+        console.log('running?')
         for(let j=i+1; j < self.allMembers.data.length; j++) {
           if(self.allMembers.data[i].id == self.allMembers.data[j].id) {
             self.allMembers.data.splice(i, 1)
           }  
         }
+        console.log('spliced2', self.allMembers.data)
       }
     })
   //end 3rd then 

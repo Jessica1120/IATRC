@@ -29,13 +29,14 @@
                 Month: <input type="text" placeholder="{{ic.meetingToEdit.data[0].month}}" ng-model="ic.editMonthIn"><br>
                 Year: <input type="text" placeholder="{{ic.meetingToEdit.data[0].year}}" ng-model="ic.editYearIn"><br>
                 </div>
-                Members: <div ng-repeat="participant in ic.meetingToEdit.data">
+                Members: <div ng-repeat="attendant in ic.attended">
                    <input type="checkbox" id="attended" value="true" checked> 
-                   <label for="attended">{{participant.last_name}}, {{participant.first_name}} </label>                         
+                   <label for="attended">{{attendant.last_name}}, {{attendant.first_name}} </label>                         
                 </div>
-                        <div ng-repeat="unattended in ic.unattended"></div>
-                
-                
+                        <div ng-repeat="member in ic.allMembers.data">
+                        <input type="checkbox" id="attended" value="false"> 
+                        <label for="attended">{{member.last_name}}, {{member.first_name}} </label> 
+                        </div>
                 <p ng-click="edit=!edit">
                 <button type="button" ng-click="ic.saveEditMeeting(ic.meetinToEdit.data[0].id)">Save</button>
                 <button type="button">Cancel</button>
