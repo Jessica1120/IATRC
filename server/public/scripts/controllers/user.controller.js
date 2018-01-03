@@ -3,7 +3,7 @@ myApp.controller('UserController', function(UserService) {
     var vm = this;
     vm.userService = UserService;
     vm.userObject = UserService.userObject;
-    vm.allMembers = UserService.allMembers;
+    vm.memberList = UserService.memberList;
     vm.memberToEdit = UserService.memberToEdit;
     
 

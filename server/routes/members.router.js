@@ -13,11 +13,12 @@ router.get('/', function (req, res) {
       if (conErr) {
         res.sendStatus(500);
       } else {
-        client.query('SELECT id, first_name, last_name, meetings_id FROM members INNER JOIN members_meetings ON members.id = members_meetings.members_id ORDER BY last_name;', function (queryErr, resultObj) {
+        client.query('SELECT id, first_name, last_name FROM members ORDER BY last_name;', function (queryErr, resultObj) {
           done();
           if (queryErr) {
             res.sendStatus(500);
           } else {
+            console.log(resultObj.rows)
             res.send(resultObj.rows);
           }
         });
@@ -69,14 +70,14 @@ router.get('/get/:id', function (req, res) {
         res.sendStatus(500);
       } else {
         var valueArray = [memberToEdit]
-        editQuery = 'SELECT * FROM members WHERE id = $1;'
+        editQuery = 'SELECT * FROM members FULL JOIN members_meetings ON members.id = members_meetings.members_id FULL JOIN meetings ON meetings.id = members_meetings.meetings_id WHERE members.id = $1';
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();
           if (queryErr) {
             res.sendStatus(500);
           } else {
             res.send(resultObj.rows);
-          }
+              }
         }) // end query
       } // end pool else
     }) // end pool connect

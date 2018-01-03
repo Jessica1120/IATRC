@@ -24,24 +24,50 @@ myApp.controller('InfoController', function(UserService) {
    //get list of all members to edit meeting participants
    vm.getMembers = function(meeting) {
     UserService.viewMembersMeeting(meeting)
-    console.log ('edit button')
-    console.log('attended', vm.attended)
-    console.log('not attended', vm.allMembers)
+   
       
   }; //end viewMembers
   
 
+
   vm.saveEditMeeting = function(meeting) {
       var objToSend = {
-      id: meeting,
-      type: vm.editTypeIn,
-      topic: vm.editTopicIn,
-      month: vm.editMonthIn,
-      year: vm.editYearIn
+      id: meeting
     };
+      if (vm.editTypeIn !== undefined) {
+        objToSend.type = vm.editTypeIn
+        if (vm.vm.editTypeIn == "") {
+          delete objToSend.type
+        }
+      }  
+       
+      if (vm.editTopicIn !== undefined) {
+        objToSend.topic = vm.editTopicIn
+        if (vm.editTopicIn == "") {
+          delete objToSend.topic
+        }
+      } 
+     
+      if (vm.editMonthIn !== undefined) {
+        objToSend.month = vm.editMonthIn
+        if (vm.editMonthIn == "") {
+          delete objToSend.month
+        }
+      } 
+
+      if (vm.editYearIn!== undefined) {
+        objToSend.year = vm.editYearIn
+        if (vm.editYearIn == "") {
+          delete objToSend.year
+        }
+      } 
+    
+   
     console.log('in saveEditMember', objToSend)
-    UserService.saveEditMeeting(objToSend); 
+    UserService.saveEditMeeting(objToSend)
+
   }
+
 
    vm.addMeeting = function() {
     console.log ('in controller addMeeting running')

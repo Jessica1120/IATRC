@@ -9,6 +9,9 @@
   color: white;
 }
 
+.input {
+  color: black;
+}
 html {
   background-color: #1c4863;
   -webkit-background-size: cover;

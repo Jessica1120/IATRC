@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-6"  id="membersView">
             <section ng-init="uc.viewMembers()">
-                <div class="memberList" ng-repeat="member in uc.allMembers.data">
+                <div class="memberList" ng-repeat="member in uc.memberList.data">
                     <h5 ng-click="uc.getMember(member.id)">
                         <div class="names">
                             {{member.last_name}}, {{member.first_name}}

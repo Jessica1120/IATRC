@@ -1,17 +1,22 @@
 myApp.service('UserService', function($http, $location){
     console.log('UserService Loaded');
     var self = this;
+    
+    //LOGIN OBJECT
     self.userObject = {};
-    //members objects
-    self.allMembers = {data: []} //object for viewMembers get
+   
+    //MEMBER PAGE OBJECTS
+    self.memberList = {data: []} //object for viewMembers get
     self.memberToEdit = {data:[]} // object for findMember
-   //meetings objects
+   
+    //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
-    self.attended = []
-    self.updatedMeeting = {data:[]} // object for findMember
-    self.participantList = {data: []} //object for viewParticipants
     self.meetingToEdit = {data: []}//object for getMeeting
-//MEMBER PAGE FUNCTIONS
+    self.allMembers = {data:[]} //object for ViewMembersMeeting
+    self.updatedMeeting = {data:[]} // object for findMember
+
+
+    //MEMBER PAGE FUNCTIONS
 
   //view members Get on page load
 self.viewMembers = function(){
@@ -21,8 +26,8 @@ self.viewMembers = function(){
       url: '/members'
     })
       .then(function (res) {
-        self.allMembers.data = res.data;
-       console.log('allMembers in Service', self.allMembers)
+        self.memberList.data = res.data;
+       console.log('allMembers in Service', self.memberList)
       }) //end call back function
     }// end view Members
 
@@ -96,7 +101,6 @@ self.viewMeetings = function(){
 //get Meeting to edit
 self.getMeeting = function(meeting) {
   console.log('In getMeeting Service', meeting);
-   //$http call to get all data from existing form
   return $http({
     method: 'GET',
     url: '/meetings/get/' + meeting
@@ -113,35 +117,19 @@ self.viewMembersMeeting = function(meeting){
   })
     .then(function (res) {
       self.allMembers.data = res.data;
-    }) //end call back function
-     .then(function (res) {
-      for (let i = 0; i < self.allMembers.data.length; i++) {
-        if (self.allMembers.data[i].meetings_id == meeting) {
-          self.attended.push(self.allMembers.data[i])
-          
-          self.allMembers.data.splice(i, 1);
-         }
-        }
-        for (let i = 0; i < self.allMembers.data.length; i++) {
-          for(let j = 0; j < self.attended.length; j++) {
-          if (self.allMembers.data[i].id == self.attended[j].id) {
-           self.allMembers.data.splice(i, 1)
-            } 
+    }).then(function(res){
+      for(let i =0; i<self.allMembers.data.length; i++) {
+        for(let j =0; j<self.meetingToEdit.data.length; j++) {
+          if (self.allMembers.data[i].id == self.meetingToEdit.data[j].id) {
+            self.allMembers.data.splice(i, 1)
+          } else {
+            console.log('no match', self.allMembers.data[i].id, self.meetingToEdit.data[j].id )
           }
         }
-      
-     
-      for (let i=0; i < self.allMembers.data.length; i++) {
-       
-        for(let j=i+1; j < self.allMembers.data.length; j++) {
-          if(self.allMembers.data[i].id == self.allMembers.data[j].id) {
-            self.allMembers.data.splice(i, 1)
-          }  
-        }
-       
+        console.log('post-splice', self.allMembers.data)
       }
-    })
-  //end 3rd then 
+    }) //end call back function
+
 }   
 //save edited meeting
 
@@ -198,3 +186,5 @@ self.getuser = function(){
       });
     }
   }); 
+
+ 
