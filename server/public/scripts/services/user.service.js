@@ -95,13 +95,13 @@ self.viewMeetings = function(){
 
 //get Meeting to edit
 self.getMeeting = function(meeting) {
-  console.log('In findmeeting', meeting);
+  console.log('In getMeeting Service', meeting);
    //$http call to get all data from existing form
   return $http({
     method: 'GET',
     url: '/meetings/get/' + meeting
   }).then(function (res) {
-    console.log('Response', res);
+    console.log('Servvice Get Meeting Response', res);
     self.meetingToEdit.data = res.data;
   })
 };
@@ -118,7 +118,7 @@ self.viewMembersMeeting = function(meeting){
       for (let i = 0; i < self.allMembers.data.length; i++) {
         if (self.allMembers.data[i].meetings_id == meeting) {
           self.attended.push(self.allMembers.data[i])
-          console.log('self.attended', self.attended )
+          
           self.allMembers.data.splice(i, 1);
          }
         }
@@ -132,13 +132,13 @@ self.viewMembersMeeting = function(meeting){
       
      
       for (let i=0; i < self.allMembers.data.length; i++) {
-        console.log('running?')
+       
         for(let j=i+1; j < self.allMembers.data.length; j++) {
           if(self.allMembers.data[i].id == self.allMembers.data[j].id) {
             self.allMembers.data.splice(i, 1)
           }  
         }
-        console.log('spliced2', self.allMembers.data)
+       
       }
     })
   //end 3rd then 

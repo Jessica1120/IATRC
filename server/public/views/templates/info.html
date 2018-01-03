@@ -3,13 +3,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6"  ng-init="ic.viewMeetings()" >
-            <div ng-repeat="meeting in ic.allMeetings.data" class="meetingItem">
-                <div ng-click="ic.getMeeting(meeting.id)">{{meeting.month}} {{meeting.topic}}</div>
+        <div ng-hide="selected" ng-click="selected=!selected">   <div ng-repeat="meeting in ic.allMeetings.data" class="meetingItem">
+                <div ng-click="ic.getMeeting(meeting.id)">
+                   {{meeting.month}} {{meeting.topic}}
                     
                 </div>
             </div> <!-- end ng-repeat meeting -->
         </div> 
-        <div class="col-md-6">
+        </div> 
+        <div class="col-md-6" ng-hide="!selected">
             <div ng-hide="edit" class="editMeeting">
                 {{ic.meetingToEdit.data[0].type}}<br>
                 {{ic.meetingToEdit.data[0].topic}}<br>
@@ -20,6 +22,7 @@
                         </div>                     
                 <div ng-click="edit=!edit"><button ng-click="ic.getMembers(ic.meetingToEdit.data[0].meetings_id)">Edit</button></div>
                 <button ng-click="ic.deleteMeeting(ic.meetingToEdit.data[0].meetings_id)">Delete</button>
+                <button ng-click="selected=!selected">Back</button>
             </div>   
                     
             <div ng-hide="!edit" class="editMeeting">
@@ -29,7 +32,7 @@
                 Month: <input type="text" placeholder="{{ic.meetingToEdit.data[0].month}}" ng-model="ic.editMonthIn"><br>
                 Year: <input type="text" placeholder="{{ic.meetingToEdit.data[0].year}}" ng-model="ic.editYearIn"><br>
                 </div>
-                Members: <div ng-repeat="attendant in ic.attended">
+                Participants: <div ng-repeat="attendant in ic.attended">
                    <input type="checkbox" id="attended" value="true" checked> 
                    <label for="attended">{{attendant.last_name}}, {{attendant.first_name}} </label>                         
                 </div>
@@ -38,7 +41,7 @@
                         <label for="attended">{{member.last_name}}, {{member.first_name}} </label> 
                         </div>
                 <p ng-click="edit=!edit">
-                <button type="button" ng-click="ic.saveEditMeeting(ic.meetinToEdit.data[0].id)">Save</button>
+                <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].id)">Save</button>
                 <button type="button">Cancel</button>
                 </p>
                         

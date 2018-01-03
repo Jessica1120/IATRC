@@ -15,15 +15,18 @@ myApp.controller('InfoController', function(UserService) {
 
     //get meeting to Edit
     vm.getMeeting = function(meeting) {
-      console.log('in controller get meeting', meeting)
+      // vm.allMembers=[];
+      // vm.attended=[];
+      console.log('get meeting')
       UserService.getMeeting(meeting);
    }
 
    //get list of all members to edit meeting participants
    vm.getMembers = function(meeting) {
     UserService.viewMembersMeeting(meeting)
-    console.log ('in info controller getMembersMeeting running', meeting, vm.attended, vm.allMembers)
-    
+    console.log ('edit button')
+    console.log('attended', vm.attended)
+    console.log('not attended', vm.allMembers)
       
   }; //end viewMembers
   
