@@ -5,8 +5,9 @@ myApp.controller('InfoController', function(UserService) {
     vm.allMeetings = UserService.allMeetings;
     vm.meetingToEdit = UserService.meetingToEdit;
     vm.allMembers = UserService.allMembers;
-    vm.attended = UserService.attended
-    vm.unattended = UserService.unattended
+    vm.attended = []
+    vm.absent = []
+    
 
     vm.viewMeetings= function() {
       UserService.viewMeetings();
@@ -27,44 +28,62 @@ myApp.controller('InfoController', function(UserService) {
    
       
   }; //end viewMembers
+
   
 
+  
 
-  vm.saveEditMeeting = function(meeting) {
-      var objToSend = {
-      id: meeting
-    };
-      if (vm.editTypeIn !== undefined) {
-        objToSend.type = vm.editTypeIn
-        if (vm.vm.editTypeIn == "") {
-          delete objToSend.type
-        }
-      }  
+vm.saveEditMeeting = function() {
+     for (var i = 0; i < vm.meetingToEdit.data.length; i++) {
+       if(vm.meetingToEdit.data[i].Selected == true) {
+         vm.attended.push(vm.meetingToEdit.data[i].id)
+       }
+       else {
+         vm.absent.push(vm.meetingToEdit.data[i].id)
+       }
+     }
+     for (var i = 0; i < vm.allMembers.data.length; i++) {
        
-      if (vm.editTopicIn !== undefined) {
-        objToSend.topic = vm.editTopicIn
-        if (vm.editTopicIn == "") {
-          delete objToSend.topic
-        }
-      } 
+      if(vm.allMembers.data[i].Selected == true) {
+      
+        vm.attended.push(vm.allMembers.data[i].id)
+      }
+      else {
+        vm.absent.push(vm.allMembers.data[i].id)
+      }
+    }
+      // if (vm.editTypeIn !== undefined) {
+      //   objToSend.type = vm.editTypeIn
+      //   if (vm.vm.editTypeIn == "") {
+      //     delete objToSend.type
+      //   }
+      // }  
+       
+      // if (vm.editTopicIn !== undefined) {
+      //   objToSend.topic = vm.editTopicIn
+      //   if (vm.editTopicIn == "") {
+      //     delete objToSend.topic
+      //   }
+      // } 
      
-      if (vm.editMonthIn !== undefined) {
-        objToSend.month = vm.editMonthIn
-        if (vm.editMonthIn == "") {
-          delete objToSend.month
-        }
-      } 
+      // if (vm.editMonthIn !== undefined) {
+      //   objToSend.month = vm.editMonthIn
+      //   if (vm.editMonthIn == "") {
+      //     delete objToSend.month
+      //   }
+      // } 
 
-      if (vm.editYearIn!== undefined) {
-        objToSend.year = vm.editYearIn
-        if (vm.editYearIn == "") {
-          delete objToSend.year
-        }
-      } 
+      // if (vm.editYearIn!== undefined) {
+      //   objToSend.year = vm.editYearIn
+      //   if (vm.editYearIn == "") {
+      //     delete objToSend.year
+      //   }
+      // } 
     
    
-    console.log('in saveEditMember', objToSend)
-    UserService.saveEditMeeting(objToSend)
+    console.log('vm.attened', vm.attended)
+    console.log('vm.absent', vm.absent)
+    // UserService.saveEditMeeting(objToSend)
 
   }
 
