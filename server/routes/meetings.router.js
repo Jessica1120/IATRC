@@ -32,7 +32,7 @@ router.get('/', function (req, res) {
 
 router.put('/', function (req, res) {
     var meetingToEdit = req.body
-    console.log('In PUT for edit Member', meetingToEdit);
+    console.log('In PUT for edit Meeiting', meetingToEdit);
     if (req.isAuthenticated()) {
       console.log('isAuthentication')
       pool.connect(function (conErr, client, done) {
@@ -40,9 +40,31 @@ router.put('/', function (req, res) {
         if (conErr) {
           res.sendStatus(500);
         } else {
-          var valueArray = [meetingToEdit.type, meetingToEdit.topic, meetingToEdit.month, meetingToEdit.year, meetingToEdit.id]
+          var valueArray = []
+          var tempvarQuery = []
+          var bling = 0
+          for (var i = 0 in meetingToEdit) {
+            console.log('meetingToEdit', meetingToEdit[i])
+            if (meetingToEdit[i] instanceof Array) {
+              console.log('Array')
+            } else {
+              valueArray.push(meetingToEdit[i]);
+            }
+          }
           console.log('valueArray', valueArray)
-          editQuery = 'UPDATE meetings SET type=$1, topic=$2, month=$3, year=$4 WHERE id=$5' 
+          for (const prop in meetingToEdit) {
+            if (prop == "attended" || prop == "absent") {
+              console.log('got it')
+            } else {
+            
+            bling++
+            var eb = ' = $'
+            tempvarQuery.push(prop+eb+bling)
+            }
+          }
+          var queryFields = tempvarQuery.join(', ')
+          var editQuery = 'UPDATE meetings SET ' + queryFields + ' WHERE id = $1'
+          console.log('line 113 query, value arry:', editQuery, valueArray)
           client.query(editQuery, valueArray, function (queryErr, resultObj) {
             done();
             if (queryErr) {

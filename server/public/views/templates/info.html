@@ -28,7 +28,7 @@
             <div ng-hide="!edit" class="editMeeting">
                 <div>
                 Type: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].type}}" ng-model="ic.editTypeIn"><br>
-                Topic: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].topic}}" ng-model="ic.lastTopicIn"><br>
+                Topic: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].topic}}" ng-model="ic.editTopicIn"><br>
                 Month: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].month}}" ng-model="ic.editMonthIn"><br>
                 Year: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].year}}" ng-model="ic.editYearIn"><br>
                 </div>
@@ -41,7 +41,7 @@
                         {{member.last_name}}, {{member.first_name}} 
                         </div>
                 <p ng-click="edit=!edit">
-                <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].id)">Save</button>
+                <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].meetings_id)">Save</button>
                 <button type="button" ng-click="ic.clearArrays()">Cancel</button>
                 </p>
                         

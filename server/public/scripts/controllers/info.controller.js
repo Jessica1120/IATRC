@@ -33,62 +33,65 @@ myApp.controller('InfoController', function(UserService) {
 
   
 
-vm.saveEditMeeting = function() {
-     for (var i = 0; i < vm.meetingToEdit.data.length; i++) {
-       if(vm.meetingToEdit.data[i].Selected == true) {
-         vm.attended.push(vm.meetingToEdit.data[i].id)
-       }
-       else {
+vm.saveEditMeeting = function(meeting) {
+  console.log(meeting)
+  var objToSend = {
+      id: meeting,
+      attended: vm.attended,
+      absent: vm.absent
+  }
+  
+  for (var i = 0; i < vm.meetingToEdit.data.length; i++) {
+    if(vm.meetingToEdit.data[i].Selected == true) {
+      vm.attended.push(vm.meetingToEdit.data[i].id)
+      } else {
          vm.absent.push(vm.meetingToEdit.data[i].id)
-       }
-     }
-     for (var i = 0; i < vm.allMembers.data.length; i++) {
-       
-      if(vm.allMembers.data[i].Selected == true) {
-      
-        vm.attended.push(vm.allMembers.data[i].id)
       }
-      else {
-        vm.absent.push(vm.allMembers.data[i].id)
-      }
+  }
+  for (var i = 0; i < vm.allMembers.data.length; i++) {
+    if(vm.allMembers.data[i].Selected == true) {
+      vm.attended.push(vm.allMembers.data[i].id)
+    } else {
+      vm.absent.push(vm.allMembers.data[i].id)
     }
-      // if (vm.editTypeIn !== undefined) {
-      //   objToSend.type = vm.editTypeIn
-      //   if (vm.vm.editTypeIn == "") {
-      //     delete objToSend.type
-      //   }
-      // }  
+  }
+      if (vm.editTypeIn !== undefined) {
+        objToSend.type = vm.editTypeIn
+        if (vm.editTypeIn == "" || vm.editTypeIn == undefined) {
+          delete objToSend.type
+        }
+      }  
        
-      // if (vm.editTopicIn !== undefined) {
-      //   objToSend.topic = vm.editTopicIn
-      //   if (vm.editTopicIn == "") {
-      //     delete objToSend.topic
-      //   }
-      // } 
+      if (vm.editTopicIn !== undefined) {
+        objToSend.topic = vm.editTopicIn
+        if (vm.editTopicIn == "" || vm.editTopicIn == undefined) {
+          delete objToSend.topic
+        }
+      } 
      
-      // if (vm.editMonthIn !== undefined) {
-      //   objToSend.month = vm.editMonthIn
-      //   if (vm.editMonthIn == "") {
-      //     delete objToSend.month
-      //   }
-      // } 
+      if (vm.editMonthIn !== undefined) {
+        objToSend.month = vm.editMonthIn
+        if (vm.editMonthIn == "" || vm.editMonthIn == undefined) {
+          delete objToSend.month
+        }
+      } 
 
-      // if (vm.editYearIn!== undefined) {
-      //   objToSend.year = vm.editYearIn
-      //   if (vm.editYearIn == "") {
-      //     delete objToSend.year
-      //   }
-      // } 
+      if (vm.editYearIn!== undefined) {
+        objToSend.year = vm.editYearIn
+        if (vm.editYearIn == "" || vm.editYearIn == undefined) {
+          delete objToSend.year
+        }
+      } 
     
    
-    console.log('vm.attened', vm.attended)
-    console.log('vm.absent', vm.absent)
-    // UserService.saveEditMeeting(objToSend)
+    console.log('objtoSend', objToSend)
+    
+    UserService.saveEditMeeting(objToSend)
 
   }
 
 
-   vm.addMeeting = function() {
+vm.addMeeting = function() {
     console.log ('in controller addMeeting running')
     var objToSend = {
       type: vm.typeIn,
