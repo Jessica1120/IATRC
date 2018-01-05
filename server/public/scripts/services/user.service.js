@@ -140,8 +140,7 @@ self.saveEditMeeting = function(objToSend) {
       url:    '/meetings',
       data:   objToSend
   }).then(function(res) {
-      console.log('addMeeting response:', res );
-      self.viewMeetings();
+
     //need a confirmation alert or something here
   }); //end then
 }; //end  saveEdit Meeting

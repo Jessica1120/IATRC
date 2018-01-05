@@ -34,7 +34,7 @@ myApp.controller('InfoController', function(UserService) {
   
 
 vm.saveEditMeeting = function(meeting) {
-  console.log(meeting)
+  
   var objToSend = {
       id: meeting,
       attended: vm.attended,
@@ -87,7 +87,7 @@ vm.saveEditMeeting = function(meeting) {
     console.log('objtoSend', objToSend)
     
     UserService.saveEditMeeting(objToSend)
-
+    
   }
 
 

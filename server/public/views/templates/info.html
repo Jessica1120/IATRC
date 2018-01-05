@@ -40,10 +40,12 @@
                         <input type="checkbox" ng-model="member.Selected" ng-init="member.Selected=false"> 
                         {{member.last_name}}, {{member.first_name}} 
                         </div>
-                <p ng-click="edit=!edit">
+                <div ng-click="selected=!selected">
                 <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].meetings_id)">Save</button>
-                <button type="button" ng-click="ic.clearArrays()">Cancel</button>
-                </p>
+                </div>
+                <div ng-click="edit=!edit"></div>
+                <button type="button">Cancel</button>
+                </div>
                         
                     </div>
 <!--         
