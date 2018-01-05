@@ -16,22 +16,14 @@ myApp.controller('InfoController', function(UserService) {
 
     //get meeting to Edit
     vm.getMeeting = function(meeting) {
-      // vm.allMembers=[];
-      // vm.attended=[];
       console.log('get meeting')
       UserService.getMeeting(meeting);
    }
 
    //get list of all members to edit meeting participants
    vm.getMembers = function(meeting) {
-    UserService.viewMembersMeeting(meeting)
-   
-      
+    UserService.viewMembersMeeting(meeting)   
   }; //end viewMembers
-
-  
-
-  
 
 vm.saveEditMeeting = function(meeting) {
   
@@ -42,18 +34,15 @@ vm.saveEditMeeting = function(meeting) {
   }
   
   for (var i = 0; i < vm.meetingToEdit.data.length; i++) {
-    if(vm.meetingToEdit.data[i].Selected == true) {
-      vm.attended.push(vm.meetingToEdit.data[i].id)
-      } else {
-         vm.absent.push(vm.meetingToEdit.data[i].id)
+    if(vm.meetingToEdit.data[i].Selected !== true) {
+      vm.absent.push(vm.meetingToEdit.data[i].id)
       }
   }
+  console.log('slice absent', vm.meetingToEdit.data, vm.absent)
   for (var i = 0; i < vm.allMembers.data.length; i++) {
     if(vm.allMembers.data[i].Selected == true) {
       vm.attended.push(vm.allMembers.data[i].id)
-    } else {
-      vm.absent.push(vm.allMembers.data[i].id)
-    }
+    } 
   }
       if (vm.editTypeIn !== undefined) {
         objToSend.type = vm.editTypeIn
@@ -106,5 +95,11 @@ vm.addMeeting = function() {
     vm.yearIn = ''
   }; //end addMeeting
 
-  });
+//delete Meeting
 
+vm.deleteMeeting = function(meetingId) {
+  console.log('in controller delete,', meetingId)
+  UserService.deleteMeeting(meetingId);
+}
+
+});

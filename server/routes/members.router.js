@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
       if (conErr) {
         res.sendStatus(500);
       } else {
-        client.query('SELECT id, first_name, last_name FROM members ORDER BY last_name;', function (queryErr, resultObj) {
+        client.query('SELECT id, first_name, last_name, past_attendance FROM members ORDER BY last_name;', function (queryErr, resultObj) {
           done();
           if (queryErr) {
             res.sendStatus(500);
@@ -41,7 +41,7 @@ router.post('/', function (req, res) {
         console.log(connectionError);
         res.sendStatus(500);
       } else {
-        var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)';
+        var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) returning id';
         var valueArray = [newMember.first_name, newMember.last_name, newMember.institution, newMember.department, newMember.address_1, newMember.address_2, newMember.address_3, newMember.city, newMember.state, newMember.zipcode, newMember.country, newMember.phone, newMember.email, newMember.website, newMember.member_status, newMember.member_year];
         client.query(gQuery, valueArray, function (queryError, resultObj) {
           done();
@@ -49,7 +49,7 @@ router.post('/', function (req, res) {
             console.log(queryError);
             res.sendStatus(500);
           } else {
-            console.log('new Member post successful');
+            console.log('new Member post successful', resultObj);
             res.sendStatus(202);
           } //end result else
         }); //end query
@@ -62,20 +62,28 @@ router.post('/', function (req, res) {
 }) //end new member post
 
 //get member to edit
-router.get('/get/:id', function (req, res) {
-  var memberToEdit = req.params.id
+router.post('/getmember', function (req, res) {
+  console.log('get member running', req.body)
+  var memberToEdit = req.body
   if (req.isAuthenticated()) {
     pool.connect(function (conErr, client, done) {
       if (conErr) {
+        console.log('pool.connect', conErr)
         res.sendStatus(500);
       } else {
-        var valueArray = [memberToEdit]
-        editQuery = 'SELECT * FROM members FULL JOIN members_meetings ON members.id = members_meetings.members_id FULL JOIN meetings ON meetings.id = members_meetings.meetings_id WHERE members.id = $1';
+        var valueArray = [memberToEdit.id]
+        if (memberToEdit.past_attendance == false) {
+        editQuery = 'SELECT * FROM members WHERE id = $1';
+        } else {
+          editQuery = 'SELECT * FROM members FULL JOIN members_meetings ON members.id = members_meetings.members_id FULL JOIN meetings ON meetings.id = members_meetings.meetings_id WHERE members.id = $1'
+        }
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();
           if (queryErr) {
+            console.log('error', queryErr)
             res.sendStatus(500);
           } else {
+            console.log(resultObj.rows)
             res.send(resultObj.rows);
               }
         }) // end query
@@ -132,7 +140,7 @@ router.put('/', function (req, res) {
 }); //end edit member
 
 //delete member
-router.delete('/delete/:id', function(req, res) {
+router.put('/delete/:id', function(req, res) {
   var deleteMember = req.params.id
   console.log('deleteMember', deleteMember)
     if (req.isAuthenticated()) {

@@ -21,7 +21,7 @@
                         {{participant.last_name}}, {{participant.first_name}}
                         </div>                     
                 <div ng-click="edit=!edit"><button ng-click="ic.getMembers(ic.meetingToEdit.data[0].meetings_id)">Edit</button></div>
-                <button ng-click="ic.deleteMeeting(ic.meetingToEdit.data[0].meetings_id)">Delete</button>
+                <div ng-click="selected=!selected"><button ng-click="ic.deleteMeeting(ic.meetingToEdit.data[0].meetings_id)">Delete</button></div>
                 <button ng-click="selected=!selected">Back</button>
             </div>   
                     
@@ -41,27 +41,16 @@
                         {{member.last_name}}, {{member.first_name}} 
                         </div>
                 <div ng-click="selected=!selected">
+                    <div ng-click="edit=!edit">
                 <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].meetings_id)">Save</button>
-                </div>
-                <div ng-click="edit=!edit"></div>
-                <button type="button">Cancel</button>
+            </div>
+            </div>
+                
+                <button type="button" ng-click="edit=!edit">Cancel</button>
                 </div>
                         
                     </div>
-<!--         
 
-            <div ng-hide="!editMeeting">
-                <form>
-                    <input type="text" placeholder="Type" ng-model="ic.editTypeIn">
-                    <br>
-                    <input type="text" placeholder="Topic" ng-model="ic.editTopicIn">
-                    <br>
-                    <input type="text" placeholder="Month" ng-model="ic.editMonthIn">
-                    <br>
-                    <input type="text" placeholder="Year" ng-model="ic.editYearIn">
-                    <br>
-                    <button type="button" ng-click="ic.saveEditMeeting(meeting.id)">Save</button>
-                </form> -->
            </div>
         </div>
 

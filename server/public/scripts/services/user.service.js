@@ -44,12 +44,13 @@ self.addMember = function(objToSend) {
 }; //end addMember
 
 //get member to edit
-self.getMember = function(member) {
-  console.log('In findMember', member);
+self.getMember = function(objToSend) {
+  console.log('In findMember', objToSend);
    //$http call to get all data from existing form
   return $http({
-    method: 'GET',
-    url: '/members/get/' + member
+    method: 'POST',
+    url: '/members/getmember',
+    data: objToSend
   }).then(function (res) {
     console.log('Response', res);
     self.memberToEdit.data = res.data;
@@ -58,7 +59,7 @@ self.getMember = function(member) {
 //save edits to member
 self.saveEditMember = function(objToSend) {
   console.log('service Obj', objToSend)
-  $http({
+  return $http({
       method: 'PUT',
       url:    '/members',
       data:   objToSend
@@ -74,7 +75,7 @@ self.saveEditMember = function(objToSend) {
 self.deleteMember = function(deleteMemberId) {
   console.log('service delete running', deleteMemberId)
   return $http ({
-    method: 'DELETE',
+    method: 'PUT',
     url: '/members/delete/' + deleteMemberId 
   }).then(function (res) {
     console.log(res)
@@ -117,6 +118,7 @@ self.viewMembersMeeting = function(meeting){
   })
     .then(function (res) {
       self.allMembers.data = res.data;
+      console.log(self.allMembers.data)
     }).then(function(res){
       for(let i =0; i<self.allMembers.data.length; i++) {
         for(let j =0; j<self.meetingToEdit.data.length; j++) {
@@ -140,7 +142,8 @@ self.saveEditMeeting = function(objToSend) {
       url:    '/meetings',
       data:   objToSend
   }).then(function(res) {
-
+    self.getMeeting(objToSend.id)
+    self.viewMembersMeeting()
     //need a confirmation alert or something here
   }); //end then
 }; //end  saveEdit Meeting
@@ -154,7 +157,18 @@ self.addMeeting = function(objToSend) {
       console.log('addmeeting response:', res );
     //need a confirmation alert or something here
   }); //end then
-}; //end addMember
+}; //end deleteMeeting
+
+self.deleteMeeting = function(meetingId) {
+  console.log('In Delete meeting', meetingId) 
+    return $http({
+      method: 'PUT',
+      url: '/meetings/delete/' + meetingId 
+    }).then(function(res) {
+      console.log('meeting deleted');
+    })
+} // end deleteMeeting
+
 
 
 //PASSPORT AUTHENTICATION FUNCTIONS
