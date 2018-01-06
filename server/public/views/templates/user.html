@@ -8,11 +8,11 @@
 
     <div class="row">
         <div class="col-md-6"  id="membersView">
-            <section ng-init="uc.viewMembers()">
+            <section ng-init="uc.viewMembers()" id="viewMembers">
                 <div class="memberList" ng-repeat="member in uc.memberList.data">
-                    <h5 ng-click="uc.getMember(member)">
+                    <h5 class="names" ng-click="uc.getMember(member)">
                         <div class="names">
-                            {{member.last_name}}, {{member.first_name}}
+                            <span class = "capitalize">{{member.last_name}}</span>, {{member.first_name}}
                         </div> 
                     </h5>
                 </div>
@@ -22,7 +22,7 @@
         <!--end column 1 -->
 
         <div class="col-md-6" id="editMembers">
-            <div ng-hide="edit">
+            <div ng-hide="edit" id="memberInfo">
                 <h4 class="memberName">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4><br>
                 {{uc.memberToEdit.data[0].institution}}<br>
                 {{uc.memberToEdit.data[0].department}}<br>
@@ -37,9 +37,11 @@
                 {{uc.memberToEdit.data[0].member_status}}<br>
                 {{uc.memberToEdit.data[0].member_year}}<br>
                 {{uc.memberToEdit.data[0].publications}}<br>
-                                                
-                <button ng-click="edit=!edit">Edit</button>
-                <button ng-click="uc.deleteMember(uc.memberToEdit.data[0].id)">Delete</button>
+                
+                <div id="buttons">
+                <button class="editBtn"ng-click="edit=!edit">Edit</button>
+                <button class="deleteBtn" ng-click="uc.deleteMember(uc.memberToEdit.data[0].id)">Delete</button>
+                </div>
             </div>   
             
             

@@ -1,9 +1,47 @@
 /* View Members */
-#editMembers {
-  background: #a2ba85;
-  
-  border: rgb(18, 110, 191) double 2px;
+#buttons {
+  float: right;
 }
+
+.capitalize {
+  text-transform: uppercase;
+}
+
+.deleteBtn { 
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  color: #485b32;
+  font-style: bold;
+  border: 2px solid #485b32;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.deleteBtn:hover {
+  background-color: rgb(232, 16, 16);
+  border-color: black;
+  color: black;
+}
+.editBtn {
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  color: #485b32;
+  font-style: bold;
+  border: 2px solid #485b32;
+  border-radius: 10px;
+  padding: 5px 15px;
+  margin: 10px;
+}
+.editBtn:hover {
+  background-color: #1c4863;
+  border: 2px solid #1c4863;
+  color: white;
+}
+
+#editMembers {
+  background: rgb(162, 186, 133);
+  font-family: Arial, Helvetica, sans-serif;
+  }
 
 .editMeeting {
   color: white;
@@ -32,20 +70,30 @@ background-image: url("./wheatfield.jpg");
   border-color: #a2ba85;
   color: white;
  }
+
+ #memberInfo {
+   padding: 10px;
+ }
 .memberList {
   border-bottom: rgb(43, 80, 145) solid 2px;
-}
-
-#memberName{
-  
+  padding: 10px;
 }
 
 #membersView {
-  background: rgb(223, 221, 221);
+  background: white;
+  
 }
-
+.names {
+  margin: 10px;
+  font-size: 15px;
+  font-family: Tahoma, Geneva, sans-serif;
+}
 .names:hover {
   color: blue;
+}
+
+#viewMembers {
+  margin: 10px;
 }
 /* premade css */
 body, html {
