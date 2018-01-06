@@ -23,8 +23,8 @@
                     <option>Executive Committee Member - Representing Funding Agency</option>
                     <option>Other</option>
                 </select>
-                <input type="text" placeholder="start year" ng-model="uc.startYearIn">
-                <input type="text" placeholder="end year" ng-model="uc.endYearIn">
+                <input type="number" placeholder="start year" ng-model="uc.startYearIn">
+                <input type="number" placeholder="end year" ng-model="uc.endYearIn">
                 <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
         </form>
             <button ng-click="uc.committeServiceIn()">Add</button>
@@ -45,7 +45,7 @@
     <input type="text" placeholder="Email" ng-model="uc.emailIn"><br>
     <input type="text" placeholder="Website" ng-model="uc.websiteIn"><br>
     <input type="text" placeholder="Member Status" ng-model="uc.statusIn"><br>
-    <input type="text" placeholder="Member Since" ng-model="uc.sinceIn"><br>
+    <input type="number" placeholder="Member Since" ng-model="uc.sinceIn"><br>
     <input type="text" placeholder="Publications" ng-model="uc.publicationsIn"><br>
     
     
@@ -57,9 +57,12 @@
 
 
 <section class ="row">
-<form>
-    Initialize get for all meetings w/ checkboxes, including service type
-</form>
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+    <input type="number" placeholder="year" ng-model="uc.meetingYearIn">
+    <button ng-click="uc.findMeetingsByYear(uc.meetingYearIn)">Search</button>
+    </div>
+    <div class="col-md-1"></div>
 </section>
 </div>
 

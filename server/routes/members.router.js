@@ -30,6 +30,37 @@ router.get('/', function (req, res) {
   }
 });//end view members Get call
 
+//Get meetings by Year
+router.get('/meetingsByYear/:id', function(req, res) {
+  var meetingsYear = req.params.id
+  console.log('in Get for meetingsbyYear', meetingsYear)
+  if (req.isAuthenticated()) {
+    pool.connect(function (conErr, client, done) {
+      if (conErr) {
+        res.sendStatus(500);
+      } else {
+        var valueArray = [meetingsYear]
+        editQuery = 'SELECT * FROM meetings WHERE meetings.year = $1 ORDER BY meetings.year;'
+        client.query(editQuery, valueArray, function (queryErr, resultObj) {
+          done();
+          if (queryErr) {
+            res.sendStatus(500);
+          } else {
+            console.log(resultObj.rows)
+            res.send(resultObj.rows);
+          }
+        }) // end query
+      } // end pool else
+    }) // end pool connect
+  } else {
+    // failure best handled on the server. do redirect here.
+    console.log('not logged in');
+    // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
+    res.send(false);
+  } //end else
+}); //end get member to edit get call
+
+
 
 //add member Post
 router.post('/', function (req, res) {
@@ -40,9 +71,11 @@ router.post('/', function (req, res) {
       if (connectionError) {
         console.log(connectionError);
         res.sendStatus(500);
-      } else {
+      } else { 
+        if (newMember.serviceArray.length < 0) {
         var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) returning id';
         var valueArray = [newMember.first_name, newMember.last_name, newMember.institution, newMember.department, newMember.address_1, newMember.address_2, newMember.address_3, newMember.city, newMember.state, newMember.zipcode, newMember.country, newMember.phone, newMember.email, newMember.website, newMember.member_status, newMember.member_year];
+        }
         client.query(gQuery, valueArray, function (queryError, resultObj) {
           done();
           if (queryError) {

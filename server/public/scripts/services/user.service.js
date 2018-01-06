@@ -8,6 +8,7 @@ myApp.service('UserService', function($http, $location){
     //MEMBER PAGE OBJECTS
     self.memberList = {data: []} //object for viewMembers get
     self.memberToEdit = {data:[]} // object for findMember
+    self.meetingsByYear = {data: []} //object for findMeetingsByYear
    
     //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
@@ -31,6 +32,18 @@ self.viewMembers = function(){
       }) //end call back function
     }// end view Members
 
+    //view Meetings by year
+self.findMeetingsByYear = function(meetingYear){
+      console.log('findMeetingByYear in Service running')
+      return $http({
+        method: 'GET',
+        url: '/members/meetingsByYear/' + meetingYear
+      })
+        .then(function (res) {
+          self.meetingsByYear.data = res.data;
+         console.log('meetings by year', self.meetingsByYear.data)
+        }) //end call back function
+      }// end view Members
 //addMember post Call 
 self.addMember = function(objToSend) {
   console.log('inserviceobjtosend', objToSend)

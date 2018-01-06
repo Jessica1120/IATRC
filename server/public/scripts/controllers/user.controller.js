@@ -5,6 +5,7 @@ myApp.controller('UserController', function(UserService) {
     vm.userObject = UserService.userObject;
     vm.memberList = UserService.memberList;
     vm.memberToEdit = UserService.memberToEdit;
+    vm.meetingsByYear = UserService.meetingsByYear;
     vm.serviceArray = []
     
 
@@ -27,6 +28,10 @@ vm.committeServiceIn = function() {
   vm.startYearIn = '',
   vm.endYearIn = '',
   vm.addInfoIn = ''
+}
+vm.findMeetingsByYear = function(meetingYear) {
+  console.log('meetingYear', meetingYear)
+  UserService.findMeetingsByYear(meetingYear)
 }
 
 vm.addMember = function() {
@@ -78,7 +83,7 @@ vm.getMember = function(member) {
        UserService.getMember(member);
     }
     // save edited fields
-    vm.saveEditMember = function(editMemberId) {
+vm.saveEditMember = function(editMemberId) {
       
       var objToSend = {id: editMemberId}
       
