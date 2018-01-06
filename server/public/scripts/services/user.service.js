@@ -47,14 +47,14 @@ self.findMeetingsByYear = function(meetingYear){
 //addMember post Call 
 self.addMember = function(objToSend) {
   console.log('inserviceobjtosend', objToSend)
-  // $http({
-  //     method: 'POST',
-  //     url:    '/members',
-  //     data:   objToSend
-  // }).then(function(res) {
-  //     console.log('addMember response:', res );
-  //   //need a confirmation alert or something here
-  // }); //end then
+  $http({
+      method: 'POST',
+      url:    '/members',
+      data:   objToSend
+  }).then(function(res) {
+      console.log('addMember response:', res );
+    //need a confirmation alert or something here
+  }); //end then
 }; //end addMember
 
 //get member to edit

@@ -72,20 +72,47 @@ router.post('/', function (req, res) {
         console.log(connectionError);
         res.sendStatus(500);
       } else { 
-        if (newMember.serviceArray.length < 0) {
-        var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) returning id';
-        var valueArray = [newMember.first_name, newMember.last_name, newMember.institution, newMember.department, newMember.address_1, newMember.address_2, newMember.address_3, newMember.city, newMember.state, newMember.zipcode, newMember.country, newMember.phone, newMember.email, newMember.website, newMember.member_status, newMember.member_year];
-        }
-        client.query(gQuery, valueArray, function (queryError, resultObj) {
+        if (newMember.serviceArray.length == 0 && newMember.attendanceOnlyArray.length == 0 && newMember.meetingServiceArray.length == 0) {
+          var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) returning id';
+          var valueArray = [newMember.first_name, newMember.last_name, newMember.institution, newMember.department, newMember.address_1, newMember.address_2, newMember.address_3, newMember.city, newMember.state, newMember.zipcode, newMember.country, newMember.phone, newMember.email, newMember.website, newMember.member_status, newMember.member_year];
+          client.query(gQuery, valueArray, function (queryError, resultObj) {
           done();
           if (queryError) {
             console.log(queryError);
             res.sendStatus(500);
           } else {
-            console.log('new Member post successful', resultObj);
+            console.log('new Member post successful', resultObj.rows);
             res.sendStatus(202);
           } //end result else
         }); //end query
+      } //end if no arrays
+        if (newMember.serviceArray.length > 0 && newMember.attendanceOnlyArray.length == 0 && newMember.meetingServiceArray.length == 0) {
+          console.log('serviceArray running')  
+          var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year, past_service) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) returning id';
+            var valueArray = [newMember.first_name, newMember.last_name, newMember.institution, newMember.department, newMember.address_1, newMember.address_2, newMember.address_3, newMember.city, newMember.state, newMember.zipcode, newMember.country, newMember.phone, newMember.email, newMember.website, newMember.member_status, newMember.member_year, true];
+          client.query(gQuery, valueArray, function (queryError, resultObj) {
+            done();
+            if (queryError) {
+              console.log(queryError);
+              res.sendStatus(500);
+            } else {
+              console.log('2nd Query', resultObj.rows[0].id)
+              var serviceQuery = 'INSERT INTO members_meetings (members_id, service_id, start_date, end_date, add_info) VALUES ($1, (SELECT id FROM service WHERE service_type = $2), $3, $4, $5)'
+              var serviceValueArray = [resultObj.rows[0].id, newMember.serviceArray.service_type, newMember.serviceArray.start_date, newMember.serviceArray.end_date, newMember.serviceArray.add_info]
+              client.query(serviceQuery, serviceValueArray, function (queryError, resultObj) {
+                done();
+              if (queryError) {
+                console.log(queryError);
+                res.sendStatus(500);
+              } else { 
+              console.log('new Member post successful', resultObj.rows);
+              res.sendStatus(202);
+            } //end result else
+          }); //end 2nd query
+          } //end 2nd else
+          }); //end query
+
+        } //end if only serviceArray
       } //end pool else
     }) //end pool connect 
   } else {
