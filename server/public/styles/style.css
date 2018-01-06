@@ -75,6 +75,10 @@ background-image: url("./wheatfield.jpg");
   color: white;
  }
 
+ #meetingsbyYear{
+   color: white;
+ }
+
  #memberInfo {
    padding: 10px;
  }

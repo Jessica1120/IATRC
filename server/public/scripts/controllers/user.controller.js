@@ -7,7 +7,8 @@ myApp.controller('UserController', function(UserService) {
     vm.memberToEdit = UserService.memberToEdit;
     vm.meetingsByYear = UserService.meetingsByYear;
     vm.serviceArray = []
-    
+    vm.attendanceOnlyArray = []
+    vm.meetingServiceArray = []
 
 vm.viewMembers = function() {
       UserService.viewMembers();
@@ -29,6 +30,24 @@ vm.committeServiceIn = function() {
   vm.endYearIn = '',
   vm.addInfoIn = ''
 }
+
+vm.meetingAttendanceIn = function (meeting) {
+  console.log('meeting', meeting)
+  if (meeting.Selected == true) {
+    vm.attendanceOnlyArray.push(meeting.id)
+    } else {
+      var meetingServiceObj = {
+        meetings_id: meeting.id,
+        service_type: vm.meetingServiceIn,
+        add_info: vm.addMeetingInfoIn
+      }
+      vm.meetingServiceArray.push(meetingServiceObj);
+    
+  }
+  console.log('attendance Only', vm.attendanceOnlyArray)
+  console.log('meetingservice', vm.meetingServiceArray)
+}
+
 vm.findMeetingsByYear = function(meetingYear) {
   console.log('meetingYear', meetingYear)
   UserService.findMeetingsByYear(meetingYear)
@@ -54,7 +73,9 @@ vm.addMember = function() {
         member_status: vm.statusIn,
         member_year: vm.sinceIn,
         publications: vm.publicationsIn,
-        serviceArray: vm.serviceArray
+        serviceArray: vm.serviceArray,
+        attendanceOnlyArray: vm.attendanceOnlyArray,
+        meetingServiceArray: vm.meetingServiceArray
       };
       UserService.addMember(objToSend)
       vm.firstIn = '',
@@ -74,7 +95,9 @@ vm.addMember = function() {
       vm.statusIn = '',
       vm.sinceIn = '',
       vm.publicationsIn = '',
-      vm.serviceArray = []
+      vm.serviceArray = [],
+      vm.attendanceOnlyArray = [],
+      vm.meetingServiceArray = []
     } //end then
 
     //get member to Edit
