@@ -5,26 +5,75 @@ myApp.controller('UserController', function(UserService) {
     vm.userObject = UserService.userObject;
     vm.memberList = UserService.memberList;
     vm.memberToEdit = UserService.memberToEdit;
+    vm.serviceArray = []
     
 
-    vm.viewMembers = function() {
+vm.viewMembers = function() {
       UserService.viewMembers();
       console.log ('in controller viewMembers running')
     }; //end viewMembers
 
-    vm.addMember = function() {
+vm.committeServiceIn = function() {
+  console.log('committeeServiceAdd')
+  var serviceObj = {
+    service_type: vm.serviceIn,
+    start_date: vm.startYearIn,
+    end_date: vm.endYearIn, 
+    add_info: vm.addInfoIn
+  }
+  vm.serviceArray.push(serviceObj)
+  console.log('serviceArray', vm.serviceArray)
+  vm.serviceIn = '',
+  vm.startYearIn = '',
+  vm.endYearIn = '',
+  vm.addInfoIn = ''
+}
+
+vm.addMember = function() {
       console.log ('in controller addMember running')
       var objToSend = {
         first_name: vm.firstIn,
-        last_name: vm.lastIn
+        last_name: vm.lastIn,
+        institution: vm.InstitutionIn,
+        department: vm.departmentIn,
+        address_1: vm.address1In,
+        address_2:  vm.address2In,
+        address_3: vm.address3In,
+        city: vm.cityIn,
+        state: vm.stateIn,
+        zipcode: vm.zipIn,
+        country: vm.countryIn,
+        phone: vm.phoneIn,
+        email:  vm.emailIn,
+        website: vm.websiteIn,
+        member_status: vm.statusIn,
+        member_year: vm.sinceIn,
+        publications: vm.publicationsIn,
+        serviceArray: vm.serviceArray
       };
-      UserService.addMember(objToSend);
+      UserService.addMember(objToSend)
       vm.firstIn = '',
       vm.lastIn = ''  
-    }; //end addMember
+      vm.InstitutionIn = '',
+      vm.departmentIn = '',
+      vm.address1In = '',
+      vm.address2In = '',
+      vm.address3In = '',
+      vm.cityIn = '',
+      vm.stateIn = '',
+      vm.zipIn = '',
+      vm.countryIn = '',
+      vm.phoneIn = '',
+      vm.emailIn = '',
+      vm.websiteIn = '',
+      vm.statusIn = '',
+      vm.sinceIn = '',
+      vm.publicationsIn = '',
+      vm.serviceArray = []
+    } //end then
 
     //get member to Edit
-    vm.getMember = function(member) {
+vm.getMember = function(member) {
        console.log('in controller get member', member)
        UserService.getMember(member);
     }

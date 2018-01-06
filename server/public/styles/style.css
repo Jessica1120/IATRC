@@ -1,4 +1,8 @@
 /* View Members */
+.addMargin {
+  margin: 20px;
+}
+
 #buttons {
   float: right;
 }

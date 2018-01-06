@@ -1,18 +1,66 @@
-<div ng-include="'views/partials/nav.html'"></div>
+<body class="container"><div ng-include="'views/partials/nav.html'"></div>
 
 <div ng-include="'views/partials/membersNav.html'"></div>
 
-
-<form>
-    <input type="text" placeholder="First Name" ng-model="uc.firstIn"><br>
+<section class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+        <input type="text" placeholder="First Name" ng-model="uc.firstIn"><br>
+    </div>
+    <div class="col-md-5">
     <input type="text" placeholder="Last Name" ng-model="uc.lastIn"><br>
-    
-   
+    </div>
+</div>
+<div class="col-md-1"></div>
+</section>
 
+<section class="row">
+    <div class="addMargin">
+        <div class="col-md-1"></div>
+        <div class="col-md-10"></div>
+         <select ng-model="uc.serviceIn" class="dropdown">
+                    <option>Executive Committee Member - Elected</option>
+                    <option>Executive Committee Member - Representing Funding Agency</option>
+                    <option>Other</option>
+                </select>
+                <input type="text" placeholder="start year" ng-model="uc.startYearIn">
+                <input type="text" placeholder="end year" ng-model="uc.endYearIn">
+                <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
+        </form>
+            <button ng-click="uc.committeServiceIn()">Add</button>
+            <div class="col-md-1"></div>
+    </div>
+</section>
+
+    <input type="text" placeholder="Institution" ng-model="uc.InstitutionIn"><br>
+    <input type="text" placeholder="Department" ng-model="uc.departmentIn"><br>
+    <input type="text" placeholder="Address 1" ng-model="uc.address1In"><br>
+    <input type="text" placeholder="Address 2" ng-model="uc.address2In"><br>
+    <input type="text" placeholder="Address 3" ng-model="uc.address3In"><br>
+    <input type="text" placeholder="City" ng-model="uc.cityIn"><br>
+    <input type="text" placeholder="State" ng-model="uc.stateIn"><br>
+    <input type="text" placeholder="Zipcode" ng-model="uc.zipIn"><br>
+    <input type="text" placeholder="Country" ng-model="uc.countryIn"><br>
+    <input type="text" placeholder="Phone" ng-model="uc.phoneIn"><br>
+    <input type="text" placeholder="Email" ng-model="uc.emailIn"><br>
+    <input type="text" placeholder="Website" ng-model="uc.websiteIn"><br>
+    <input type="text" placeholder="Member Status" ng-model="uc.statusIn"><br>
+    <input type="text" placeholder="Member Since" ng-model="uc.sinceIn"><br>
+    <input type="text" placeholder="Publications" ng-model="uc.publicationsIn"><br>
     
     
     <button type="button" class="btn btn-primary" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" ng-click="uc.addMember()">
         Add
     </button>
 </form>
+</div>
 
+
+<section class ="row">
+<form>
+    Initialize get for all meetings w/ checkboxes, including service type
+</form>
+</section>
+</div>
+
+</body>

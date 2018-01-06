@@ -23,7 +23,11 @@
 
         <div class="col-md-6" id="editMembers">
             <div ng-hide="edit" id="memberInfo">
+                <div class="row">
                 <h4 class="memberName">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4><br>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
                 {{uc.memberToEdit.data[0].institution}}<br>
                 {{uc.memberToEdit.data[0].department}}<br>
                 {{uc.memberToEdit.data[0].address_1}}<br>
@@ -37,10 +41,18 @@
                 {{uc.memberToEdit.data[0].member_status}}<br>
                 {{uc.memberToEdit.data[0].member_year}}<br>
                 {{uc.memberToEdit.data[0].publications}}<br>
-                
+                    </div>
+                    <div class="col-md-6">
+                       <div ng-repeat="meeting in uc.memberToEdit.data"}}>
+                           {{meeting.month}}, {{meeting.year}} {{meeting.topic}} {{meeting.type}}
+                       </div>
+                    </div>
+                </div>  
+                <div class="row">
                 <div id="buttons">
                 <button class="editBtn"ng-click="edit=!edit">Edit</button>
                 <button class="deleteBtn" ng-click="uc.deleteMember(uc.memberToEdit.data[0].id)">Delete</button>
+                </div>
                 </div>
             </div>   
             
