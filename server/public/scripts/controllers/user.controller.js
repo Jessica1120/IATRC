@@ -7,50 +7,32 @@ myApp.controller('UserController', function(UserService) {
     vm.memberToEdit = UserService.memberToEdit;
     vm.meetingsByYear = UserService.meetingsByYear;
     vm.serviceArray = []
-    vm.attendanceOnlyArray = []
-    vm.meetingServiceArray = []
+    vm.defaultMeeting = {id: 1}
 
 vm.viewMembers = function() {
       UserService.viewMembers();
       console.log ('in controller viewMembers running')
     }; //end viewMembers
 
-vm.committeServiceIn = function() {
-  console.log('committeeServiceAdd')
-  var serviceObj = {
-    service_type: parseInt(vm.serviceIn),
-    start_date: vm.startYearIn,
-    end_date: vm.endYearIn, 
-    add_info: vm.addInfoIn
-  }
 
-  // if (vm.startYearIn == "") {
-  //     serviceObj.start_date == undefined
-  //   }
-  
+
+
+
+    vm.ServiceIn = function(meeting) {
+    console.log('ServiceAdd')
+    var serviceObj = {
+      meetings_id: meeting.id,
+      service_type: parseInt(vm.serviceIn),
+      start_date: vm.startYearIn,
+      end_date: vm.endYearIn, 
+      add_info: vm.addInfoIn
+  }
   vm.serviceArray.push(serviceObj)
   console.log('serviceArray', vm.serviceArray)
   vm.serviceIn = undefined,
   vm.startYearIn = undefined,
   vm.endYearIn = undefined,
   vm.addInfoIn = undefined
-}
-
-vm.meetingAttendanceIn = function (meeting) {
-  console.log('meeting', meeting)
-  if (meeting.Selected == true) {
-    vm.attendanceOnlyArray.push(meeting.id)
-    } else {
-      var meetingServiceObj = {
-        meetings_id: meeting.id,
-        service_type: vm.meetingServiceIn,
-        add_info: vm.addMeetingInfoIn
-      }
-      vm.meetingServiceArray.push(meetingServiceObj);
-    
-  }
-  console.log('attendance Only', vm.attendanceOnlyArray)
-  console.log('meetingservice', vm.meetingServiceArray)
 }
 
 vm.findMeetingsByYear = function(meetingYear) {
@@ -105,6 +87,23 @@ vm.addMember = function() {
       vm.meetingServiceArray = []
     } //end then
 
+vm.ServiceIn = function(meeting) {
+  console.log('ServiceAdd')
+  var serviceObj = {
+  meetings_id: meeting.id,
+  service_type: parseInt(vm.serviceIn),
+  start_date: vm.startYearIn,
+  end_date: vm.endYearIn, 
+  add_info: vm.addInfoIn
+  }
+  vm.serviceArray.push(serviceObj)
+  console.log('serviceArray', vm.serviceArray)
+  vm.serviceIn = undefined,
+  vm.startYearIn = undefined,
+  vm.endYearIn = undefined,
+  vm.addInfoIn = undefined
+  }
+  
     //get member to Edit
 vm.getMember = function(member) {
        console.log('in controller get member', member)

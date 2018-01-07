@@ -27,7 +27,7 @@
                 <input type="number" placeholder="end year" ng-model="uc.endYearIn">
                 <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
         
-            <button ng-click="uc.committeServiceIn()">Add</button>
+            <button ng-click="uc.ServiceIn(uc.defaultMeeting)">Add</button>
             <div class="col-md-1"></div>
     </div>
 </section>
@@ -62,18 +62,17 @@
         <ul ng-repeat="meeting in uc.meetingsByYear.data">
             <li ng-click="addMeeting=!addMeeting">{{meeting.topic}}, {{meeting.type}} {{meeting.month}}</li> <br>
             <div ng-hide="!addMeeting">
-                    Attended Only: <input type="checkbox" ng-model="meeting.Selected" ng-init="meeting.Selected=false"> <br>
-                    Attended and Service:
-                    <select ng-model="uc.meetingServiceIn" class="dropdown" ng-disabled="meeting.Selected">
-                            <option>Theme Day Organizer</option>
-                            <option>Non-Theme Day Organizer</option>
-                            <option>Other</option>
+                    <select ng-model="uc.serviceIn" class="dropdown">
+                            <option value=6>Attendance Only</option>
+                            <option value=3>Theme Day Organizer</option>
+                            <option value=4>Non-Theme Day Organizer</option>
+                            <option value=5>Other</option>
     
                     </select>
                         <input type="text" placeholder="additional information" ng-model="uc.addMeetingInfoIn" ng-disabled="meeting.Selected">
                         
                         <div ng-click="addMeeting=!addMeeting">
-                        <button ng-click="uc.meetingAttendanceIn(meeting)">Add</button>
+                        <button ng-click="uc.ServiceIn(meeting)">Add</button>
                     </div>
             </div>
         </ul>

@@ -72,7 +72,7 @@ router.post('/', function (req, res) {
         console.log(connectionError);
         res.sendStatus(500);
       } else { 
-        if (newMember.serviceArray.length == 0 && newMember.attendanceOnlyArray.length == 0 && newMember.meetingServiceArray.length == 0) {
+        if (newMember.serviceArray.length == 0) {
           var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) returning id';
           var valueArray = [newMember.first_name, newMember.last_name, newMember.institution, newMember.department, newMember.address_1, newMember.address_2, newMember.address_3, newMember.city, newMember.state, newMember.zipcode, newMember.country, newMember.phone, newMember.email, newMember.website, newMember.member_status, newMember.member_year];
           client.query(gQuery, valueArray, function (queryError, resultObj) {
@@ -86,7 +86,7 @@ router.post('/', function (req, res) {
           } //end result else
         }); //end query
       } //end if no arrays
-        if (newMember.serviceArray.length > 0 && newMember.attendanceOnlyArray.length == 0 && newMember.meetingServiceArray.length == 0) {
+        else {
           console.log('serviceArray running')  
           var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year, past_service) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) returning id';
             var valueArray = [newMember.first_name, newMember.last_name, newMember.institution, newMember.department, newMember.address_1, newMember.address_2, newMember.address_3, newMember.city, newMember.state, newMember.zipcode, newMember.country, newMember.phone, newMember.email, newMember.website, newMember.member_status, newMember.member_year, true];
@@ -103,23 +103,23 @@ router.post('/', function (req, res) {
               var $1 = 1
 
               newMember.serviceArray.forEach(function (element) {
-                  serviceValueArray.push(resultObj.rows[0].id, element.service_type, element.start_date, element.end_date, element.add_info)
+                  serviceValueArray.push(resultObj.rows[0].id, element.meetings_id, element.service_type, element.start_date, element.end_date, element.add_info)
                 })
                 console.log('serviceValue Array', serviceValueArray)
               for(let i = 0; i<serviceValueArray.length; i++){
                 $serviceArray.push('$' + $1++)
               }
               console.log($serviceArray)
-              for(let k=0; k < $serviceArray.length-4; k+=5) {
+              for(let k=0; k < $serviceArray.length-5; k+=6) {
                 $serviceArray.splice(k, 1, '(' + $serviceArray[k])
               }
-              for (let j=4; j < $serviceArray.length; j+=5) {
+              for (let j=5; j < $serviceArray.length; j+=6) {
                 $serviceArray.splice(j, 1, $serviceArray[j]+')')
               }
               console.log('$$serviceArray', $serviceArray)
               var $blingPhrase = $serviceArray.join(', ')
              
-              var serviceQuery = 'INSERT INTO members_meetings (members_id, service_id, start_date, end_date, add_info) VALUES ' + $blingPhrase
+              var serviceQuery = 'INSERT INTO members_meetings (members_id, meetings_id, service_id, start_date, end_date, add_info) VALUES ' + $blingPhrase
               console.log('serviceQuery', serviceQuery)
               console.log('serviceValueArray', serviceValueArray)
               client.query(serviceQuery, serviceValueArray, function (queryError, resultObj) {
@@ -128,7 +128,7 @@ router.post('/', function (req, res) {
                 console.log(queryError);
                 res.sendStatus(500);
               } else { 
-              console.log('new Member post successful', resultObj.rows);
+              console.log('new Member post successful');
               res.sendStatus(202);
             } //end result else
           }); //end 2nd query
