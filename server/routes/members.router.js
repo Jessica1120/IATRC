@@ -96,9 +96,32 @@ router.post('/', function (req, res) {
               console.log(queryError);
               res.sendStatus(500);
             } else {
-              console.log('2nd Query', resultObj.rows[0].id)
-              var serviceQuery = 'INSERT INTO members_meetings (members_id, service_id, start_date, end_date, add_info) VALUES ($1, (SELECT id FROM service WHERE service_type = $2), $3, $4, $5)'
-              var serviceValueArray = [resultObj.rows[0].id, newMember.serviceArray.service_type, newMember.serviceArray.start_date, newMember.serviceArray.end_date, newMember.serviceArray.add_info]
+              console.log('else', resultObj.rows[0].id)
+              var serviceValueArray = []
+              var $serviceArray = []
+              var $blingPhrase = $serviceArray.join(', ')
+              var $1 = 1
+
+              newMember.serviceArray.forEach(function (element) {
+                  serviceValueArray.push(resultObj.rows[0].id, element.service_type, element.start_date, element.end_date, element.add_info)
+                })
+                console.log('serviceValue Array', serviceValueArray)
+              for(let i = 0; i<serviceValueArray.length; i++){
+                $serviceArray.push('$' + $1++)
+              }
+              console.log($serviceArray)
+              for(let k=0; k < $serviceArray.length-4; k+=5) {
+                $serviceArray.splice(k, 1, '(' + $serviceArray[k])
+              }
+              for (let j=4; j < $serviceArray.length; j+=5) {
+                $serviceArray.splice(j, 1, $serviceArray[j]+')')
+              }
+              console.log('$$serviceArray', $serviceArray)
+              var $blingPhrase = $serviceArray.join(', ')
+             
+              var serviceQuery = 'INSERT INTO members_meetings (members_id, service_id, start_date, end_date, add_info) VALUES ' + $blingPhrase
+              console.log('serviceQuery', serviceQuery)
+              console.log('serviceValueArray', serviceValueArray)
               client.query(serviceQuery, serviceValueArray, function (queryError, resultObj) {
                 done();
               if (queryError) {

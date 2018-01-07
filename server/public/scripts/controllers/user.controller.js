@@ -18,17 +18,22 @@ vm.viewMembers = function() {
 vm.committeServiceIn = function() {
   console.log('committeeServiceAdd')
   var serviceObj = {
-    service_type: vm.serviceIn,
+    service_type: parseInt(vm.serviceIn),
     start_date: vm.startYearIn,
     end_date: vm.endYearIn, 
     add_info: vm.addInfoIn
   }
+
+  // if (vm.startYearIn == "") {
+  //     serviceObj.start_date == undefined
+  //   }
+  
   vm.serviceArray.push(serviceObj)
   console.log('serviceArray', vm.serviceArray)
-  vm.serviceIn = '',
-  vm.startYearIn = '',
-  vm.endYearIn = '',
-  vm.addInfoIn = ''
+  vm.serviceIn = undefined,
+  vm.startYearIn = undefined,
+  vm.endYearIn = undefined,
+  vm.addInfoIn = undefined
 }
 
 vm.meetingAttendanceIn = function (meeting) {
