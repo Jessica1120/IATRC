@@ -8,6 +8,7 @@ myApp.controller('InfoController', function(UserService) {
     vm.attended = []
     vm.absent = []
     
+    
 
     vm.viewMeetings= function() {
       UserService.viewMeetings();

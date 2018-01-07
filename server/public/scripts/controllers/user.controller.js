@@ -6,8 +6,9 @@ myApp.controller('UserController', function(UserService) {
     vm.memberList = UserService.memberList;
     vm.memberToEdit = UserService.memberToEdit;
     vm.meetingsByYear = UserService.meetingsByYear;
-    vm.serviceArray = []
+    vm.serviceArray = [] // array to send to Database
     vm.defaultMeeting = {id: 1}
+    vm.serviceOnly = UserService.serviceOnly //array to display Service only on DOM
 
 vm.viewMembers = function() {
       UserService.viewMembers();
@@ -108,6 +109,7 @@ vm.ServiceIn = function(meeting) {
 vm.getMember = function(member) {
        console.log('in controller get member', member)
        UserService.getMember(member);
+       console.log('vm.serviceOnly', vm.serviceOnly)
     }
     // save edited fields
 vm.saveEditMember = function(editMemberId) {

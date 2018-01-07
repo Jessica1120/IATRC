@@ -11,11 +11,14 @@ router.get('/', function (req, res) {
   if (req.isAuthenticated()) {
     pool.connect(function (conErr, client, done) {
       if (conErr) {
+        console.log(conErr)
         res.sendStatus(500);
       } else {
-        client.query('SELECT id, first_name, last_name, past_attendance FROM members ORDER BY last_name;', function (queryErr, resultObj) {
+        console.log('running query')
+        client.query('SELECT id, first_name, last_name, past_service FROM members ORDER BY last_name;', function (queryErr, resultObj) {
           done();
           if (queryErr) {
+            console.log('query Error', queryErr)
             res.sendStatus(500);
           } else {
             console.log(resultObj.rows)
@@ -155,10 +158,10 @@ router.post('/getmember', function (req, res) {
         res.sendStatus(500);
       } else {
         var valueArray = [memberToEdit.id]
-        if (memberToEdit.past_attendance == false) {
+        if (memberToEdit.past_service == false) {
         editQuery = 'SELECT * FROM members WHERE id = $1';
         } else {
-          editQuery = 'SELECT * FROM members FULL JOIN members_meetings ON members.id = members_meetings.members_id FULL JOIN meetings ON meetings.id = members_meetings.meetings_id WHERE members.id = $1'
+          editQuery = 'SELECT * FROM members FULL JOIN members_meetings ON members.id = members_meetings.members_id FULL JOIN meetings ON meetings.id = members_meetings.meetings_id FULL JOIN service ON service.id = members_meetings.service_id WHERE members.id = $1'
         }
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();

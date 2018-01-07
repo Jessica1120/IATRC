@@ -9,12 +9,14 @@ myApp.service('UserService', function($http, $location){
     self.memberList = {data: []} //object for viewMembers get
     self.memberToEdit = {data:[]} // object for findMember
     self.meetingsByYear = {data: []} //object for findMeetingsByYear
+    self.serviceOnly = []
    
     //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
     self.meetingToEdit = {data: []}//object for getMeeting
     self.allMembers = {data:[]} //object for ViewMembersMeeting
     self.updatedMeeting = {data:[]} // object for findMember
+
 
 
     //MEMBER PAGE FUNCTIONS
@@ -67,7 +69,17 @@ self.getMember = function(objToSend) {
     data: objToSend
   }).then(function (res) {
     console.log('Response', res);
-    self.memberToEdit.data = res.data;
+    self.memberToEdit.data = res.data
+    self.memberToEdit.data.forEach(function(element) {
+      if (element.meetings_id == 1) {
+        self.serviceOnly.push(element)
+        self.memberToEdit.data.splice(self.memberToEdit.data.indexOf(element, 1))
+    }
+    
+    })
+    console.log('self.serviceOnly', self.serviceOnly)
+    console.log('emberToEdit.data', self.memberToEdit.data)
+ 
   })
 };
 //save edits to member

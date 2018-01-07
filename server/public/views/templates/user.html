@@ -43,8 +43,16 @@
                 {{uc.memberToEdit.data[0].publications}}<br>
                     </div>
                     <div class="col-md-6">
-                       <div ng-repeat="meeting in uc.memberToEdit.data"}}>
-                           {{meeting.month}}, {{meeting.year}} {{meeting.topic}} {{meeting.type}}
+                        Service:
+                        <div ng-repeat="service in uc.serviceOnly"> 
+                                {{service.service_type}} {{service.start_date}} - {{service.end_date}} <br>
+                                {{service.add_info}}
+                        </div>
+                       
+                        Meetings:
+                        <div ng-repeat="meeting in uc.memberToEdit.data"}}>
+                           {{meeting.year}} - {{meeting.topic}} {{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}}<br>
+                           {{meeting.service_type}}
                        </div>
                     </div>
                 </div>  
