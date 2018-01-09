@@ -64,7 +64,7 @@ router.post('/', function(req, res) {
 
 //get Meeting to Edit
 router.get('/get/:id', function (req, res) {
-  var meetingToEdit = req.params.id
+  var meetingToEdit = req.params.meeting_id
   console.log('in Get for meeting', meetingToEdit)
   if (req.isAuthenticated()) {
     pool.connect(function (conErr, client, done) {
@@ -72,7 +72,7 @@ router.get('/get/:id', function (req, res) {
         res.sendStatus(500);
       } else {
         var valueArray = [meetingToEdit]
-        editQuery = 'SELECT * FROM meetings FULL JOIN members_meetings ON meetings.id = members_meetings.meetings_id FULL JOIN members ON members.id = members_meetings.members_id WHERE meetings.id = $1 ORDER BY members.last_name;'
+        editQuery = 'SELECT * FROM meetings FULL JOIN members_meetings ON meetings.id = members_meetings.meetings_id FULL JOIN members ON members.meeting_id = members_meetings.members_id WHERE meetings.meeting_id = $1 ORDER BY members.last_name;'
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();
           if (queryErr) {
@@ -99,7 +99,7 @@ router.put('/', function (req, res){
       removeMembers = function() {
         var deleteBling = 2
         var blingArray = []
-        editMeeting.absent.unshift(editMeeting.id)
+        editMeeting.absent.unshift(editMeeting.meeting_id)
         for(let i=0; i< editMeeting.absent.length-1; i++) {
           blingArray.push('$' + deleteBling++)
           }
@@ -125,7 +125,7 @@ router.put('/', function (req, res){
         var blingArray2 = []
         var attendedPairs = []
             for(let i=0; i< editMeeting.attended.length; i++) {
-              attendedPairs.push(editMeeting.attended[i], editMeeting.id)
+              attendedPairs.push(editMeeting.attended[i], editMeeting.meeting_id)
             }
             for(let j=0; j<attendedPairs.length/2; j++) {
               blingArray2.push(' ($' + addBling++ + ', $' + addBling++ + ')')
@@ -168,7 +168,7 @@ router.put('/', function (req, res){
         } 
         }//end for loop for temp array of properties
         var queryFields = tempvarQuery.join(', ')
-        var editQuery = 'UPDATE meetings SET ' + queryFields + ' WHERE id = $1'
+        var editQuery = 'UPDATE meetings SET ' + queryFields + ' WHERE meeting_id = $1'
         console.log('editQuery', editQuery, valueArray)
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();
@@ -197,7 +197,7 @@ router.put('/', function (req, res){
   } //end authentication
 }); //end put
 router.put('/delete/:id', function(req, res) {
-  var deleteMeeting = req.params.id
+  var deleteMeeting = req.params.meeting_id
   console.log('deleteMeeting', deleteMeeting)
     if (req.isAuthenticated()) {
       pool.connect(function (conErr, client, done) {
@@ -205,7 +205,7 @@ router.put('/delete/:id', function(req, res) {
       res.sendStatus(500);
     } else {
       valueArray = [deleteMeeting]
-      pQuery = 'DELETE FROM meetings WHERE meetings.id = $1;'
+      pQuery = 'DELETE FROM meetings WHERE meetings.meeting_id = $1;'
       console.log('pQuery', pQuery)
       console.log('valueArray', valueArray)
       client.query(pQuery, valueArray, function (queryErr, resultObj) {

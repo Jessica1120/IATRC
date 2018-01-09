@@ -15,7 +15,7 @@ router.get('/', function (req, res) {
         res.sendStatus(500);
       } else {
         console.log('running query')
-        client.query('SELECT id, first_name, last_name, past_service FROM members ORDER BY last_name;', function (queryErr, resultObj) {
+        client.query('SELECT member_id, first_name, last_name, past_service FROM members ORDER BY last_name;', function (queryErr, resultObj) {
           done();
           if (queryErr) {
             console.log('query Error', queryErr)
@@ -76,7 +76,7 @@ router.post('/', function (req, res) {
         res.sendStatus(500);
       } else { 
         if (newMember.serviceArray.length == 0) {
-          var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) returning id';
+          var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) returning member_id';
           var valueArray = [newMember.first_name, newMember.last_name, newMember.institution, newMember.department, newMember.address_1, newMember.address_2, newMember.address_3, newMember.city, newMember.state, newMember.zipcode, newMember.country, newMember.phone, newMember.email, newMember.website, newMember.member_status, newMember.member_year];
           client.query(gQuery, valueArray, function (queryError, resultObj) {
           done();
@@ -99,14 +99,14 @@ router.post('/', function (req, res) {
               console.log(queryError);
               res.sendStatus(500);
             } else {
-              console.log('else', resultObj.rows[0].id)
+              console.log('else', resultObj.rows[0].member_id)
               var serviceValueArray = []
               var $serviceArray = []
               var $blingPhrase = $serviceArray.join(', ')
               var $1 = 1
 
               newMember.serviceArray.forEach(function (element) {
-                  serviceValueArray.push(resultObj.rows[0].id, element.meetings_id, element.service_type, element.start_date, element.end_date, element.add_info)
+                  serviceValueArray.push(resultObj.rows[0].member_id, element.meetings_id, element.service_type, element.start_date, element.end_date, element.add_info)
                 })
                 console.log('serviceValue Array', serviceValueArray)
               for(let i = 0; i<serviceValueArray.length; i++){
@@ -157,11 +157,11 @@ router.post('/getmember', function (req, res) {
         console.log('pool.connect', conErr)
         res.sendStatus(500);
       } else {
-        var valueArray = [memberToEdit.id]
+        var valueArray = [memberToEdit.member_id]
         if (memberToEdit.past_service == false) {
-        editQuery = 'SELECT * FROM members WHERE id = $1';
+        editQuery = 'SELECT * FROM members WHERE member_id = $1';
         } else {
-          editQuery = 'SELECT * FROM members FULL JOIN members_meetings ON members.id = members_meetings.members_id FULL JOIN meetings ON meetings.id = members_meetings.meetings_id FULL JOIN service ON service.id = members_meetings.service_id WHERE members.id = $1'
+          editQuery = 'SELECT * FROM members FULL JOIN members_meetings ON members.member_id = members_meetings.members_id FULL JOIN meetings ON meetings.meeting_id = members_meetings.meetings_id FULL JOIN service ON service.service_id = members_meetings.service_id WHERE members.member_id = $1'
         }
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();
@@ -205,7 +205,7 @@ router.put('/', function (req, res) {
           tempvarQuery.push(prop+eb+bling)
         }
         var queryFields = tempvarQuery.join(', ')
-        var gQuery = 'UPDATE members SET ' + queryFields + ' WHERE id = $1'
+        var gQuery = 'UPDATE members SET ' + queryFields + ' WHERE member_id = $1 Returning past_service'
         console.log('line 113 query, value arry:', gQuery, valueArray)
         client.query(gQuery, valueArray, function(queryError, resultObj) {
             done();
@@ -214,7 +214,7 @@ router.put('/', function (req, res) {
                 res.sendStatus(500);
             } else {
                 console.log('Update member Put successful');
-                res.sendStatus(202);
+                res.send(resultObj.rows);
             } //end result else
         }); //end query
       } //end pool else
@@ -235,7 +235,7 @@ router.put('/delete/:id', function(req, res) {
       res.sendStatus(500);
     } else {
       var valueArray = [deleteMember]
-      pQuery = 'DELETE FROM members WHERE members.id = $1;'
+      pQuery = 'DELETE FROM members WHERE members.member_id = $1;'
       client.query(pQuery, valueArray, function (queryErr, resultObj) {
         done();
         if (queryErr) {

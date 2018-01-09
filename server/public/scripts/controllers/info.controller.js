@@ -29,20 +29,20 @@ myApp.controller('InfoController', function(UserService) {
 vm.saveEditMeeting = function(meeting) {
   
   var objToSend = {
-      id: meeting,
+      meeting_id: meeting,
       attended: vm.attended,
       absent: vm.absent
   }
   
   for (var i = 0; i < vm.meetingToEdit.data.length; i++) {
     if(vm.meetingToEdit.data[i].Selected !== true) {
-      vm.absent.push(vm.meetingToEdit.data[i].id)
+      vm.absent.push(vm.meetingToEdit.data[i].meeting_id)
       }
   }
   console.log('slice absent', vm.meetingToEdit.data, vm.absent)
   for (var i = 0; i < vm.allMembers.data.length; i++) {
     if(vm.allMembers.data[i].Selected == true) {
-      vm.attended.push(vm.allMembers.data[i].id)
+      vm.attended.push(vm.allMembers.data[i].member_id)
     } 
   }
       if (vm.editTypeIn !== undefined) {

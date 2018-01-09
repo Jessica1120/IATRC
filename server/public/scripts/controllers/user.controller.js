@@ -7,39 +7,11 @@ myApp.controller('UserController', function(UserService) {
     vm.memberToEdit = UserService.memberToEdit;
     vm.meetingsByYear = UserService.meetingsByYear;
     vm.serviceArray = [] // array to send to Database
-    vm.defaultMeeting = {id: 1}
+    vm.defaultMeeting = {meeting_id: 1}
     vm.serviceOnly = UserService.serviceOnly //array to display Service only on DOM
+    vm.meetings = UserService.meetings
+    vm.editServiceArray = []
 
-vm.viewMembers = function() {
-      UserService.viewMembers();
-      console.log ('in controller viewMembers running')
-    }; //end viewMembers
-
-
-
-
-
-    vm.ServiceIn = function(meeting) {
-    console.log('ServiceAdd')
-    var serviceObj = {
-      meetings_id: meeting.id,
-      service_type: parseInt(vm.serviceIn),
-      start_date: vm.startYearIn,
-      end_date: vm.endYearIn, 
-      add_info: vm.addInfoIn
-  }
-  vm.serviceArray.push(serviceObj)
-  console.log('serviceArray', vm.serviceArray)
-  vm.serviceIn = undefined,
-  vm.startYearIn = undefined,
-  vm.endYearIn = undefined,
-  vm.addInfoIn = undefined
-}
-
-vm.findMeetingsByYear = function(meetingYear) {
-  console.log('meetingYear', meetingYear)
-  UserService.findMeetingsByYear(meetingYear)
-}
 
 vm.addMember = function() {
       console.log ('in controller addMember running')
@@ -62,8 +34,6 @@ vm.addMember = function() {
         member_year: vm.sinceIn,
         publications: vm.publicationsIn,
         serviceArray: vm.serviceArray,
-        attendanceOnlyArray: vm.attendanceOnlyArray,
-        meetingServiceArray: vm.meetingServiceArray
       };
       UserService.addMember(objToSend)
       vm.firstIn = '',
@@ -83,15 +53,211 @@ vm.addMember = function() {
       vm.statusIn = '',
       vm.sinceIn = '',
       vm.publicationsIn = '',
-      vm.serviceArray = [],
-      vm.attendanceOnlyArray = [],
-      vm.meetingServiceArray = []
+      vm.serviceArray = []
     } //end then
+    
+vm.addMembertoMeeting = function(member_id, meeting_id) {
+  var objToSend = {
+    member_id: member_id,
+    meeting_id: meeting_id,
+    service_type: vm.serviceIn,
+    add_info: vm.addMeetingInfoIn
+  }
+console.log('add meeting', objToSend)
+}
 
+
+
+vm.deleteMember = function(deleteMemberId) {
+  console.log('in controller delete,', deleteMemberId)
+  UserService.deleteMember(deleteMemberId); 
+  }
+    
+vm.editService = function(service) {
+      console.log('service', service)
+      console.log('Edit', editServiceObj)
+      var editServiceObj = {
+      service_id: service
+      }
+      if (vm.editSelect !== undefined) {
+        editServiceObj.service_type = parseInt(vm.editSelect)
+      if (vm.editSelect == "") {
+        delete editServiceObj.service_type
+            }
+          }
+         
+          if (vm.editStartYear !== undefined) {
+            editServiceObj.start_date = vm.editStartYear
+            if (vm.editStartYear == "") {
+              delete editServiceObj.start_date
+            }
+          }
+          if (vm.editEndYear !== undefined) {
+            editServiceObj.end_date = vm.editEndYear
+            if (vm.editEndYear == "") {
+              delete editServiceObj.end_date
+            }
+          }
+          if (vm.editAddInfo !== undefined) {
+            editServiceObj.add_info = vm.editAddInfo
+            if (vm.editAddInfo == "") {
+              delete objToSend.add_info
+            }
+          }
+          vm.editServiceArray.push(editServiceObj)
+          console.log('serviceArray', vm.editServiceArray)
+          ;
+          }
+      
+          //delete member
+
+        
+vm.findMeetingsByYear = function(meetingYear) {
+  console.log('meetingYear', meetingYear)
+  UserService.findMeetingsByYear(meetingYear)
+  
+  } //end findMeetingsByYear
+
+vm.getMember = function(member) {
+  console.log('in controller get member', member)
+  UserService.getMember(member);
+  
+  } //end getMember
+
+vm.saveEditMember = function(editMemberId) {
+      var objToSend = {member_id: editMemberId}
+    
+    if (vm.firstEditIn !== undefined) {
+      objToSend.first_name = vm.firstEditIn
+      if (vm.firstEditIn == "") {
+        delete objToSend.first_name
+      }  
+    }
+    if (vm.lastEditIn !== undefined) {
+      objToSend.last_name = vm.lastEditIn
+      if (vm.lastEditIn == "") {
+        delete objToSend.last_name
+      }
+    }
+    if (vm.institutionEditIn !== undefined) {
+      objToSend.institution = vm.institutionEditIn
+      if (vm.institutionEditIn == "") {
+        delete objToSend.institution
+      }
+    }
+    if (vm.departmentEditIn !== undefined) {
+      objToSend.department = vm.departmentEditIn
+      if (vm.departmentEditIn == "") {
+        delete objToSend.department
+      }
+    }
+    if (vm.address_1EditIn !== undefined) {
+      objToSend.address_1 = vm.address_1EditIn
+      if (vm.address_1EditIn == "") {
+        delete objToSend.address_1
+      }
+    }
+    if (vm.address_2EditIn !== undefined) {
+      objToSend.address_2 = vm.address_2EditIn
+      if (vm.address_2EditIn == "") {
+        delete objToSend.address_2
+      }
+    }
+    if (vm.address_3EditIn !== undefined) {
+      objToSend.address_3 = vm.address_3EditIn
+      if (vm.address_3EditIn == "") {
+        delete objToSend.address_3
+      }
+    }
+    if (vm.cityEditIn !== undefined) {
+      objToSend.city = vm.cityEditIn
+      if (vm.cityEditIn == "") {
+        delete objToSend.city
+      }
+    } 
+    if (vm.stateEditIn !== undefined) {
+      objToSend.state= vm.stateEditIn
+      if (vm.stateEditIn == "") {
+        delete objToSend.state
+      }
+    }
+    if (vm.zipcodeEditIn !== undefined) {
+      objToSend.zipcode= vm.zipcodeEditIn
+      if (vm.zipcodeEditIn == "") {
+        delete objToSend.zipcode
+      }
+    }
+    if (vm.countryEditIn !== undefined) {
+      objToSend.country= vm.countryEditIn
+      if (vm.countryEditIn == "") {
+        delete objToSend.country
+      }
+    }
+    if (vm.phoneEditIn !== undefined) {
+      objToSend.phone = vm.phoneEditIn
+      if (vm.phoneEditIn == "") {
+        delete objToSend.phone
+      }
+    }
+    if (vm.emailEditIn !== undefined) {
+      objToSend.email = vm.emailEditIn
+      if (vm.emailEditIn == "") {
+        delete objToSend.email
+      }
+    }
+    if (vm.websiteEditIn !== undefined) {
+      objToSend.website = vm.websiteEditIn
+      if (vm.websiteEditIn == "") {
+        delete objToSend.website
+      }
+    }
+    if (vm.memberStatusEditIn !== undefined) {
+      objToSend.member_status = vm.memberStatusEditIn
+      if (vm.memberStatusEditIn == "") {
+        delete objToSend.member_status
+      }
+    }
+    if (vm.memberYearEditIn !== undefined) {
+      objToSend.member_year = vm.memberYearEditIn
+      if (vm.memberYearEditIn == "") {
+        delete objToSend.member_year
+      }
+    }
+    if (vm.publicationsEditIn !== undefined) {
+      objToSend.publications = vm.publicationsEditIn
+      if (vm.publicationsEditIn == "") {
+        delete objToSend.publications
+      }
+    }
+    if (vm.editServiceArray.length > 0) {
+      objToSend.editServiceArray = vm.editServiceArray
+    }
+    console.log('controller saveEditMember', editMemberId, objToSend)
+    UserService.saveEditMember(objToSend);
+    vm.firstEditIn = ""
+    vm.lastEditIn = ""
+    vm.institutionEditIn = ""
+    vm.departmentEditIn = ""
+    vm.address_1EditIn = ""
+    vm.address_2EditIn = ""
+    vm.address_3EditIn = ""
+    vm.cityEditIn = ""
+    vm.stateEditIn = ""
+    vm.zipcodeEditIn = ""
+    vm.countryEditIn = ""
+    vm.phoneEditIn = ""
+    vm.emailEditIn = ""
+    vm.websiteEditIn = ""
+    vm.memberStatusEditIn = ""
+    vm.memberYearEditIn = ""
+    vm.publicationsEditIn = ""
+    vm.editServiceArray = []
+  }
+  
 vm.ServiceIn = function(meeting) {
   console.log('ServiceAdd')
   var serviceObj = {
-  meetings_id: meeting.id,
+  meetings_id: meeting.meeting_id,
   service_type: parseInt(vm.serviceIn),
   start_date: vm.startYearIn,
   end_date: vm.endYearIn, 
@@ -103,154 +269,15 @@ vm.ServiceIn = function(meeting) {
   vm.startYearIn = undefined,
   vm.endYearIn = undefined,
   vm.addInfoIn = undefined
-  }
+  }; //end ServiceIn
   
-    //get member to Edit
-vm.getMember = function(member) {
-       console.log('in controller get member', member)
-       UserService.getMember(member);
-       console.log('vm.serviceOnly', vm.serviceOnly)
-    }
-    // save edited fields
-vm.saveEditMember = function(editMemberId) {
-      
-      var objToSend = {id: editMemberId}
-      
-      if (vm.firstEditIn !== undefined) {
-        objToSend.first_name = vm.firstEditIn
-        if (vm.firstEditIn == "") {
-          delete objToSend.first_name
-        }
-        
-      }
-      if (vm.lastEditIn !== undefined) {
-        objToSend.last_name = vm.lastEditIn
-        if (vm.lastEditIn == "") {
-          delete objToSend.last_name
-        }
-        
-      }
-      if (vm.institutionEditIn !== undefined) {
-        objToSend.institution = vm.institutionEditIn
-        if (vm.institutionEditIn == "") {
-          delete objToSend.institution
-        }
-        
-      }
-      if (vm.departmentEditIn !== undefined) {
-        objToSend.department = vm.departmentEditIn
-        if (vm.departmentEditIn == "") {
-          delete objToSend.department
-        }
-      }
-      if (vm.address_1EditIn !== undefined) {
-        objToSend.address_1 = vm.address_1EditIn
-        if (vm.address_1EditIn == "") {
-          delete objToSend.address_1
-        }
-      }
-      if (vm.address_2EditIn !== undefined) {
-        objToSend.address_2 = vm.address_2EditIn
-        if (vm.address_2EditIn == "") {
-          delete objToSend.address_2
-        }
-      }
-      if (vm.address_3EditIn !== undefined) {
-        objToSend.address_3 = vm.address_3EditIn
-        if (vm.address_3EditIn == "") {
-          delete objToSend.address_3
-        }
-      }
-      if (vm.cityEditIn !== undefined) {
-        objToSend.city = vm.cityEditIn
-        if (vm.cityEditIn == "") {
-          delete objToSend.city
-        }
-      } 
-      if (vm.stateEditIn !== undefined) {
-        objToSend.state= vm.stateEditIn
-        if (vm.stateEditIn == "") {
-          delete objToSend.state
-        }
-      }
-      if (vm.zipcodeEditIn !== undefined) {
-        objToSend.zipcode= vm.zipcodeEditIn
-        if (vm.zipcodeEditIn == "") {
-          delete objToSend.zipcode
-        }
-      }
-      if (vm.countryEditIn !== undefined) {
-        objToSend.country= vm.countryEditIn
-        if (vm.countryEditIn == "") {
-          delete objToSend.country
-        }
-      }
-      if (vm.phoneEditIn !== undefined) {
-        objToSend.phone = vm.phoneEditIn
-        if (vm.phoneEditIn == "") {
-          delete objToSend.phone
-        }
-      }
-      if (vm.emailEditIn !== undefined) {
-        objToSend.email = vm.emailEditIn
-        if (vm.emailEditIn == "") {
-          delete objToSend.email
-        }
-      }
-      if (vm.websiteEditIn !== undefined) {
-        objToSend.website = vm.websiteEditIn
-        if (vm.websiteEditIn == "") {
-          delete objToSend.website
-        }
-      }
-      if (vm.memberStatusEditIn !== undefined) {
-        objToSend.member_status = vm.memberStatusEditIn
-        if (vm.memberStatusEditIn == "") {
-          delete objToSend.member_status
-        }
-      }
-      if (vm.memberYearEditIn !== undefined) {
-        objToSend.member_year = vm.memberYearEditIn
-        if (vm.memberYearEditIn == "") {
-          delete objToSend.member_year
-        }
-      }
-      if (vm.publicationsEditIn !== undefined) {
-        objToSend.publications = vm.publicationsEditIn
-        if (vm.publicationsEditIn == "") {
-          delete objToSend.publications
-        }
-      }
-      
-      console.log('controller saveEditMember', objToSend)
-      UserService.saveEditMember(objToSend);
-      vm.firstEditIn = ""
-      vm.lastEditIn = ""
-      vm.institutionEditIn = ""
-      vm.departmentEditIn = ""
-      vm.address_1EditIn = ""
-      vm.address_2EditIn = ""
-      vm.address_3EditIn = ""
-      vm.cityEditIn = ""
-      vm.stateEditIn = ""
-      vm.zipcodeEditIn = ""
-      vm.countryEditIn = ""
-      vm.phoneEditIn = ""
-      vm.emailEditIn = ""
-      vm.websiteEditIn = ""
-      vm.memberStatusEditIn = ""
-      vm.memberYearEditIn = ""
-      vm.publicationsEditIn = ""
-      console.log('object after servidce', objToSend) 
-    }
-    //delete member
-    vm.deleteMember = function(deleteMemberId) {
-      console.log('in controller delete,', deleteMemberId)
-      UserService.deleteMember(deleteMemberId);
-      
-      
-    }
-   
+vm.viewMembers = function() {
+  UserService.viewMembers();
+  console.log ('in controller viewMembers running')
+  }; //end viewMembers
+
+
+
 
   
 

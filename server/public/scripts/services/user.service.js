@@ -10,7 +10,7 @@ myApp.service('UserService', function($http, $location){
     self.memberToEdit = {data:[]} // object for findMember
     self.meetingsByYear = {data: []} //object for findMeetingsByYear
     self.serviceOnly = []
-   
+    self.meetings = []
     //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
     self.meetingToEdit = {data: []}//object for getMeeting
@@ -61,8 +61,7 @@ self.addMember = function(objToSend) {
 
 //get member to edit
 self.getMember = function(objToSend) {
-  console.log('In findMember', objToSend);
-   //$http call to get all data from existing form
+  console.log('In findMember', objToSend)
   return $http({
     method: 'POST',
     url: '/members/getmember',
@@ -70,16 +69,20 @@ self.getMember = function(objToSend) {
   }).then(function (res) {
     console.log('Response', res);
     self.memberToEdit.data = res.data
-    self.memberToEdit.data.forEach(function(element) {
-      if (element.meetings_id == 1) {
-        self.serviceOnly.push(element)
-        self.memberToEdit.data.splice(self.memberToEdit.data.indexOf(element, 1))
+    for(let i = 0; i < self.memberToEdit.data.length; i++) {
+      console.log(' Index', i)
+    
+      if (self.memberToEdit.data[i].meetings_id == 1) {
+        console.log('meetings', self.memberToEdit.data[i])
+        self.serviceOnly.push(self.memberToEdit.data[i])
+     } else {
+       self.meetings.push(self.memberToEdit.data[i])
+     }
     }
     
-    })
     console.log('self.serviceOnly', self.serviceOnly)
-    console.log('emberToEdit.data', self.memberToEdit.data)
- 
+    console.log('emberToEdit.data', self.meetings)
+    
   })
 };
 //save edits to member
@@ -90,10 +93,9 @@ self.saveEditMember = function(objToSend) {
       url:    '/members',
       data:   objToSend
   }).then(function(res) {
-      console.log('editMember response:', res );
-      console.log('objToSend.id after call:', objToSend.id);
-      self.viewMembers();
-      self.getMember(objToSend.id);
+      self.getMember(objToSend);
+      self.serviceOnly = []
+      self.meetings = []
     //need a confirmation alert or something here
   }); //end then
 }; //end saveEditmember

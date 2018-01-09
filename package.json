@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/Jessica1120/IATRC#readme",
   "dependencies": {
-    "angular": "^1.6.7",
-    "angular-animate": "^1.6.7",
-    "angular-route": "^1.6.7",
-    "angular-touch": "^1.6.7",
+    "angular": "^1.6.8",
+    "angular-animate": "^1.6.8",
+    "angular-route": "^1.6.8",
+    "angular-touch": "^1.6.8",
     "angular-ui-bootstrap": "^2.5.6",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
@@ -31,7 +31,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "pg": "^7.4.0",
+    "pg": "^7.4.1",
     "ui-bootstrap": "^0.1.10"
   }
 }
