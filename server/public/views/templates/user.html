@@ -7,11 +7,13 @@
         <div class="col-md-6"  id="membersView"> <!--Column 1 Row 1-->
             <section ng-init="uc.viewMembers()" id="viewMembers">
                 <div class="memberList" ng-repeat="member in uc.memberList.data">
+                    
                     <h5 class="names" ng-click="uc.getMember(member)">
                         <div class="names">
                             <span class = "capitalize">{{member.last_name}}</span>, {{member.first_name}}
                         </div> 
                     </h5>
+                  
                 </div>
 
             </section>
@@ -152,7 +154,7 @@
                 <div class="col-md-6"> <!-- column 2, row 2, Column 2, Row 1 -->
                     <section class="row"> <!-- row 1, column 2, row 2, Column 2, Row 1 -->
                         Service:
-                        <div ng-repeat="service in uc.serviceOnly"> 
+                        <div ng-repeat="service in uc.serviceOnly.data"> 
                             <div ng-click="mainService=!mainService">
                                 {{service.service_type}}, {{service.start_date}} - {{service.end_date}}
                             </div>
@@ -191,6 +193,7 @@
                     </section>  <!-- end row 1, column 2, row 2, Column 2, Row 1 -->
                         
                     <section class="row"> <!-- row 2, column 2, row 2, Column 2, Row 1 --> 
+                    <div class = "col-md">
                         Meetings:
                         <div ng-repeat="meeting in uc.meetings">
                             <p ng-click="meetingService=!meetingService">{{meeting.year}} - {{meeting.topic}} {{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}}</p>
@@ -225,13 +228,14 @@
                                         <option value=5>Other</option>
                                     </select>
                                     <input type="text" placeholder="additional information" ng-model="uc.addMeetingInfoIn" >
-                                    <div ng-click="addMeeting=!addMeeting">
-                                        <button ng-click="uc.addMembertoMeeting(uc.memberToEdit.data[0].member_id, meeting.meeting_id)">Add</button>
+                                    <div ng-click="addtoMeeting=!addtoMeeting">
+                                        <button ng-click="uc.addMembertoMeeting(uc.memberToEdit.data[0].member_id, meeting.meeting_id)">Save</button>
                                         <button type="button">Cancel</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>    
                     </section><!-- end row 2, column 2, row 2, Column 2, Row 1 -->
                         
                     <section class = "row"> <!-- row 3, column 2, row 2, Column 2, Row 1 -->

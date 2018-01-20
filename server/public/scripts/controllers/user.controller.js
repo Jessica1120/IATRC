@@ -8,10 +8,9 @@ myApp.controller('UserController', function(UserService) {
     vm.meetingsByYear = UserService.meetingsByYear;
     vm.serviceArray = [] // array to send to Database
     vm.defaultMeeting = {meeting_id: 1}
-    vm.serviceOnly = UserService.serviceOnly //array to display Service only on DOM
-    vm.meetings = UserService.meetings
     vm.editServiceArray = []
-
+    vm.serviceOnly = UserService.serviceOnly
+    vm.meetings = UserService.meetings
 
 vm.addMember = function() {
       console.log ('in controller addMember running')
@@ -61,9 +60,13 @@ vm.addMembertoMeeting = function(member_id, meeting_id) {
     member_id: member_id,
     meeting_id: meeting_id,
     service_type: vm.serviceIn,
+    start_date: vm.start_dateIn,
+    end_date: vm.end_dateIn,
     add_info: vm.addMeetingInfoIn
   }
 console.log('add meeting', objToSend)
+UserService.addMembertoMeeting(objToSend)
+
 }
 
 
@@ -118,11 +121,13 @@ vm.findMeetingsByYear = function(meetingYear) {
   
   } //end findMeetingsByYear
 
-vm.getMember = function(member) {
-  console.log('in controller get member', member)
-  UserService.getMember(member);
   
+vm.getMember = function(member) {
+  
+  UserService.getMember(member);
+  console.log('controller', vm.serviceOnly)
   } //end getMember
+
 
 vm.saveEditMember = function(editMemberId) {
       var objToSend = {member_id: editMemberId}

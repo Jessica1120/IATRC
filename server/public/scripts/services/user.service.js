@@ -9,17 +9,31 @@ myApp.service('UserService', function($http, $location){
     self.memberList = {data: []} //object for viewMembers get
     self.memberToEdit = {data:[]} // object for findMember
     self.meetingsByYear = {data: []} //object for findMeetingsByYear
-    self.serviceOnly = []
-    self.meetings = []
+    
     //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
     self.meetingToEdit = {data: []}//object for getMeeting
     self.allMembers = {data:[]} //object for ViewMembersMeeting
     self.updatedMeeting = {data:[]} // object for findMember
-
+    self.serviceOnly = {data: []}
+    self.meetings = {data: []}
 
 
     //MEMBER PAGE FUNCTIONS
+self.addMembertoMeeting = function(objToSend) {
+  console.log('in add Memeberto Meeting', objToSend)
+  $http({
+      method: 'POST',
+      url:    'members/memberToMeeting',
+      data:   objToSend
+  }).then(function(res) {
+      console.log('addMembertoMeeting response:', res );
+      self.getMember(objToSend);
+      self.serviceOnly = []
+      self.meetings = []
+    //need a confirmation alert or something here
+  }); //end then
+}; //end addMembertoMeeting
 
   //view members Get on page load
 self.viewMembers = function(){
@@ -67,24 +81,25 @@ self.getMember = function(objToSend) {
     url: '/members/getmember',
     data: objToSend
   }).then(function (res) {
-    console.log('Response', res);
-    self.memberToEdit.data = res.data
-    for(let i = 0; i < self.memberToEdit.data.length; i++) {
-      console.log(' Index', i)
-    
-      if (self.memberToEdit.data[i].meetings_id == 1) {
-        console.log('meetings', self.memberToEdit.data[i])
-        self.serviceOnly.push(self.memberToEdit.data[i])
-     } else {
-       self.meetings.push(self.memberToEdit.data[i])
-     }
-    }
-    
-    console.log('self.serviceOnly', self.serviceOnly)
-    console.log('emberToEdit.data', self.meetings)
-    
+    console.log('Response', res.data);
+    self.memberToEdit.data = res.data;
+    self.memberService();
   })
 };
+self.memberService = function() {
+    self.serviceOnly.data = []
+    self.meetings.data = []
+  for(let i = 0; i < self.memberToEdit.data.length; i++) {
+    if (self.memberToEdit.data[i].meetings_id == 1) {
+      self.serviceOnly.data.push(self.memberToEdit.data[i])
+   } else {
+     self.meetings.data.push(self.memberToEdit.data[i])
+   }
+  }
+  console.log('self.serviceOnly', self.serviceOnly)
+  console.log('self.meetings', self.meetings)
+}
+
 //save edits to member
 self.saveEditMember = function(objToSend) {
   console.log('service Obj', objToSend)
@@ -94,8 +109,8 @@ self.saveEditMember = function(objToSend) {
       data:   objToSend
   }).then(function(res) {
       self.getMember(objToSend);
-      self.serviceOnly = []
-      self.meetings = []
+      // self.serviceOnly = []
+      // self.meetings = []
     //need a confirmation alert or something here
   }); //end then
 }; //end saveEditmember
@@ -217,7 +232,7 @@ self.getuser = function(){
         console.log('UserService -- getuser -- failure: ', response);
         $location.path("/home");
       });
-    }
+    } //end get user
   
     self.logout = function() {
       console.log('UserService -- logout');
@@ -225,7 +240,8 @@ self.getuser = function(){
         console.log('UserService -- logout -- logged out');
         $location.path("/home");
       });
-    }
-  }); 
+    } //end logout
+  
+  }); //end app 
 
  
