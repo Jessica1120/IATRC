@@ -155,20 +155,18 @@
                     <section class="row"> <!-- row 1, column 2, row 2, Column 2, Row 1 -->
                         Service:
                         <div ng-repeat="service in uc.serviceOnly.data"> 
+                                {{service.service_type}}
                             <div ng-click="mainService=!mainService">
-                                {{service.service_type}}, {{service.start_date}} - {{service.end_date}}
+                                {{service.start_date}} - {{service.end_date}}
+                                {{service.add_info}}
                             </div>
                             <div ng-hide="!mainService">
-                                <select ng-model="uc.editSelect" class="dropdown">
-                                    <option value=1>Executive Committee Member - Elected</option>
-                                    <option value=2>Executive Committee Member - Representing Funding Agency</option>
-                                    <option value=5>Other</option>
-                                </select>  
+
                                 <input type="number" placeholder="start year" ng-model="uc.editStartYear">
                                 <input type="number" placeholder="end year" ng-model="uc.editEndYear">
                                 <input type="text" placeholder="additional information" ng-model="uc.editAddInfo">
                                 <div ng-click="mainService=!mainService">
-                                    <button type="button" ng-click="uc.editService(service.service_id)">Save</button>
+                                    <button type="button" ng-click="uc.editService(service.service_id, uc.memberToEdit.data[0].member_id)">Save</button>
                                     <button type="button" ng-click="uc.delete(service)">Delete Service</button>    
                                     <button type="button">Cancel</button>
                                 </div>
@@ -195,9 +193,10 @@
                     <section class="row"> <!-- row 2, column 2, row 2, Column 2, Row 1 --> 
                     <div class = "col-md">
                         Meetings:
-                        <div ng-repeat="meeting in uc.meetings">
+                        <div ng-repeat="meeting in uc.meetings.data">
                             <p ng-click="meetingService=!meetingService">{{meeting.year}} - {{meeting.topic}} {{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}}</p>
                             {{meeting.service_type}}
+                            {{meeting.add_info}}
                             <div ng-hide="!meetingService">
                                 <select ng-model="uc.editMeetingIn" class="dropdown">
                                     <option value=6>Attendance Only</option>

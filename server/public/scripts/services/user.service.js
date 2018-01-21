@@ -86,7 +86,7 @@ self.getMember = function(objToSend) {
     self.memberService();
   })
 };
-self.memberService = function() {
+self.memberService = function() { //called as part of getMember function
     self.serviceOnly.data = []
     self.meetings.data = []
   for(let i = 0; i < self.memberToEdit.data.length; i++) {
@@ -109,9 +109,19 @@ self.saveEditMember = function(objToSend) {
       data:   objToSend
   }).then(function(res) {
       self.getMember(objToSend);
-      // self.serviceOnly = []
-      // self.meetings = []
-    //need a confirmation alert or something here
+    // need a confirmation alert or something here
+  }); //end then
+}; //end saveEditmember
+
+self.editService = function(objToSend) {
+  console.log('service Obj', objToSend)
+  return $http({
+      method: 'PUT',
+      url:    '/members/service',
+      data:   objToSend
+  }).then(function(res) {
+      self.getMember(res.data);
+    // need a confirmation alert or something here
   }); //end then
 }; //end saveEditmember
 

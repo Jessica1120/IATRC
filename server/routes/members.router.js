@@ -200,7 +200,7 @@ router.post('/getmember', function (req, res) {
             console.log('error', queryErr)
             res.sendStatus(500);
           } else {
-            console.log(resultObj.rows)
+            console.log('getmemberreturn', resultObj.rows)
             res.send(resultObj.rows);
               }
         }) // end query
@@ -256,6 +256,58 @@ router.put('/', function (req, res) {
   }
 }); //end edit member
 
+//edit member Service
+router.put('/service', function (req, res) {
+  var editService = req.body;
+  console.log('In PUT edit Service', req.body);
+  if (req.isAuthenticated()) {
+    pool.connect(function (connectionError, client, done) {
+      if (connectionError) {
+        console.log(connectionError);
+        res.sendStatus(500);
+      } else {
+        var valueArray = []
+        var tempvarQuery = []
+        var bling = 0
+        for (var i = 0 in editService) {
+          valueArray.push(editService[i]);
+          }
+        for (const prop in editService) {
+          bling++
+          var eb = ' = $'
+          tempvarQuery.push(prop+eb+bling)
+        }
+        var queryFields = tempvarQuery.join(', ')
+        var gQuery = 'UPDATE members_meetings SET ' + queryFields + ' WHERE members_id = $1 returning members_id'
+        console.log('line 113 query, value arry:', gQuery, valueArray)
+        client.query(gQuery, valueArray, function(queryError, resultObj) {
+            done();
+            if(queryError) {
+                console.log('1st error',queryError);
+                res.sendStatus(500);
+            } else {
+              console.log('res', resultObj.rows[0])
+              var sQuery = 'SELECT member_id FROM members INNER JOIN members_meetings ON members.member_id = members_meetings.members_id WHERE members_meetings.members_id = $1';
+              var valueArray2 = [resultObj.rows[0].members_id];
+              client.query(sQuery, valueArray2, function (queryError, resultObj) {
+              done();
+                if (queryError) {
+                  console.log('2nd error', queryError);
+                  res.sendStatus(500);
+                } else {
+                console.log('Update member Put successful', resultObj.rows[0]);
+                res.send(resultObj.rows[0]);
+            } //end result else
+        }); //end query
+      };
+      }) 
+    }//end pool else
+    }) //end pool connect 
+  } else {
+    console.log('not logged in');
+    res.send(false);//end auth if
+  }
+}); //end edit member
 //delete member
 router.put('/delete/:id', function(req, res) {
   var deleteMember = req.params.id

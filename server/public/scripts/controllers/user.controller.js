@@ -8,7 +8,6 @@ myApp.controller('UserController', function(UserService) {
     vm.meetingsByYear = UserService.meetingsByYear;
     vm.serviceArray = [] // array to send to Database
     vm.defaultMeeting = {meeting_id: 1}
-    vm.editServiceArray = []
     vm.serviceOnly = UserService.serviceOnly
     vm.meetings = UserService.meetings
 
@@ -76,19 +75,13 @@ vm.deleteMember = function(deleteMemberId) {
   UserService.deleteMember(deleteMemberId); 
   }
     
-vm.editService = function(service) {
-      console.log('service', service)
-      console.log('Edit', editServiceObj)
+vm.editService = function(service, memberId) {
+      console.log('service', service, memberId)
+      
       var editServiceObj = {
-      service_id: service
+        members_id: memberId,
+        service_id: service
       }
-      if (vm.editSelect !== undefined) {
-        editServiceObj.service_type = parseInt(vm.editSelect)
-      if (vm.editSelect == "") {
-        delete editServiceObj.service_type
-            }
-          }
-         
           if (vm.editStartYear !== undefined) {
             editServiceObj.start_date = vm.editStartYear
             if (vm.editStartYear == "") {
@@ -107,8 +100,8 @@ vm.editService = function(service) {
               delete objToSend.add_info
             }
           }
-          vm.editServiceArray.push(editServiceObj)
-          console.log('serviceArray', vm.editServiceArray)
+          console.log('Edit', editServiceObj)
+          UserService.editService(editServiceObj)
           ;
           }
       
@@ -130,6 +123,7 @@ vm.getMember = function(member) {
 
 
 vm.saveEditMember = function(editMemberId) {
+  console.log('saveEditMemberrunning')
       var objToSend = {member_id: editMemberId}
     
     if (vm.firstEditIn !== undefined) {
