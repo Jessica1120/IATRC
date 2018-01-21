@@ -75,12 +75,12 @@ vm.deleteMember = function(deleteMemberId) {
   UserService.deleteMember(deleteMemberId); 
   }
     
-vm.editService = function(service, memberId) {
-      console.log('service', service, memberId)
+vm.editService = function(primaryId, memberId) {
+      console.log('service', primaryId, memberId, vm.editMeetingIn)
       
       var editServiceObj = {
         members_id: memberId,
-        service_id: service
+        primary_id: primaryId
       }
           if (vm.editStartYear !== undefined) {
             editServiceObj.start_date = vm.editStartYear
@@ -92,6 +92,12 @@ vm.editService = function(service, memberId) {
             editServiceObj.end_date = vm.editEndYear
             if (vm.editEndYear == "") {
               delete editServiceObj.end_date
+            }
+          }
+          if (vm.editMeetingIn !== undefined) {
+            editServiceObj.service_id = vm.editMeetingIn
+            if (vm.editMeetingIn == "") {
+              delete editServiceObj.service_id
             }
           }
           if (vm.editAddInfo !== undefined) {
