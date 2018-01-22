@@ -19,7 +19,74 @@ myApp.service('UserService', function($http, $location){
     self.meetings = {data: []}
 
 
-    //MEMBER PAGE FUNCTIONS
+//MEMBER PAGE FUNCTIONS
+self.viewMembers = function(){
+  console.log('viewMembers in Service running')
+  return $http({
+    method: 'GET',
+    url: '/members'
+  })
+    .then(function (res) {
+      self.memberList.data = res.data;
+     console.log('allMembers in Service', self.memberList)
+    }) //end call back function
+  }// end view Members
+  //edit box functions
+
+//get member to edit
+self.getMember = function(objToSend) {
+  console.log('In findMember', objToSend)
+  return $http({
+    method: 'POST',
+    url: '/members/getmember',
+    data: objToSend
+  }).then(function (res) {
+    console.log('Response', res.data);
+    self.memberToEdit.data = res.data;
+    self.memberService();
+  })
+};
+//gets service information for getMember function
+self.memberService = function() { 
+  self.serviceOnly.data = []
+  self.meetings.data = []
+  for(let i = 0; i < self.memberToEdit.data.length; i++) {
+    if (self.memberToEdit.data[i].meetings_id == 1) {
+      self.serviceOnly.data.push(self.memberToEdit.data[i])
+    } else {
+      self.meetings.data.push(self.memberToEdit.data[i])
+    }
+  }
+  console.log('self.serviceOnly', self.serviceOnly)
+  console.log('self.meetings', self.meetings)
+}
+//save edited non-service related information
+self.saveEditMember = function(objToSend) {
+  console.log('service Obj', objToSend)
+  return $http({
+      method: 'PUT',
+      url:    '/members',
+      data:   objToSend
+  }).then(function(res) {
+      self.getMember(objToSend);
+    // need a confirmation alert or something here
+  }); //end then
+}; //end saveEditmember
+
+//edit service information
+self.editService = function(objToSend) {
+  console.log('service Obj', objToSend)
+  return $http({
+      method: 'PUT',
+      url:    '/members/service',
+      data:   objToSend
+  }).then(function(res) {
+      self.getMember(res.data);
+    // need a confirmation alert or something here
+  }); //end then
+}; //end editService
+
+//adding service
 self.addMembertoMeeting = function(objToSend) {
   console.log('in add Memeberto Meeting', objToSend)
   $http({
@@ -35,18 +102,8 @@ self.addMembertoMeeting = function(objToSend) {
   }); //end then
 }; //end addMembertoMeeting
 
-  //view members Get on page load
-self.viewMembers = function(){
-    console.log('viewMembers in Service running')
-    return $http({
-      method: 'GET',
-      url: '/members'
-    })
-      .then(function (res) {
-        self.memberList.data = res.data;
-       console.log('allMembers in Service', self.memberList)
-      }) //end call back function
-    }// end view Members
+
+
 
     //view Meetings by year
 self.findMeetingsByYear = function(meetingYear){
@@ -73,57 +130,12 @@ self.addMember = function(objToSend) {
   }); //end then
 }; //end addMember
 
-//get member to edit
-self.getMember = function(objToSend) {
-  console.log('In findMember', objToSend)
-  return $http({
-    method: 'POST',
-    url: '/members/getmember',
-    data: objToSend
-  }).then(function (res) {
-    console.log('Response', res.data);
-    self.memberToEdit.data = res.data;
-    self.memberService();
-  })
-};
-self.memberService = function() { //called as part of getMember function
-    self.serviceOnly.data = []
-    self.meetings.data = []
-  for(let i = 0; i < self.memberToEdit.data.length; i++) {
-    if (self.memberToEdit.data[i].meetings_id == 1) {
-      self.serviceOnly.data.push(self.memberToEdit.data[i])
-   } else {
-     self.meetings.data.push(self.memberToEdit.data[i])
-   }
-  }
-  console.log('self.serviceOnly', self.serviceOnly)
-  console.log('self.meetings', self.meetings)
-}
+
+
 
 //save edits to member
-self.saveEditMember = function(objToSend) {
-  console.log('service Obj', objToSend)
-  return $http({
-      method: 'PUT',
-      url:    '/members',
-      data:   objToSend
-  }).then(function(res) {
-      self.getMember(objToSend);
-    // need a confirmation alert or something here
-  }); //end then
-}; //end saveEditmember
 
-self.editService = function(objToSend) {
-  console.log('service Obj', objToSend)
-  return $http({
-      method: 'PUT',
-      url:    '/members/service',
-      data:   objToSend
-  }).then(function(res) {
-      self.getMember(res.data);
-    // need a confirmation alert or something here
-  }); //end then
-}; //end saveEditmember
+
 
 self.deleteMember = function(deleteMemberId) {
   console.log('service delete running', deleteMemberId)

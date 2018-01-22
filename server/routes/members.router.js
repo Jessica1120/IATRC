@@ -33,6 +33,42 @@ router.get('/', function (req, res) {
   }
 });//end view members Get call
 
+//get member to edit
+router.post('/getmember', function (req, res) {
+  console.log('get member running', req.body)
+  var memberToEdit = req.body
+  if (req.isAuthenticated()) {
+    pool.connect(function (conErr, client, done) {
+      if (conErr) {
+        console.log('pool.connect', conErr)
+        res.sendStatus(500);
+      } else {
+        var valueArray = [memberToEdit.member_id]
+        if (memberToEdit.past_service == false) {
+        editQuery = 'SELECT * FROM members WHERE member_id = $1';
+        } else {
+          editQuery = 'SELECT * FROM members FULL JOIN members_meetings ON members.member_id = members_meetings.members_id FULL JOIN meetings ON meetings.meeting_id = members_meetings.meetings_id FULL JOIN service ON service.service_id = members_meetings.service_id WHERE members.member_id = $1'
+        }
+        client.query(editQuery, valueArray, function (queryErr, resultObj) {
+          done();
+          if (queryErr) {
+            console.log('error', queryErr)
+            res.sendStatus(500);
+          } else {
+            console.log('getmemberreturn', resultObj.rows)
+            res.send(resultObj.rows);
+              }
+        }) // end query
+      } // end pool else
+    }) // end pool connect
+  } else {
+    // failure best handled on the server. do redirect here.
+    console.log('not logged in');
+    // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
+    res.send(false);
+  } //end else
+}); //end get member to edit get call
+
 //Get meetings by Year
 router.get('/meetingsByYear/:id', function(req, res) {
   var meetingsYear = req.params.id
@@ -178,41 +214,7 @@ router.post('/memberToMeeting', function (req, res) {
   } //end else
 }); //end add member to meeting
 
-//get member to edit
-router.post('/getmember', function (req, res) {
-  console.log('get member running', req.body)
-  var memberToEdit = req.body
-  if (req.isAuthenticated()) {
-    pool.connect(function (conErr, client, done) {
-      if (conErr) {
-        console.log('pool.connect', conErr)
-        res.sendStatus(500);
-      } else {
-        var valueArray = [memberToEdit.member_id]
-        if (memberToEdit.past_service == false) {
-        editQuery = 'SELECT * FROM members WHERE member_id = $1';
-        } else {
-          editQuery = 'SELECT * FROM members FULL JOIN members_meetings ON members.member_id = members_meetings.members_id FULL JOIN meetings ON meetings.meeting_id = members_meetings.meetings_id FULL JOIN service ON service.service_id = members_meetings.service_id WHERE members.member_id = $1'
-        }
-        client.query(editQuery, valueArray, function (queryErr, resultObj) {
-          done();
-          if (queryErr) {
-            console.log('error', queryErr)
-            res.sendStatus(500);
-          } else {
-            console.log('getmemberreturn', resultObj.rows)
-            res.send(resultObj.rows);
-              }
-        }) // end query
-      } // end pool else
-    }) // end pool connect
-  } else {
-    // failure best handled on the server. do redirect here.
-    console.log('not logged in');
-    // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
-    res.send(false);
-  } //end else
-}); //end get member to edit get call
+
 
 //edit member information
 router.put('/', function (req, res) {
@@ -268,17 +270,26 @@ router.put('/service', function (req, res) {
       } else {
         var valueArray = []
         var tempvarQuery = []
-        var bling = 0
+        var bling = 1
         for (var i = 0 in editService) {
+          if (editService[i] == editService.primary_id) {
+            valueArray.splice(0, 0, editService[i])
+          } else {
           valueArray.push(editService[i]);
           }
+          }
         for (const prop in editService) {
+          
+          if (prop == 'primary_id') {
+            delete editService.primary_id
+          } else {
           bling++
           var eb = ' = $'
           tempvarQuery.push(prop+eb+bling)
+          }
         }
         var queryFields = tempvarQuery.join(', ')
-        var gQuery = 'UPDATE members_meetings SET ' + queryFields + ' WHERE members_id = $1 returning members_id'
+        var gQuery = 'UPDATE members_meetings SET ' + queryFields + ' WHERE primary_id = $1 returning members_id'
         console.log('line 113 query, value arry:', gQuery, valueArray)
         client.query(gQuery, valueArray, function(queryError, resultObj) {
             done();
