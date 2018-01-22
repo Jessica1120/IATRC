@@ -245,6 +245,34 @@ router.post('/addService', function (req, res) {
   } //end else
 }); //end addService
 
+router.delete('/deleteService/:id', function(req, res) {
+  var deleteService = req.params.id
+  console.log('in Delete', deleteService)
+  if (req.isAuthenticated()) {
+    pool.connect(function (conErr, client, done) {
+      if (conErr) {
+        res.sendStatus(500);
+      } else {
+        var valueArray = [deleteService]
+        deleteQuery = 'DELETE FROM members_meetings WHERE primary_id = $1'
+        client.query(deleteQuery, valueArray, function (queryErr, resultObj) {
+          done();
+          if (queryErr) {
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(200);
+          }
+        }) // end query
+      } // end pool else
+    }) // end pool connect
+  } else {
+    // failure best handled on the server. do redirect here.
+    console.log('not logged in');
+    // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
+    res.send(false);
+  } //end else
+}); //end get member to edit get call
+
 
 
 //add member Post

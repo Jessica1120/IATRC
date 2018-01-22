@@ -113,7 +113,17 @@ self.addService = function(objToSend) {
     //need a confirmation alert or something here
   }); //end then
 }; //end addService
-      //addMember post Call 
+      
+self.deleteService = function (service) {
+  return $http ({
+    method: 'DELETE',
+    url: '/members/deleteService/' + service
+  }).then(function (res) {
+    console.log(res)
+  })
+}
+
+//addMember post Call 
 self.addMember = function(objToSend) {
   console.log('inserviceobjtosend', objToSend)
   $http({
@@ -125,13 +135,6 @@ self.addMember = function(objToSend) {
     //need a confirmation alert or something here
   }); //end then
 }; //end addMember
-
-
-
-
-//save edits to member
-
-
 
 self.deleteMember = function(deleteMemberId) {
   console.log('service delete running', deleteMemberId)
