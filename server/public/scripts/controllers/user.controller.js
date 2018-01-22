@@ -15,14 +15,13 @@ myApp.controller('UserController', function(UserService) {
 vm.viewMembers = function() {
   UserService.viewMembers();
   console.log ('in controller viewMembers running')
-  }; //end viewMembers
-
+}; //end viewMembers
 
 //Click on member to view/edit
 vm.getMember = function(member) {
   UserService.getMember(member);
   console.log('vm.serviceOnly Array in getMember', vm.serviceOnly)
-  } //end getMember
+} //end getMember
 
 //saveEditMember function to edit non-service info
 vm.saveEditMember = function(editMemberId) {
@@ -131,7 +130,7 @@ vm.saveEditMember = function(editMemberId) {
         delete objToSend.publications
       }
     }
-    console.log('csaveEditMember object', objToSend)
+    console.log('saveEditMember object', objToSend)
     UserService.saveEditMember(objToSend);
     vm.firstEditIn = ""
     vm.lastEditIn = ""
@@ -150,8 +149,71 @@ vm.saveEditMember = function(editMemberId) {
     vm.memberStatusEditIn = ""
     vm.memberYearEditIn = ""
     vm.publicationsEditIn = "" 
-  } //end saveEditMember
+}; //end saveEditMember
   
+//edit Service
+vm.editService = function(primaryId, memberId) {
+    console.log('service', primaryId, memberId, vm.editMeetingIn)
+    
+    var editServiceObj = {
+      members_id: memberId,
+      primary_id: primaryId
+    }
+        if (vm.editStartYear !== undefined) {
+          editServiceObj.start_date = vm.editStartYear
+          if (vm.editStartYear == "") {
+            delete editServiceObj.start_date
+          }
+        }
+        if (vm.editEndYear !== undefined) {
+          editServiceObj.end_date = vm.editEndYear
+          if (vm.editEndYear == "") {
+            delete editServiceObj.end_date
+          }
+        }
+        if (vm.editMeetingIn !== undefined) {
+          editServiceObj.service_id = vm.editMeetingIn
+          if (vm.editMeetingIn == "") {
+            delete editServiceObj.service_id
+          }
+        }
+        if (vm.editAddInfo !== undefined) {
+          editServiceObj.add_info = vm.editAddInfo
+          if (vm.editAddInfo == "") {
+            delete objToSend.add_info
+          }
+        }
+        console.log('Edit', editServiceObj)
+        UserService.editService(editServiceObj);
+}; //end edit Service
+
+//adding member to meeting pt 1 - search for meeting
+vm.findMeetingsByYear = function(meetingYear) {
+  console.log('meetingYear', meetingYear)
+  UserService.findMeetingsByYear(meetingYear)
+}; //end findMeetingsByYear
+
+//addService
+vm.addService = function(member_id, meetings_id) {
+  console.log(meetings_id)
+  var objToSend = {
+    member_id: member_id,
+    service_id: parseInt(vm.serviceIn),
+    meetings_id: meetings_id,
+    start_date: vm.start_dateIn,
+    end_date: vm.end_dateIn,
+    add_info: vm.addInfoIn
+    }
+    if (meetings_id == undefined) {
+      objToSend.meetings_id = 1
+  }
+  console.log('add service', objToSend)
+  UserService.addService(objToSend)
+}; //end addService
+
+
+
+
 vm.addMember = function() {
       console.log ('in controller addMember running')
       var objToSend = {
@@ -198,19 +260,6 @@ vm.addMember = function() {
 
 
 
-    vm.addMembertoMeeting = function(member_id, meeting_id) {
-  var objToSend = {
-    member_id: member_id,
-    meeting_id: meeting_id,
-    service_type: vm.serviceIn,
-    start_date: vm.start_dateIn,
-    end_date: vm.end_dateIn,
-    add_info: vm.addMeetingInfoIn
-  }
-console.log('add meeting', objToSend)
-UserService.addMembertoMeeting(objToSend)
-
-}
 
 
 
@@ -219,50 +268,12 @@ vm.deleteMember = function(deleteMemberId) {
   UserService.deleteMember(deleteMemberId); 
   }
     
-vm.editService = function(primaryId, memberId) {
-      console.log('service', primaryId, memberId, vm.editMeetingIn)
-      
-      var editServiceObj = {
-        members_id: memberId,
-        primary_id: primaryId
-      }
-          if (vm.editStartYear !== undefined) {
-            editServiceObj.start_date = vm.editStartYear
-            if (vm.editStartYear == "") {
-              delete editServiceObj.start_date
-            }
-          }
-          if (vm.editEndYear !== undefined) {
-            editServiceObj.end_date = vm.editEndYear
-            if (vm.editEndYear == "") {
-              delete editServiceObj.end_date
-            }
-          }
-          if (vm.editMeetingIn !== undefined) {
-            editServiceObj.service_id = vm.editMeetingIn
-            if (vm.editMeetingIn == "") {
-              delete editServiceObj.service_id
-            }
-          }
-          if (vm.editAddInfo !== undefined) {
-            editServiceObj.add_info = vm.editAddInfo
-            if (vm.editAddInfo == "") {
-              delete objToSend.add_info
-            }
-          }
-          console.log('Edit', editServiceObj)
-          UserService.editService(editServiceObj)
-          ;
-          }
+
       
           //delete member
 
         
-vm.findMeetingsByYear = function(meetingYear) {
-  console.log('meetingYear', meetingYear)
-  UserService.findMeetingsByYear(meetingYear)
-  
-  } //end findMeetingsByYear
+
 
   
 
@@ -270,22 +281,7 @@ vm.findMeetingsByYear = function(meetingYear) {
 
 
   
-vm.ServiceIn = function(meeting) {
-  console.log('ServiceAdd')
-  var serviceObj = {
-  meetings_id: meeting.meeting_id,
-  service_type: parseInt(vm.serviceIn),
-  start_date: vm.startYearIn,
-  end_date: vm.endYearIn, 
-  add_info: vm.addInfoIn
-  }
-  vm.serviceArray.push(serviceObj)
-  console.log('serviceArray', vm.serviceArray)
-  vm.serviceIn = undefined,
-  vm.startYearIn = undefined,
-  vm.endYearIn = undefined,
-  vm.addInfoIn = undefined
-  }; //end ServiceIn
+
   
 
 

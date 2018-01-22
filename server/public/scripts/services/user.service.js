@@ -87,20 +87,20 @@ self.editService = function(objToSend) {
 }; //end editService
 
 //adding service
-self.addMembertoMeeting = function(objToSend) {
-  console.log('in add Memeberto Meeting', objToSend)
+self.addService = function(objToSend) {
+  console.log('addService', objToSend)
   $http({
       method: 'POST',
-      url:    'members/memberToMeeting',
+      url:    'members/addService',
       data:   objToSend
   }).then(function(res) {
-      console.log('addMembertoMeeting response:', res );
+      console.log('addService response:', res );
       self.getMember(objToSend);
       self.serviceOnly = []
       self.meetings = []
     //need a confirmation alert or something here
   }); //end then
-}; //end addMembertoMeeting
+}; //end addService
 
 
 

@@ -68,6 +68,109 @@ router.post('/getmember', function (req, res) {
     res.send(false);
   } //end else
 }); //end get member to edit get call
+//edit member information
+router.put('/', function (req, res) {
+  var editMember = req.body;
+  console.log('In PUT edit Member', req.body);
+  if (req.isAuthenticated()) {
+    pool.connect(function (connectionError, client, done) {
+      if (connectionError) {
+        console.log(connectionError);
+        res.sendStatus(500);
+      } else {
+        var valueArray = []
+        var tempvarQuery = []
+        var bling = 0
+        for (var i = 0 in editMember) {
+          valueArray.push(editMember[i]);
+          }
+        for (const prop in editMember) {
+          bling++
+          var eb = ' = $'
+          tempvarQuery.push(prop+eb+bling)
+        }
+        var queryFields = tempvarQuery.join(', ')
+        var gQuery = 'UPDATE members SET ' + queryFields + ' WHERE member_id = $1 Returning past_service'
+        console.log('line 113 query, value arry:', gQuery, valueArray)
+        client.query(gQuery, valueArray, function(queryError, resultObj) {
+            done();
+            if(queryError) {
+                console.log(queryError);
+                res.sendStatus(500);
+            } else {
+                console.log('Update member Put successful');
+                res.send(resultObj.rows);
+            } //end result else
+        }); //end query
+      } //end pool else
+    }) //end pool connect 
+  } else {
+    console.log('not logged in');
+    res.send(false);//end auth if
+  }
+}); //end edit member
+
+//edit member service
+router.put('/service', function (req, res) {
+  var editService = req.body;
+  console.log('In PUT edit Service', req.body);
+  if (req.isAuthenticated()) {
+    pool.connect(function (connectionError, client, done) {
+      if (connectionError) {
+        console.log(connectionError);
+        res.sendStatus(500);
+      } else {
+        var valueArray = []
+        var tempvarQuery = []
+        var bling = 1
+        for (var i = 0 in editService) {
+          if (editService[i] == editService.primary_id) {
+            valueArray.splice(0, 0, editService[i])
+          } else {
+          valueArray.push(editService[i]);
+          }
+          }
+        for (const prop in editService) {
+          
+          if (prop == 'primary_id') {
+            delete editService.primary_id
+          } else {
+          bling++
+          var eb = ' = $'
+          tempvarQuery.push(prop+eb+bling)
+          }
+        }
+        var queryFields = tempvarQuery.join(', ')
+        var gQuery = 'UPDATE members_meetings SET ' + queryFields + ' WHERE primary_id = $1 returning members_id'
+        console.log('line 113 query, value arry:', gQuery, valueArray)
+        client.query(gQuery, valueArray, function(queryError, resultObj) {
+            done();
+            if(queryError) {
+                console.log('1st error',queryError);
+                res.sendStatus(500);
+            } else {
+              console.log('res', resultObj.rows[0])
+              var sQuery = 'SELECT member_id FROM members INNER JOIN members_meetings ON members.member_id = members_meetings.members_id WHERE members_meetings.members_id = $1';
+              var valueArray2 = [resultObj.rows[0].members_id];
+              client.query(sQuery, valueArray2, function (queryError, resultObj) {
+              done();
+                if (queryError) {
+                  console.log('2nd error', queryError);
+                  res.sendStatus(500);
+                } else {
+                console.log('Update member Put successful', resultObj.rows[0]);
+                res.send(resultObj.rows[0]);
+            } //end result else
+        }); //end query
+      };
+      }) 
+    }//end pool else
+    }) //end pool connect 
+  } else {
+    console.log('not logged in');
+    res.send(false);//end auth if
+  }
+}); //end edit member service
 
 //Get meetings by Year
 router.get('/meetingsByYear/:id', function(req, res) {
@@ -183,18 +286,18 @@ router.post('/', function (req, res) {
   }
 }) //end new member post
 
-router.post('/memberToMeeting', function (req, res) {
-  console.log('memberToMeetingrunning', req.body)
-  var memberToMeeting = req.body
+router.post('/addService', function (req, res) {
+  console.log('addService', req.body)
+  var addService = req.body
   if (req.isAuthenticated()) {
     pool.connect(function (conErr, client, done) {
       if (conErr) {
         console.log('pool.connect', conErr)
         res.sendStatus(500);
       } else {
-        var valueArray = [memberToMeeting.member_id, memberToMeeting.meeting_id, memberToMeeting.service_type, memberToMeeting.start_date, memberToMeeting.end_date, memberToMeeting.add_info];
-        memberToMeetingQuery = 'INSERT INTO members_meetings (members_id, meetings_id, service_id, start_date, end_date, add_info) VALUES ($1, $2, $3, $4, $5, $6)';
-        client.query(memberToMeetingQuery, valueArray, function (queryErr, resultObj) {
+        var valueArray = [addService.member_id, addService.meetings_id, addService.service_id, addService.start_date, addService.end_date, addService.add_info];
+        addServiceQuery = 'INSERT INTO members_meetings (members_id, meetings_id, service_id, start_date, end_date, add_info) VALUES ($1, $2, $3, $4, $5, $6)';
+        client.query(addServiceQuery, valueArray, function (queryErr, resultObj) {
           done();
           if (queryErr) {
             console.log('error', queryErr)
@@ -212,113 +315,14 @@ router.post('/memberToMeeting', function (req, res) {
     // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
     res.send(false);
   } //end else
-}); //end add member to meeting
+}); //end addService
 
 
 
-//edit member information
-router.put('/', function (req, res) {
-  var editMember = req.body;
-  console.log('In PUT edit Member', req.body);
-  if (req.isAuthenticated()) {
-    pool.connect(function (connectionError, client, done) {
-      if (connectionError) {
-        console.log(connectionError);
-        res.sendStatus(500);
-      } else {
-        var valueArray = []
-        var tempvarQuery = []
-        var bling = 0
-        for (var i = 0 in editMember) {
-          valueArray.push(editMember[i]);
-          }
-        for (const prop in editMember) {
-          bling++
-          var eb = ' = $'
-          tempvarQuery.push(prop+eb+bling)
-        }
-        var queryFields = tempvarQuery.join(', ')
-        var gQuery = 'UPDATE members SET ' + queryFields + ' WHERE member_id = $1 Returning past_service'
-        console.log('line 113 query, value arry:', gQuery, valueArray)
-        client.query(gQuery, valueArray, function(queryError, resultObj) {
-            done();
-            if(queryError) {
-                console.log(queryError);
-                res.sendStatus(500);
-            } else {
-                console.log('Update member Put successful');
-                res.send(resultObj.rows);
-            } //end result else
-        }); //end query
-      } //end pool else
-    }) //end pool connect 
-  } else {
-    console.log('not logged in');
-    res.send(false);//end auth if
-  }
-}); //end edit member
+
 
 //edit member Service
-router.put('/service', function (req, res) {
-  var editService = req.body;
-  console.log('In PUT edit Service', req.body);
-  if (req.isAuthenticated()) {
-    pool.connect(function (connectionError, client, done) {
-      if (connectionError) {
-        console.log(connectionError);
-        res.sendStatus(500);
-      } else {
-        var valueArray = []
-        var tempvarQuery = []
-        var bling = 1
-        for (var i = 0 in editService) {
-          if (editService[i] == editService.primary_id) {
-            valueArray.splice(0, 0, editService[i])
-          } else {
-          valueArray.push(editService[i]);
-          }
-          }
-        for (const prop in editService) {
-          
-          if (prop == 'primary_id') {
-            delete editService.primary_id
-          } else {
-          bling++
-          var eb = ' = $'
-          tempvarQuery.push(prop+eb+bling)
-          }
-        }
-        var queryFields = tempvarQuery.join(', ')
-        var gQuery = 'UPDATE members_meetings SET ' + queryFields + ' WHERE primary_id = $1 returning members_id'
-        console.log('line 113 query, value arry:', gQuery, valueArray)
-        client.query(gQuery, valueArray, function(queryError, resultObj) {
-            done();
-            if(queryError) {
-                console.log('1st error',queryError);
-                res.sendStatus(500);
-            } else {
-              console.log('res', resultObj.rows[0])
-              var sQuery = 'SELECT member_id FROM members INNER JOIN members_meetings ON members.member_id = members_meetings.members_id WHERE members_meetings.members_id = $1';
-              var valueArray2 = [resultObj.rows[0].members_id];
-              client.query(sQuery, valueArray2, function (queryError, resultObj) {
-              done();
-                if (queryError) {
-                  console.log('2nd error', queryError);
-                  res.sendStatus(500);
-                } else {
-                console.log('Update member Put successful', resultObj.rows[0]);
-                res.send(resultObj.rows[0]);
-            } //end result else
-        }); //end query
-      };
-      }) 
-    }//end pool else
-    }) //end pool connect 
-  } else {
-    console.log('not logged in');
-    res.send(false);//end auth if
-  }
-}); //end edit member
+
 //delete member
 router.put('/delete/:id', function(req, res) {
   var deleteMember = req.params.id

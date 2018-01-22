@@ -172,21 +172,20 @@
                                 </div>
                             </div>
                         </div> <!--end ng-repeat for service info-->
-                        <button ng-click"addService=!addService">Add</button>
+                        <button ng-click="addService=!addService">Add</button>
                         <div ng-hide="!addService">
-                            
-                                <select ng-model="uc.serviceIn" class="dropdown">
-                                    <option value=1>Executive Committee Member - Elected</option>
-                                    <option value=2>Executive Committee Member - Representing Funding Agency</option>
-                                    <option value=5>Other</option>
-                                </select>
-                                <input type="number" placeholder="start year" ng-model="uc.startYearIn">
-                                <input type="number" placeholder="end year" ng-model="uc.endYearIn">
-                                <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
-                        
-                                <button ng-click="uc.ServiceIn(uc.defaultMeeting)">Add</button>
-                                <button type="button">Cancel</button>
-                            
+                            <select ng-model="uc.serviceIn" class="dropdown">
+                                <option value=1>Executive Committee Member - Elected</option>
+                                <option value=2>Executive Committee Member - Representing Funding Agency</option>
+                                <option value=5>Other</option>
+                            </select>
+                            <input type="number" placeholder="start year" ng-model="uc.start_dateIn">
+                            <input type="number" placeholder="end year" ng-model="uc.end_dateIn">
+                            <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
+                            <div ng-click= "addService=!addService">
+                                <button ng-click="uc.addService(uc.memberToEdit.data[0].member_id)">Add</button>
+                                <button type="button">Cancel</button>   
+                            </div>                         
                         </div>
                     </section>  <!-- end row 1, column 2, row 2, Column 2, Row 1 -->
                         
@@ -226,9 +225,9 @@
                                         <option value=4>Non-Theme Day Organizer</option>
                                         <option value=5>Other</option>
                                     </select>
-                                    <input type="text" placeholder="additional information" ng-model="uc.addMeetingInfoIn" >
+                                    <input type="text" placeholder="additional information" ng-model="uc.addInfoIn" >
                                     <div ng-click="addtoMeeting=!addtoMeeting">
-                                        <button ng-click="uc.addMembertoMeeting(uc.memberToEdit.data[0].member_id, meeting.meeting_id)">Save</button>
+                                        <button ng-click="uc.addService(uc.memberToEdit.data[0].member_id, meeting.meeting_id)">Save</button>
                                         <button type="button">Cancel</button>
                                     </div>
                                 </div>
