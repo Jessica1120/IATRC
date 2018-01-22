@@ -202,6 +202,49 @@ router.get('/meetingsByYear/:id', function(req, res) {
   } //end else
 }); //end get member to edit get call
 
+//add Service to Member
+router.post('/addService', function (req, res) {
+  console.log('addService', req.body)
+  var addService = req.body
+  if (req.isAuthenticated()) {
+    pool.connect(function (conErr, client, done) {
+      if (conErr) {
+        console.log('pool.connect', conErr)
+        res.sendStatus(500);
+      } else {
+        var valueArray = [addService.member_id, addService.meetings_id, addService.service_id, addService.start_date, addService.end_date, addService.add_info];
+        addServiceQuery = 'INSERT INTO members_meetings (members_id, meetings_id, service_id, start_date, end_date, add_info) VALUES ($1, $2, $3, $4, $5, $6) returning members_id';
+        client.query(addServiceQuery, valueArray, function (queryErr, resultObj) {
+          done();
+          if (queryErr) {
+            console.log('error', queryErr)
+            res.sendStatus(500);
+          } else {
+              console.log('res', resultObj.rows[0])
+              var sQuery = 'SELECT member_id FROM members INNER JOIN members_meetings ON members.member_id = members_meetings.members_id WHERE members_meetings.members_id = $1';
+              var valueArray2 = [resultObj.rows[0].members_id];
+              client.query(sQuery, valueArray2, function (queryError, resultObj) {
+              done();
+                if (queryError) {
+                  console.log('2nd error', queryError);
+                  res.sendStatus(500);
+                } else {
+                console.log('Update member Put successful', resultObj.rows[0]);
+                res.send(resultObj.rows[0]);
+            } //end result else
+        }); //end query
+      };
+      }) // end pool else
+    } // end pool connect
+  }) 
+  } else {
+    // failure best handled on the server. do redirect here.
+    console.log('not logged in');
+    // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
+    res.send(false);
+  } //end else
+}); //end addService
+
 
 
 //add member Post
@@ -286,44 +329,14 @@ router.post('/', function (req, res) {
   }
 }) //end new member post
 
-router.post('/addService', function (req, res) {
-  console.log('addService', req.body)
-  var addService = req.body
-  if (req.isAuthenticated()) {
-    pool.connect(function (conErr, client, done) {
-      if (conErr) {
-        console.log('pool.connect', conErr)
-        res.sendStatus(500);
-      } else {
-        var valueArray = [addService.member_id, addService.meetings_id, addService.service_id, addService.start_date, addService.end_date, addService.add_info];
-        addServiceQuery = 'INSERT INTO members_meetings (members_id, meetings_id, service_id, start_date, end_date, add_info) VALUES ($1, $2, $3, $4, $5, $6)';
-        client.query(addServiceQuery, valueArray, function (queryErr, resultObj) {
-          done();
-          if (queryErr) {
-            console.log('error', queryErr)
-            res.sendStatus(500);
-          } else {
-            console.log('202')
-            res.sendStatus(202);
-              }
-        }) // end query
-      } // end pool else
-    }) // end pool connect
-  } else {
-    // failure best handled on the server. do redirect here.
-    console.log('not logged in');
-    // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
-    res.send(false);
-  } //end else
-}); //end addService
 
 
 
 
 
-//edit member Service
 
-//delete member
+
+
 router.put('/delete/:id', function(req, res) {
   var deleteMember = req.params.id
   console.log('deleteMember', deleteMember)

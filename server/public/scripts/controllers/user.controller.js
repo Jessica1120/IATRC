@@ -206,7 +206,7 @@ vm.addService = function(member_id, meetings_id) {
     }
     if (meetings_id == undefined) {
       objToSend.meetings_id = 1
-  }
+    }
   console.log('add service', objToSend)
   UserService.addService(objToSend)
 }; //end addService

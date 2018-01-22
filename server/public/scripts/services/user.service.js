@@ -81,31 +81,13 @@ self.editService = function(objToSend) {
       url:    '/members/service',
       data:   objToSend
   }).then(function(res) {
+      console.log('edit service res', res)
       self.getMember(res.data);
     // need a confirmation alert or something here
   }); //end then
 }; //end editService
 
-//adding service
-self.addService = function(objToSend) {
-  console.log('addService', objToSend)
-  $http({
-      method: 'POST',
-      url:    'members/addService',
-      data:   objToSend
-  }).then(function(res) {
-      console.log('addService response:', res );
-      self.getMember(objToSend);
-      self.serviceOnly = []
-      self.meetings = []
-    //need a confirmation alert or something here
-  }); //end then
-}; //end addService
-
-
-
-
-    //view Meetings by year
+//view Meetings by year
 self.findMeetingsByYear = function(meetingYear){
       console.log('findMeetingByYear in Service running')
       return $http({
@@ -116,8 +98,22 @@ self.findMeetingsByYear = function(meetingYear){
           self.meetingsByYear.data = res.data;
          console.log('meetings by year', self.meetingsByYear.data)
         }) //end call back function
-      }// end view Members
-//addMember post Call 
+};// end findMeetingsByYear
+
+//adding service
+self.addService = function(objToSend) {
+  console.log('addService', objToSend)
+  $http({
+      method: 'POST',
+      url:    'members/addService',
+      data:   objToSend
+  }).then(function(res) {
+      console.log('addService response:', res );
+      self.getMember(res.data);
+    //need a confirmation alert or something here
+  }); //end then
+}; //end addService
+      //addMember post Call 
 self.addMember = function(objToSend) {
   console.log('inserviceobjtosend', objToSend)
   $http({
