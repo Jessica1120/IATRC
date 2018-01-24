@@ -4,7 +4,7 @@ var pool = require('../modules/pool.js');
 
 
 
-//Request for view meetings
+//Request for view meetings on page load
 router.get('/', function (req, res) {
     console.log('in Get for view meetings');
     // check if logged in
@@ -64,18 +64,19 @@ router.post('/', function(req, res) {
 
 //get Meeting to Edit
 router.get('/get/:id', function (req, res) {
-  var meetingToEdit = req.params.meeting_id
-  console.log('in Get for meeting', meetingToEdit)
+  var meetingToEdit = req.params.id
+  console.log('in Get for meeting', req.params.id)
   if (req.isAuthenticated()) {
     pool.connect(function (conErr, client, done) {
       if (conErr) {
         res.sendStatus(500);
       } else {
         var valueArray = [meetingToEdit]
-        editQuery = 'SELECT * FROM meetings FULL JOIN members_meetings ON meetings.id = members_meetings.meetings_id FULL JOIN members ON members.meeting_id = members_meetings.members_id WHERE meetings.meeting_id = $1 ORDER BY members.last_name;'
+        editQuery = 'SELECT * FROM meetings FULL JOIN members_meetings ON meetings.meeting_id = members_meetings.meetings_id FULL JOIN members ON members.member_id = members_meetings.members_id WHERE meetings.meeting_id = $1 ORDER BY members.last_name;'
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
           done();
           if (queryErr) {
+            console.log('query error:', queryErr)
             res.sendStatus(500);
           } else {
             res.send(resultObj.rows);

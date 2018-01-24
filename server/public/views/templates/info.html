@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6"  ng-init="ic.viewMeetings()" >
         <div ng-hide="selected" ng-click="selected=!selected">   <div ng-repeat="meeting in ic.allMeetings.data" class="meetingItem">
-                <div ng-click="ic.getMeeting(meeting.id)">
+                <div ng-click="ic.getMeeting(meeting.meeting_id)">
                    {{meeting.month}} {{meeting.topic}}
                     
                 </div>

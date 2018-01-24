@@ -9,7 +9,7 @@ myApp.controller('InfoController', function(UserService) {
     vm.absent = []
     
     
-
+  //loads all meeting on Page Load
     vm.viewMeetings= function() {
       UserService.viewMeetings();
       console.log('in view Meetings running')

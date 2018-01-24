@@ -357,14 +357,6 @@ router.post('/', function (req, res) {
   }
 }) //end new member post
 
-
-
-
-
-
-
-
-
 router.put('/delete/:id', function(req, res) {
   var deleteMember = req.params.id
   console.log('deleteMember', deleteMember)
