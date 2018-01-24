@@ -72,6 +72,30 @@ vm.saveEditMeeting = function(meeting) {
           delete objToSend.year
         }
       } 
+      if (vm.editCityIn !== undefined) {
+        objToSend.meeting_city = vm.editCityIn
+        if (vm.editCityIn == "" || vm.editCityIn == undefined) {
+          delete objToSend.meeting_city
+        }
+      }  
+      if (vm.editStateIn !== undefined) {
+        objToSend.meeting_state = vm.editStateIn
+        if (vm.editStateIn == "" || vm.editStateIn == undefined) {
+          delete objToSend.meeting_state
+        }
+      }  
+      if (vm.editCountryIn !== undefined) {
+        objToSend.meeting_country = vm.editCountryIn
+        if (vm.editCountryIn == "" || vm.editCountryIn == undefined) {
+          delete objToSend.meeting_country
+        }
+      }  
+      if (vm.editHotelIn !== undefined) {
+        objToSend.hotel = vm.editHotelIn
+        if (vm.editHotelIn == "" || vm.editHotelIn == undefined) {
+          delete objToSend.hotel
+        }
+      } 
     console.log('objtoSend', objToSend)
     UserService.saveEditMeeting(objToSend)
 } //end saveEditMeeting
@@ -83,13 +107,21 @@ vm.addMeeting = function() {
       type: vm.typeIn,
       topic: vm.topicIn,
       month: vm.monthIn,
-      year: vm.yearIn
+      year: vm.yearIn,
+      meeting_city: vm.cityIn,
+      meeting_state: vm.stateIn,
+      meeting_country: vm.countryIn,
+      hotel: vm.hotelIn
     };
     UserService.addMeeting(objToSend);
     vm.typeIn = '',
     vm.topicIn = '',
     vm.monthIn = '',
-    vm.yearIn = ''
+    vm.yearIn = '',
+    vm.cityIn = '',
+    vm.stateIn= '',
+    vm.countryIn= '',
+    vm.hotelIn= ''
   }; //end addMeeting
 
 //delete Meeting

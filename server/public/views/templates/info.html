@@ -5,7 +5,8 @@
         <div class="col-md-6"  ng-init="ic.viewMeetings()" >
         <div ng-hide="selected" ng-click="selected=!selected">   <div ng-repeat="meeting in ic.allMeetings.data" class="meetingItem">
                 <div ng-click="ic.getMeeting(meeting.meeting_id)">
-                   {{meeting.month}} {{meeting.topic}}
+                   {{meeting.month}}, {{meeting.year}} - {{meeting.topic}}
+                   {{meeting.hotel}}, {{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}} 
                     
                 </div>
             </div> <!-- end ng-repeat meeting -->
@@ -17,6 +18,10 @@
                 {{ic.meetingToEdit.data[0].topic}}<br>
                 {{ic.meetingToEdit.data[0].month}}<br>
                 {{ic.meetingToEdit.data[0].year}}<br>
+                {{ic.meetingToEdit.data[0].hotel}}<br>
+                {{ic.meetingToEdit.data[0].meeting_city}}<br>
+                {{ic.meetingToEdit.data[0].meeting_state}}<br>
+                {{ic.meetingToEdit.data[0].meeting_country}}<br>
                 Participants: <div ng-repeat="participant in ic.meetingToEdit.data">
                         {{participant.last_name}}, {{participant.first_name}}
                         </div>                     
@@ -31,6 +36,11 @@
                 Topic: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].topic}}" ng-model="ic.editTopicIn"><br>
                 Month: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].month}}" ng-model="ic.editMonthIn"><br>
                 Year: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].year}}" ng-model="ic.editYearIn"><br>
+                City: <input type="text" placeholder="{{ic.meetingToEdit.data[0].meeting_city}}" ng-model="ic.editCityIn"><br>
+                State: <input type="text" placeholder="{{ic.meetingToEdit.data[0].meeting_state}}" ng-model="ic.editStateIn"><br>
+                Country: <input type="text" placeholder="{{ic.meetingToEdit.data[0].meeting_country}}" ng-model="ic.editCountryIn"><br>
+                Hotel: <input type="text" placeholder="{{ic.meetingToEdit.data[0].hotel}}" ng-model="ic.editHotelIn"><br>
+
                 </div>
                 Participants: <div ng-repeat="participant in ic.meetingToEdit.data">
                    <input type="checkbox" ng-model="participant.Selected" ng-init="participant.Selected=true"> 

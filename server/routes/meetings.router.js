@@ -123,7 +123,7 @@ router.put('/', function (req, res){
                   console.log('deleteQuery Successful')
                 }
                 }); //end deleteQuery query
-                }    else { //end if absent array has contents 
+                }  else { //end if absent array has contents 
                 console.log('absent Array empty')
                 }
             if (editMeeting.attended.length > 0) {
@@ -144,12 +144,16 @@ router.put('/', function (req, res){
                 console.log('done 500', queryErr)
                 res.sendStatus(500);
                 } else {
-                console.log('202')
-                res.sendStatus(202)
-              }
-            }) //end addMembers Query
-          }; //end attended if
-          }; // end first query error/success
+                console.log('add members successfull')
+                  }
+              }) //end addMembers Query
+              } else {
+                console.log('attended array empty')
+              } //end attended if
+          console.log('202');
+          res.sendStatus(202);  
+        }; // end first query error/success
+          
        }); //end first client query 
       } //ends first else for queries 
     }); //end first pool connect
@@ -159,6 +163,7 @@ router.put('/', function (req, res){
   } //end authentication
 }); //end save changes to meeting
 
+//delete meeting
 router.put('/delete/:id', function(req, res) {
   var deleteMeeting = req.params.id
   console.log('deleteMeeting', deleteMeeting)
@@ -186,8 +191,8 @@ router.put('/delete/:id', function(req, res) {
   console.log('not logged in');
   // should probably be res.sendStatus(403) and handled client-side, esp if this is an AJAX request (which is likely with AngularJS)
   res.send(false);
-} //end else
-}); //end delete member
+ } //end else
+}); //end delete meeting
 
 //Add Meeting
 router.post('/', function(req, res) {
@@ -199,8 +204,8 @@ router.post('/', function(req, res) {
               console.log(connectionError);
               res.sendStatus(500);
           } else {
-              var gQuery = 'INSERT INTO meetings (type, topic, month, year) VALUES ($1, $2, $3, $4)';
-              var valueArray = [newMeeting.type, newMeeting.topic, newMeeting.month, newMeeting.year];
+              var gQuery = 'INSERT INTO meetings (type, topic, month, year, meeting_city, meeting_state, hotel, meeting_country) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
+              var valueArray = [newMeeting.type, newMeeting.topic, newMeeting.month, newMeeting.year, newMeeting.meeting_city, newMeeting.meeting_state, newMeeting.hotel, newMeeting.meeting_country ];
               client.query(gQuery, valueArray, function(queryError, resultObj) {
                   done();
                   if(queryError) {

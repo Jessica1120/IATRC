@@ -204,8 +204,8 @@ self.saveEditMeeting = function(objToSend) {
       url:    '/meetings',
       data:   objToSend
   }).then(function(res) {
-    self.getMeeting(objToSend.meeting_id)
-    self.editMembers(objToSend.meeting_id)
+    console.log(res)
+    self.viewMeetings()
     //need a confirmation alert or something here
   }); //end then
 }; //end  saveEdit Meeting
