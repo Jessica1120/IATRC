@@ -159,9 +159,7 @@ self.viewMeetings = function(){
       self.allMeetings.data = res.data;
      console.log('allMeetings in Service', self.allMeetings)
     }) //end call back function
-  }// end view Meetings
-
-
+}// end view Meetings
 
 //get Meeting to edit
 self.getMeeting = function(meeting) {
@@ -173,30 +171,31 @@ self.getMeeting = function(meeting) {
     console.log('Servvice Get Meeting Response', res);
     self.meetingToEdit.data = res.data;
   })
-};
+}; //end get Meeting to edit
 
-self.viewMembersMeeting = function(meeting){
+//get to edit attendees
+self.editMembers = function(meeting){
+ console.log('what is this?')
   return $http({
     method: 'GET',
     url: '/members'
   })
     .then(function (res) {
       self.allMembers.data = res.data;
-      console.log(self.allMembers.data)
+      
     }).then(function(res){
       for(let i =0; i<self.allMembers.data.length; i++) {
         for(let j =0; j<self.meetingToEdit.data.length; j++) {
-          if (self.allMembers.data[i].id == self.meetingToEdit.data[j].id) {
+          if (self.allMembers.data[i].member_id == self.meetingToEdit.data[j].member_id) {
             self.allMembers.data.splice(i, 1)
           } else {
-            console.log('no match', self.allMembers.data[i].id, self.meetingToEdit.data[j].id )
+            console.log('no match')
           }
         }
-        console.log('post-splice', self.allMembers.data)
       }
     }) //end call back function
+}   //end get attendees to edit
 
-}   
 //save edited meeting
 
 self.saveEditMeeting = function(objToSend) {
@@ -206,8 +205,8 @@ self.saveEditMeeting = function(objToSend) {
       url:    '/meetings',
       data:   objToSend
   }).then(function(res) {
-    self.getMeeting(objToSend.id)
-    self.viewMembersMeeting()
+    self.getMeeting(objToSend.meeting_id)
+    self.editMembers(objToSend.meeting_id)
     //need a confirmation alert or something here
   }); //end then
 }; //end  saveEdit Meeting

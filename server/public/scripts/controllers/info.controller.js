@@ -5,8 +5,8 @@ myApp.controller('InfoController', function(UserService) {
     vm.allMeetings = UserService.allMeetings;
     vm.meetingToEdit = UserService.meetingToEdit;
     vm.allMembers = UserService.allMembers;
-    vm.attended = []
-    vm.absent = []
+    vm.attended = [] //holds members added to meeting
+    vm.absent = [] //holds members removed from meeting
     
     
   //loads all meeting on Page Load
@@ -16,15 +16,15 @@ myApp.controller('InfoController', function(UserService) {
     }; //end ViewMeetings
 
     //get meeting to Edit
-    vm.getMeeting = function(meeting) {
+vm.getMeeting = function(meeting) {
       console.log('get meeting')
       UserService.getMeeting(meeting);
-   }
+} //end get meeting to Edit
 
-   //get list of all members to edit meeting participants
-   vm.getMembers = function(meeting) {
-    UserService.viewMembersMeeting(meeting)   
-  }; //end viewMembers
+   //get to edit attendees
+vm.editMembers = function(meeting) {
+    UserService.editMembers(meeting)   
+}; //end get to edit attendees
 
 vm.saveEditMeeting = function(meeting) {
   
@@ -36,7 +36,7 @@ vm.saveEditMeeting = function(meeting) {
   
   for (var i = 0; i < vm.meetingToEdit.data.length; i++) {
     if(vm.meetingToEdit.data[i].Selected !== true) {
-      vm.absent.push(vm.meetingToEdit.data[i].meeting_id)
+      vm.absent.push(vm.meetingToEdit.data[i].member_id)
       }
   }
   console.log('slice absent', vm.meetingToEdit.data, vm.absent)
@@ -72,13 +72,9 @@ vm.saveEditMeeting = function(meeting) {
           delete objToSend.year
         }
       } 
-    
-   
     console.log('objtoSend', objToSend)
-    
     UserService.saveEditMeeting(objToSend)
-    
-  }
+} //end saveEditMeeting
 
 
 vm.addMeeting = function() {

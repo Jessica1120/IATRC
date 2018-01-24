@@ -92,11 +92,13 @@ router.get('/get/:id', function (req, res) {
   } //end else
 }); //end get member to edit get call
 
+//save changes to meeting
 router.put('/', function (req, res){
   var editMeeting = req.body;  
   console.log('in Put for edit Meeting', editMeeting);
   if (req.isAuthenticated()) {
     pool.connect(function (conErr, client, done) {
+      //defines remove Members
       removeMembers = function() {
         var deleteBling = 2
         var blingArray = []
@@ -120,7 +122,9 @@ router.put('/', function (req, res){
               }
             }
           }) //end deleteQuery query
-        } //end removeMembers    
+        }   
+
+      //defines addMembers
       addMembers = function() {
         var addBling = 1
         var blingArray2 = []
@@ -143,7 +147,7 @@ router.put('/', function (req, res){
               res.sendStatus(202)
             }
           }) //end addMembers Query
-        }
+        } //end add Members
       
       if (conErr) {
         console.log('Pool.connect error', conErr);
@@ -196,7 +200,8 @@ router.put('/', function (req, res){
     console.log('not logged in');
     res.send(false)
   } //end authentication
-}); //end put
+}); //end save changes to meeting
+
 router.put('/delete/:id', function(req, res) {
   var deleteMeeting = req.params.meeting_id
   console.log('deleteMeeting', deleteMeeting)
