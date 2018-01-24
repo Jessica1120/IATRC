@@ -112,7 +112,7 @@ router.put('/', function (req, res){
               for(let i=0; i< editMeeting.absent.length-1; i++) {
               blingArray.push('$' + deleteBling++)
               } 
-              var deleteQuery = 'DELETE FROM members_meetings WHERE members_id is (' + blingArray + ') AND meetings_id = $1'
+              var deleteQuery = 'DELETE FROM members_meetings WHERE members_id in (' + blingArray + ') AND meetings_id = $1'
               console.log('deleteQuery', deleteQuery, editMeeting.absent)
               client.query(deleteQuery, editMeeting.absent, function (queryErr, resultObj) {
               done();
@@ -160,7 +160,7 @@ router.put('/', function (req, res){
 }); //end save changes to meeting
 
 router.put('/delete/:id', function(req, res) {
-  var deleteMeeting = req.params.meeting_id
+  var deleteMeeting = req.params.id
   console.log('deleteMeeting', deleteMeeting)
     if (req.isAuthenticated()) {
       pool.connect(function (conErr, client, done) {

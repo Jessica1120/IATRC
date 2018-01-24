@@ -169,7 +169,7 @@ self.getMeeting = function(meeting) {
     url: '/meetings/get/' + meeting
   }).then(function (res) {
     console.log('Servvice Get Meeting Response', res);
-    self.meetingToEdit.data = res.data;
+    self.meetingToEdit.data = res.data; 
   })
 }; //end get Meeting to edit
 
@@ -228,6 +228,7 @@ self.deleteMeeting = function(meetingId) {
       url: '/meetings/delete/' + meetingId 
     }).then(function(res) {
       console.log('meeting deleted');
+      self.viewMeetings();
     })
 } // end deleteMeeting
 
