@@ -204,7 +204,7 @@ router.post('/', function(req, res) {
               console.log(connectionError);
               res.sendStatus(500);
           } else {
-              var gQuery = 'INSERT INTO meetings (type, topic, month, year, meeting_city, meeting_state, hotel, meeting_country) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)';
+              var gQuery = 'INSERT INTO meetings (type, topic, month, year, meeting_city, meeting_state, hotel, meeting_country) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning meeting_id';
               var valueArray = [newMeeting.type, newMeeting.topic, newMeeting.month, newMeeting.year, newMeeting.meeting_city, newMeeting.meeting_state, newMeeting.hotel, newMeeting.meeting_country ];
               client.query(gQuery, valueArray, function(queryError, resultObj) {
                   done();
@@ -212,12 +212,39 @@ router.post('/', function(req, res) {
                       console.log(queryError);
                       res.sendStatus(500);
                   } else {
-                      console.log('new Meeting post successful');
+                    var participantArray = []
+                    var $array = []
+                    var $1 = 1
+      
+                    newMeeting.participants.forEach(function (element) {
+                      participantArray.push(resultObj.rows[0].meeting_id, element)
+                      })
+                      console.log('participantArray', participantArray)
+                    for(let i = 0; i<participantArray.length; i++){
+                      $array.push('$' + $1++)
+                    }
+                    for(let k=0; k < $array.length-1; k+=2) {
+                      $array.splice(k, 1, '(' + $array[k])
+                    }
+                    for (let j=1; j < $array.length; j+=2) {
+                      $array.splice(j, 1, $array[j]+')')
+                    }
+                    var $blingPhrase = $array.join(', ')
+                    console.log('$blingPhrase', $blingPhrase)
+                  var pQuery = 'INSERT INTO members_meetings (meetings_id, members_id) VALUES' + $blingPhrase
+                  client.query(pQuery, participantArray, function (queryError, resultObj) {
+                    done();
+                  if (queryError) {
+                    console.log(queryError);
+                    res.sendStatus(500);    
+                  } else {
                       res.sendStatus(202);
                   } //end result else
               }); //end query
           } //end pool else
-      }) //end pool connect 
+      });//end pool connect 
+    } 
+  });//end pool connect
     } else {
         console.log('not logged in');
         res.send(false);//end auth if

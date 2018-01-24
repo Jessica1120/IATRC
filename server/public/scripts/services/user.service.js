@@ -180,7 +180,6 @@ self.getMeeting = function(meeting) {
 
 //get to edit attendees
 self.editMembers = function(meeting){
- console.log('what is this?')
   return $http({
     method: 'GET',
     url: '/members'

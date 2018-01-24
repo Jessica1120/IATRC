@@ -11,6 +11,15 @@
         <input type="text" placeholder="State" ng-model="ic.stateIn"><br>
         <input type="text" placeholder="Country" ng-model="ic.countryIn"><br>
         <input type="text" placeholder="Hotel" ng-model="ic.hotelIn"><br>
-        <button type="button" ng-click="ic.addMeeting()">Add</button>
-    </form>
+        
+</form>
 
+<div ng-init = "ic.viewMembers()">
+    <div ng-repeat="member in ic.memberList.data">
+            <input type="checkbox" ng-model="member.Selected"> 
+            {{member.last_name}}, {{member.first_name}}
+            <button type="button" ng-click="ic.addMeeting()">Add</button>
+                  
+    </div>
+    
+</div>

@@ -4,10 +4,11 @@ myApp.controller('InfoController', function(UserService) {
     vm.userService = UserService;
     vm.allMeetings = UserService.allMeetings;
     vm.meetingToEdit = UserService.meetingToEdit;
-    vm.allMembers = UserService.allMembers;
-    vm.attended = [] //holds members added to meeting
+    vm.allMembers = UserService.allMembers; //member object for editing meeting
+    vm.memberList = UserService.memberList; //member object for new meeting
+    vm.attended = [] //holds members added to edited meeting
     vm.absent = [] //holds members removed from meeting
-    
+    vm.participants= [] //holds members added to new meeting
     
   //loads all meeting on Page Load
     vm.viewMeetings= function() {
@@ -111,8 +112,14 @@ vm.addMeeting = function() {
       meeting_city: vm.cityIn,
       meeting_state: vm.stateIn,
       meeting_country: vm.countryIn,
-      hotel: vm.hotelIn
-    };
+      hotel: vm.hotelIn,
+      participants: vm.participants 
+    }
+    for (var i = 0; i <  vm.memberList.data.length; i++) {
+      if( vm.memberList.data[i].Selected == true) {
+        vm.participants.push(vm.memberList.data[i].member_id)
+      } 
+    }
     UserService.addMeeting(objToSend);
     vm.typeIn = '',
     vm.topicIn = '',
@@ -126,6 +133,10 @@ vm.addMeeting = function() {
 
 //delete Meeting
 
+vm.viewMembers = function() {
+  UserService.viewMembers();
+  console.log('in controller:', vm.memberList)
+}
 vm.deleteMeeting = function(meetingId) {
   console.log('in controller delete,', meetingId)
   UserService.deleteMeeting(meetingId);
