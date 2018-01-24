@@ -156,8 +156,13 @@ self.viewMeetings = function(){
     url: '/meetings'
   })
     .then(function (res) {
-      self.allMeetings.data = res.data;
-     console.log('allMeetings in Service', self.allMeetings)
+      self.allMeetings.data = res.data
+      for (let i = 0; i < self.allMeetings.data.length; i++) {
+        if (self.allMeetings.data[i].meeting_id == 1) {
+          self.allMeetings.data.splice(self.allMeetings.data.indexOf(self.allMeetings.data[i]), 1)
+        }
+      }
+     console.log('allMeetings in Service', self.allMeetings.data)
     }) //end call back function
 }// end view Meetings
 
