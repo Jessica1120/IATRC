@@ -20,7 +20,7 @@
                 Participants: <div ng-repeat="participant in ic.meetingToEdit.data">
                         {{participant.last_name}}, {{participant.first_name}}
                         </div>                     
-                <div ng-click="edit=!edit"><button ng-click="ic.editMembers(ic.meetingToEdit.data[0].meetings_id)">Edit</button></div>
+                <div ng-click="edit=!edit"><button ng-click="ic.editMembers(ic.meetingToEdit.data[0].meeting_id)">Edit</button></div>
                 <div ng-click="selected=!selected"><button ng-click="ic.deleteMeeting(ic.meetingToEdit.data[0].meetings_id)">Delete</button></div>
                 <button ng-click="selected=!selected">Back</button>
             </div>   
@@ -42,7 +42,7 @@
                         </div>
                 <div ng-click="selected=!selected">
                     <div ng-click="edit=!edit">
-                <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].meetings_id)">Save</button>
+                <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].meeting_id)">Save</button>
             </div>
             </div>
                 

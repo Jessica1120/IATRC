@@ -27,7 +27,7 @@ vm.editMembers = function(meeting) {
 }; //end get to edit attendees
 
 vm.saveEditMeeting = function(meeting) {
-  
+  console.log('save edit meeting', meeting )
   var objToSend = {
       meeting_id: meeting,
       attended: vm.attended,

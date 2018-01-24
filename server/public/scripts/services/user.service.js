@@ -197,7 +197,6 @@ self.editMembers = function(meeting){
 }   //end get attendees to edit
 
 //save edited meeting
-
 self.saveEditMeeting = function(objToSend) {
   console.log('saveEdit running in Service')
   $http({
@@ -217,7 +216,7 @@ self.addMeeting = function(objToSend) {
       url:    '/meetings',
       data:   objToSend
   }).then(function(res) {
-      console.log('addmeeting response:', res );
+      console.log('add meeting response:', res );
     //need a confirmation alert or something here
   }); //end then
 }; //end deleteMeeting

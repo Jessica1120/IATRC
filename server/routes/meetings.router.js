@@ -29,34 +29,6 @@ router.get('/', function (req, res) {
     }
   });//end view members Get call
   
-router.post('/', function(req, res) {
-    var newMeeting = req.body;
-        console.log('In Post New Meeting', req.body);
-        if (req.isAuthenticated()) {
-        pool.connect(function(connectionError, client, done){
-            if(connectionError) {
-                console.log(connectionError);
-                res.sendStatus(500);
-            } else {
-                var gQuery = 'INSERT INTO meetings (type, topic, month, year) VALUES ($1, $2, $3, $4)';
-                var valueArray = [newMeeting.type, newMeeting.topic, newMeeting.month, newMeeting.year];
-                client.query(gQuery, valueArray, function(queryError, resultObj) {
-                    done();
-                    if(queryError) {
-                        console.log(queryError);
-                        res.sendStatus(500);
-                    } else {
-                        console.log('new Meeting post successful');
-                        res.sendStatus(202);
-                    } //end result else
-                }); //end query
-            } //end pool else
-        }) //end pool connect 
-      } else {
-          console.log('not logged in');
-          res.send(false);//end auth if
-        }
-  }) //end meeting post
 
 
 
@@ -79,6 +51,7 @@ router.get('/get/:id', function (req, res) {
             console.log('query error:', queryErr)
             res.sendStatus(500);
           } else {
+            console.log(resultObj.rows)
             res.send(resultObj.rows);
           }
         }) // end query
@@ -98,62 +71,11 @@ router.put('/', function (req, res){
   console.log('in Put for edit Meeting', editMeeting);
   if (req.isAuthenticated()) {
     pool.connect(function (conErr, client, done) {
-      //defines remove Members
-      removeMembers = function() {
-        var deleteBling = 2
-        var blingArray = []
-        editMeeting.absent.unshift(editMeeting.meeting_id)
-        for(let i=0; i< editMeeting.absent.length-1; i++) {
-          blingArray.push('$' + deleteBling++)
-          }
-        var deleteQuery = 'DELETE FROM members_meetings WHERE members_id in (' + blingArray + ') AND meetings_id = $1'
-        console.log('deleteQuery', deleteQuery, editMeeting.absent)
-        client.query(deleteQuery, editMeeting.absent, function (queryErr, resultObj) {
-          done();
-          if (queryErr) {
-          console.log('done 500', queryErr)
-          res.sendStatus(500);
-            } else {
-              if (editMeeting.attended > 0) {
-                addMembers()
-              } else {
-                console.log('202')
-                res.sendStatus(202)
-              }
-            }
-          }) //end deleteQuery query
-        }   
-
-      //defines addMembers
-      addMembers = function() {
-        var addBling = 1
-        var blingArray2 = []
-        var attendedPairs = []
-            for(let i=0; i< editMeeting.attended.length; i++) {
-              attendedPairs.push(editMeeting.attended[i], editMeeting.meeting_id)
-            }
-            for(let j=0; j<attendedPairs.length/2; j++) {
-              blingArray2.push(' ($' + addBling++ + ', $' + addBling++ + ')')
-            }
-            var addQuery = 'INSERT INTO members_meetings (members_id, meetings_id) VALUES ' + blingArray2
-            console.log('addQuery', addQuery, attendedPairs)
-          client.query(addQuery, attendedPairs, function (queryErr, resultObj) {
-          done();
-            if (queryErr) {
-              console.log('done 500', queryErr)
-              res.sendStatus(500);
-            } else {
-              console.log('202')
-              res.sendStatus(202)
-            }
-          }) //end addMembers Query
-        } //end add Members
-      
       if (conErr) {
         console.log('Pool.connect error', conErr);
         res.sendStatus(500);
       } else {
-        console.log('first Query running');
+        console.log('first Query running'); //determines if non-Array changes exist
         var valueArray = []
         var tempvarQuery = []
         var bling = 0
@@ -170,9 +92,9 @@ router.put('/', function (req, res){
             bling++
             var eb = ' = $'
             tempvarQuery.push(prop+eb+bling)
-        } 
-        }//end for loop for temp array of properties
-        var queryFields = tempvarQuery.join(', ')
+          } 
+          }//end for loop for temp array of properties
+        var queryFields = tempvarQuery.join(', ') //fields are non array properties (topic etc.)
         var editQuery = 'UPDATE meetings SET ' + queryFields + ' WHERE meeting_id = $1'
         console.log('editQuery', editQuery, valueArray)
         client.query(editQuery, valueArray, function (queryErr, resultObj) {
@@ -181,21 +103,56 @@ router.put('/', function (req, res){
             console.log('queryError', queryErr);
             res.sendStatus(500);
           } else { 
-            console.log('edit query successful')
+            console.log('edit query successful') 
             if (editMeeting.absent.length > 0) {
-              removeMembers();
-            } else {
-                if (editMeeting.attended.length > 0) {
-                addMembers()
+               //defines remove Members
+              var deleteBling = 2
+              var blingArray = []
+              editMeeting.absent.unshift(editMeeting.meeting_id)
+              for(let i=0; i< editMeeting.absent.length-1; i++) {
+              blingArray.push('$' + deleteBling++)
+              } 
+              var deleteQuery = 'DELETE FROM members_meetings WHERE members_id is (' + blingArray + ') AND meetings_id = $1'
+              console.log('deleteQuery', deleteQuery, editMeeting.absent)
+              client.query(deleteQuery, editMeeting.absent, function (queryErr, resultObj) {
+              done();
+                if (queryErr) {
+                console.log('deleteQuery error', queryErr)
+                res.sendStatus(500);
                 } else {
-                  console.log('last 202')
-                  res.sendStatus(202)
-                  }
+                  console.log('deleteQuery Successful')
                 }
+                }); //end deleteQuery query
+                }    else { //end if absent array has contents 
+                console.log('absent Array empty')
+                }
+            if (editMeeting.attended.length > 0) {
+              var addBling = 1
+              var blingArray2 = []
+              var attendedPairs = []
+              for(let i=0; i< editMeeting.attended.length; i++) {
+                attendedPairs.push(editMeeting.attended[i], editMeeting.meeting_id)
               }
-            }) //end client.Query query
-          }
-    })//end pool.connect
+              for(let j=0; j<attendedPairs.length/2; j++) {
+                blingArray2.push(' ($' + addBling++ + ', $' + addBling++ + ')')
+              }
+              var addQuery = 'INSERT INTO members_meetings (members_id, meetings_id) VALUES ' + blingArray2
+              console.log('addQuery', addQuery, attendedPairs)
+              client.query(addQuery, attendedPairs, function (queryErr, resultObj) {
+              done();
+              if (queryErr) {
+                console.log('done 500', queryErr)
+                res.sendStatus(500);
+                } else {
+                console.log('202')
+                res.sendStatus(202)
+              }
+            }) //end addMembers Query
+          }; //end attended if
+          }; // end first query error/success
+       }); //end first client query 
+      } //ends first else for queries 
+    }); //end first pool connect
   } else {
     console.log('not logged in');
     res.send(false)
@@ -231,4 +188,38 @@ router.put('/delete/:id', function(req, res) {
   res.send(false);
 } //end else
 }); //end delete member
+
+//Add Meeting
+router.post('/', function(req, res) {
+  var newMeeting = req.body;
+      console.log('In Post New Meeting', req.body);
+      if (req.isAuthenticated()) {
+      pool.connect(function(connectionError, client, done){
+          if(connectionError) {
+              console.log(connectionError);
+              res.sendStatus(500);
+          } else {
+              var gQuery = 'INSERT INTO meetings (type, topic, month, year) VALUES ($1, $2, $3, $4)';
+              var valueArray = [newMeeting.type, newMeeting.topic, newMeeting.month, newMeeting.year];
+              client.query(gQuery, valueArray, function(queryError, resultObj) {
+                  done();
+                  if(queryError) {
+                      console.log(queryError);
+                      res.sendStatus(500);
+                  } else {
+                      console.log('new Meeting post successful');
+                      res.sendStatus(202);
+                  } //end result else
+              }); //end query
+          } //end pool else
+      }) //end pool connect 
+    } else {
+        console.log('not logged in');
+        res.send(false);//end auth if
+      }
+}) //end add meeting post
+
 module.exports = router;
+
+     
+//end if absent array has contents 
