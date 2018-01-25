@@ -67,6 +67,11 @@ html {
   height: 420px 
 }
 
+#img2 {
+  background-image: url("./redcow.jpg");
+  background-size: cover;
+  height: 420px 
+}
 input[type=text] {
   border: 2px solid black;
   border-radius: 4px;
@@ -93,7 +98,7 @@ input[type=submit] {
 #login {
   font-style: bold;
 }
-#loginBox {
+.loginBox {
   margin: 125px; 
 }
 #mainNav {
@@ -144,8 +149,6 @@ background-image: url("./wheatfield.jpg");
 #viewMembers {
   margin: 10px;
 }
-
-
 
 /* premade css */
 body, html {
