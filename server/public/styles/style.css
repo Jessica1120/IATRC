@@ -51,9 +51,8 @@
   color: white;
 }
 
-.input {
-  color: black;
-}
+
+
 html {
   background-color: #1c4863;
   -webkit-background-size: cover;
@@ -61,13 +60,47 @@ html {
   -o-background-size: cover;
   background-size: cover;
 }
+
+#img {
+  background-image: url("./cow.jpg");
+  background-size: cover;
+  height: 420px 
+}
+
+input[type=text] {
+  border: 2px solid black;
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+}
+
+input[type=password] {
+  border: 2px solid black;
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+}
+
+input[type=submit] {
+  border: 2px solid black;
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+}
+.input {
+  color: black;
+}
+#login {
+  font-style: bold;
+}
+#loginBox {
+  margin: 125px; 
+}
 #mainNav {
 background-image: url("./wheatfield.jpg");
 }
 
-#main {
-  background-color: #1c4863;
-}
+
 
 .meetingItem {
   border: solid 1px;
@@ -100,9 +133,20 @@ background-image: url("./wheatfield.jpg");
   color: blue;
 }
 
+#register{
+  border: 2px solid black;
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+
+}
+
 #viewMembers {
   margin: 10px;
 }
+
+
+
 /* premade css */
 body, html {
     margin: 0;
