@@ -61,7 +61,7 @@ html {
   background-size: cover;
 }
 
-#img {
+#img1 {
   background-image: url("./cow.jpg");
   background-size: cover;
   height: 420px 
@@ -95,6 +95,12 @@ input[type=submit] {
 .input {
   color: black;
 }
+.lead {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-style: bold; 
+  font-size: 25px;
+  font-variant: small-caps;
+}
 #login {
   font-style: bold;
 }
@@ -102,10 +108,11 @@ input[type=submit] {
   margin: 125px; 
 }
 #mainNav {
-background-image: url("./wheatfield.jpg");
+background-image: url("./wheat.jpeg");
+background-size: cover; 
+height: 125px;
+color: black;
 }
-
-
 
 .meetingItem {
   border: solid 1px;
@@ -148,6 +155,16 @@ background-image: url("./wheatfield.jpg");
 
 #viewMembers {
   margin: 10px;
+}
+
+.wheat {
+  background: rgba(255, 253, 248, 0.7);
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+  color: black;
+  font-family: Garamond;
+  font-variant: small-caps;
 }
 
 /* premade css */
@@ -204,7 +221,8 @@ body, html {
   .navbar {
     background-color: #333333;
     width: 100%;
-    border-radius: 0px;
+    border: 1px solid;
+    border-color: rgb(255, 253, 248);
     padding: 0px;
     margin: 0px;
     height: 100%
@@ -227,18 +245,15 @@ body, html {
   
   li {
     float: left;
-  }
-  
-  li a {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
-    padding: 14px 16px;
+    padding: 5px 5px;
     text-decoration: none;
   }
   
   /* Change the link color to #111 (black) on hover */
   li a:hover {
     text-decoration: underline;
-    color: #eee;
+    color:  rgb(43, 80, 145);
   }
