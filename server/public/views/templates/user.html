@@ -1,11 +1,11 @@
 
 
-<body class="container">
+<body class="container-fluid">
         <div ng-include="'views/partials/nav.html'"></div>
         <div ng-include="'views/partials/membersNav.html'"></div>
     <section class="row">
-        <div class="col-md-6"  id="membersView"> <!--Column 1 Row 1-->
-            <section ng-init="uc.viewMembers()" id="viewMembers">
+        <div class="col-md-6"> <!--Column 1 Row 1-->
+            <section ng-init="uc.viewMembers()">
                 <div class="memberList" ng-repeat="member in uc.memberList.data">
                     
                     <h5 class="names" ng-click="uc.getMember(member)">

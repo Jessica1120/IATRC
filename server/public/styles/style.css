@@ -1,5 +1,104 @@
-/* View Members */
-.addMargin {
+/* Global Sytles */
+
+html {
+  background-color: #1c4863;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+input[type=text] {
+  border: 2px solid black;
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+}
+.lead {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-style: bold; 
+  font-size: 25px;
+  font-variant: small-caps;
+}
+
+/* Log-In/Registration views */
+#img1 {
+  background-image: url("./cow.jpg");
+  background-size: cover;
+  height: 420px 
+  }
+  #img2 {
+  background-image: url("./redcow.jpg");
+  background-size: cover;
+  height: 420px 
+  }
+  input[type=password] {
+  border: 2px solid black;
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+  }
+  input[type=submit] {
+  border: 2px solid black;
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+  }
+  #login {
+  font-style: bold;
+  }
+  .loginBox {
+  margin: 125px; 
+}
+
+/* NavBars */
+#mainNav {
+  background-image: url("./wheat.jpeg");
+  background-size: cover; 
+  height: 125px;
+  color: black;
+  }
+  .wheat {
+    background: rgba(255, 253, 248, 0.7);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    color: black;
+    font-family: Garamond;
+    font-variant: small-caps;
+  }
+  .navbar {
+    background-color: #333333;
+    width: 100%;
+    border: 1px solid;
+    border-color: rgb(255, 253, 248);
+    padding: 0px;
+    margin: 0px;
+    height: 100%
+  }
+
+.navbar2 {
+    background-color: #b63333;
+    width: 100%;
+    height: 50px;
+  }
+  #nav2ul {
+  margin: 10px;
+  }
+  .wheat2 {
+    background: rgba(255, 253, 248, 0.7);
+    border-radius: 4px;
+    padding: 5px;
+    margin: 10px;
+    color: black;
+    font-family: Garamond;
+    font-variant: small-caps;
+}
+
+/* User view */
+
+
+
+  .addMargin {
   margin: 20px;
 }
 
@@ -53,66 +152,17 @@
 
 
 
-html {
-  background-color: #1c4863;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
 
-#img1 {
-  background-image: url("./cow.jpg");
-  background-size: cover;
-  height: 420px 
-}
 
-#img2 {
-  background-image: url("./redcow.jpg");
-  background-size: cover;
-  height: 420px 
-}
-input[type=text] {
-  border: 2px solid black;
-  border-radius: 4px;
-  margin: 5px;
-  font: black;
-}
 
-input[type=password] {
-  border: 2px solid black;
-  border-radius: 4px;
-  margin: 5px;
-  font: black;
-}
 
-input[type=submit] {
-  border: 2px solid black;
-  border-radius: 4px;
-  margin: 5px;
-  font: black;
-}
-.input {
-  color: black;
-}
-.lead {
-  font-family: Tahoma, Geneva, sans-serif;
-  font-style: bold; 
-  font-size: 25px;
-  font-variant: small-caps;
-}
-#login {
-  font-style: bold;
-}
-.loginBox {
-  margin: 125px; 
-}
-#mainNav {
-background-image: url("./wheat.jpeg");
-background-size: cover; 
-height: 125px;
-color: black;
-}
+
+
+
+
+
+
+
 
 .meetingItem {
   border: solid 1px;
@@ -129,11 +179,12 @@ color: black;
  }
 .memberList {
   border-bottom: rgb(43, 80, 145) solid 2px;
-  padding: 10px;
+ 
 }
 
 #membersView {
   background: white;
+  width: 50%;
   
 }
 .names {
@@ -153,19 +204,9 @@ color: black;
 
 }
 
-#viewMembers {
-  margin: 10px;
-}
 
-.wheat {
-  background: rgba(255, 253, 248, 0.7);
-  border-radius: 4px;
-  padding: 10px;
-  margin: 10px;
-  color: black;
-  font-family: Garamond;
-  font-variant: small-caps;
-}
+
+
 
 /* premade css */
 body, html {
@@ -218,24 +259,9 @@ body, html {
     margin-left: 10px;
   }
   
-  .navbar {
-    background-color: #333333;
-    width: 100%;
-    border: 1px solid;
-    border-color: rgb(255, 253, 248);
-    padding: 0px;
-    margin: 0px;
-    height: 100%
-  }
   
-  .navbar2 {
-    background-color: #8e0808;
-    width: 100%;
-    border-radius: 0px;
-    padding: 0px;
-    margin: 0px;
-    height: 100%
-  }
+  
+  
   ul {
     list-style-type: none;
     margin: 0;

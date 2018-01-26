@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,19 +18,16 @@
   "homepage": "https://github.com/Jessica1120/IATRC#readme",
   "dependencies": {
     "angular": "^1.6.8",
-    "angular-animate": "^1.6.8",
     "angular-route": "^1.6.8",
-    "angular-touch": "^1.6.8",
-    "angular-ui-bootstrap": "^2.5.6",
+    "angularjs": "0.0.1",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "pg": "^7.4.1",
-    "ui-bootstrap": "^0.1.10"
+    "pg": "^7.4.1"
   }
 }
