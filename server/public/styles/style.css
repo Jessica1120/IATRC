@@ -1,5 +1,22 @@
 /* Global Sytles */
-
+.btnSave {
+  border: 2px solid rgba(0, 69, 14, 0.804);
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+}
+.btnSave:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.btnCancel {
+  border: 2px solid rgba(43, 43, 43, 0.804);
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+}
+.btnCancel:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
 html {
   background-color: #1c4863;
   -webkit-background-size: cover;
@@ -13,14 +30,18 @@ input[type=text] {
   margin: 5px;
   font: black;
 }
+
 .lead {
   font-family: Tahoma, Geneva, sans-serif;
   font-style: bold; 
   font-size: 25px;
   font-variant: small-caps;
 }
-
+.listItem {
+  border-bottom: rgb(43, 80, 145) solid 2px;
+}
 /* Log-In/Registration views */
+
 #img1 {
   background-image: url("./cow.jpg");
   background-size: cover;
@@ -48,6 +69,12 @@ input[type=text] {
   }
   .loginBox {
   margin: 125px; 
+  }
+  #register{
+  border: 2px solid black;
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
 }
 
 /* NavBars */
@@ -95,10 +122,45 @@ input[type=text] {
 }
 
 /* User view */
+#editAddress {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#editMembers {
+  background: rgb(162, 186, 133);
+  font-family: Arial, Helvetica, sans-serif;
+  height: 500px;
+  border-left-style: solid;
+  border-left-width:1px;
+  border-color:  rgb(43, 80, 145);
+  border-radius: 10px;
+  }
+#editMemberName {
+  padding: 20px;
+  border-bottom: 2px solid;
+}
+#fullList {
+    background-color: rgba(255, 253, 248, .9);
+    height: 500px;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-color:  rgb(43, 80, 145);
+    border-radius: 10px;
+    overflow: auto;
+}
+#memberName {
+  padding-left: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid;
+}
+#row {
+  background:  rgb(43, 80, 145)
+}
 
 
 
-  .addMargin {
+.addMargin {
   margin: 20px;
 }
 
@@ -141,28 +203,11 @@ input[type=text] {
   color: white;
 }
 
-#editMembers {
-  background: rgb(162, 186, 133);
-  font-family: Arial, Helvetica, sans-serif;
-  }
+
 
 .editMeeting {
   color: white;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .meetingItem {
   border: solid 1px;
@@ -177,16 +222,9 @@ input[type=text] {
  #memberInfo {
    padding: 10px;
  }
-.memberList {
-  border-bottom: rgb(43, 80, 145) solid 2px;
- 
-}
 
-#membersView {
-  background: white;
-  width: 50%;
-  
-}
+
+
 .names {
   margin: 10px;
   font-size: 15px;
@@ -196,25 +234,14 @@ input[type=text] {
   color: blue;
 }
 
-#register{
-  border: 2px solid black;
-  border-radius: 4px;
-  margin: 5px;
-  font: black;
 
-}
 
 
 
 
 
 /* premade css */
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    font-size: 14px;
-  }
+
   
   .instructions .container h1 {
     font-size: 32px;
@@ -231,13 +258,7 @@ body, html {
     margin-top: 14px;
   }
   
-  #container {
-    margin-top: 10px;
-  }
-  
-  .container p{
-    margin-top : 14px;
-  }
+
   
   .message {
     padding: 10px 0;

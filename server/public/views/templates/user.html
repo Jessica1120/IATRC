@@ -1,157 +1,139 @@
-
-
-<body class="container-fluid">
         <div ng-include="'views/partials/nav.html'"></div>
         <div ng-include="'views/partials/membersNav.html'"></div>
-    <section class="row">
-        <div class="col-md-6"> <!--Column 1 Row 1-->
-            <section ng-init="uc.viewMembers()">
-                <div class="memberList" ng-repeat="member in uc.memberList.data">
-                    
-                    <h5 class="names" ng-click="uc.getMember(member)">
-                        <div class="names">
-                            <span class = "capitalize">{{member.last_name}}</span>, {{member.first_name}}
-                        </div> 
-                    </h5>
-                  
-                </div>
-
-            </section>
-        </div> <!--end column 1 -->
+ 
+<body class="container-fluid">      
+    <div class="row" id="row">
         
-        <div class="col-md-6" id="editMembers"> <!--Column 2 Row 1 --> 
-            <section class="row"> <!--row 1 Column 2 Row 1 -->
-                <div ng-hide ="fullName" ng-click="fullName=!fullName">
-                    <h4 class="memberName">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4>
-                </div>
-                <div ng-hide = "!fullName">
-                    <input type="text" placeholder="{{uc.memberToEdit.data[0].first_name}}" ng-model="uc.firstEditIn">
-                    <input type="text" placeholder="{{uc.memberToEdit.data[0].last_name}}" ng-model="uc.lastEditIn">
-                    <div ng-click="fullName=!fullName">
-                        <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                        <button type="button">Cancel</button>
+        <div class="col-sm-5" id="fullList"> <!--Column 1 Row 1-->
+                <section ng-init="uc.viewMembers()">
+                    <div class="listItem" ng-repeat="member in uc.memberList.data">
+                        <h5 class="names" ng-click="uc.getMember(member)">
+                            <div class="names">
+                                <span class = "capitalize">{{member.last_name}}</span>, {{member.first_name}}
+                            </div> 
+                        </h5>
                     </div>
+                </section>       
+        </div> <!--end column 1 -->
+       
+        <div class="col-sm-7" id="editMembers"> <!--Column 2 Row 1 --> 
+            <section class="row" ng-hide ="fullName" ng-click="fullName=!fullName"> <!--row 1 Column 2 Row 1 -->
+                <div class="col-sm-6">
+                        <h4 class="lead" id="memberName">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4>
                 </div>
+                <div class="col-sm-6"></div>
+            </section>    
+            <section class="row" ng-hide = "!fullName"  id="editMemberName">
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="{{uc.memberToEdit.data[0].first_name}}" ng-model="uc.firstEditIn">
+                        <input type="text" placeholder="{{uc.memberToEdit.data[0].last_name}}" ng-model="uc.lastEditIn">
+                    </div>
+                    <div class="col-sm-6">
+                        <div ng-click="fullName=!fullName">
+                        <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                        <button type="button" class="btnCancel">Cancel</button>
+                        </div>
+                    </div>
             </section>
+            
             <section class="row"> <!--row 2, Column 2, Row 1 -->
-                <div class="col-md-6"> <!-- column 1, row 2, Column 2, Row 1 -->
-                    <div ng-hide = "institution" ng-click="institution=!institution">
-                       Institution: {{uc.memberToEdit.data[0].institution}}
-                    </div>
-                    <div ng-hide = "!institution">
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].institution}}" ng-model="uc.institutionEditIn">
-                        <div ng-click="institution=!institution">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
+                <div class="col-md-1"></div>
+                <div class="col-md-5"> <!-- column 1, row 2, Column 2, Row 1 -->
+                    <div class="row" id="editAddress">
+                        <div ng-hide = "institution" ng-click="institution=!institution">
+                        {{uc.memberToEdit.data[0].institution}}
                         </div>
-                    </div>
-                    
-                    <div ng-hide = "department" ng-click="department=!department">
-                        Department: {{uc.memberToEdit.data[0].department}}
-                    </div>
-                    <div ng-hide = "!department">
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].department}}" ng-model="uc.departmentEditIn">
-                        <div ng-click="department=!department">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
+                        <div ng-hide = "!institution">
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].institution}}" ng-model="uc.institutionEditIn">
+                            <div ng-click="institution=!institution">
+                                <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button" class="btnCancel">Cancel</button>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div ng-hide ="address" ng-click="address=!address">
-                        Address: {{uc.memberToEdit.data[0].address_1}}<br>
+                        <div ng-hide = "department" ng-click="department=!department">
+                        {{uc.memberToEdit.data[0].department}}
+                        </div>
+                        <div ng-hide = "!department">
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].department}}" ng-model="uc.departmentEditIn">
+                            <div ng-click="department=!department">
+                                <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button" class="btnCancel">Cancel</button>
+                            </div>
+                        </div>
+                        <div ng-hide ="address" ng-click="address=!address">
+                        {{uc.memberToEdit.data[0].address_1}}<br>
                         {{uc.memberToEdit.data[0].address_2}}<br>
                         {{uc.memberToEdit.data[0].address_3}}<br>
-                    </div>
-                    <div ng-hide="!address">
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].address_1}}" ng-model="uc.address_1EditIn"><br>
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].address_2}}" ng-model="uc.address_2EditIn"><br>
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].address_3}}" ng-model="uc.address_3EditIn"><br>
-                        <div ng-click="address=!address">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
+                        {{uc.memberToEdit.data[0].city}} {{uc.memberToEdit.data[0].state}} {{uc.memberToEdit.data[0].zipcode}} {{uc.memberToEdit.data[0].country}}
+                        </div>
+                        <div ng-hide="!address">
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].address_1}}" ng-model="uc.address_1EditIn"><br>
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].address_2}}" ng-model="uc.address_2EditIn"><br>
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].address_3}}" ng-model="uc.address_3EditIn"><br>
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].city}}" ng-model="uc.cityEditIn">, <input type="text" placeholder="{{uc.memberToEdit.data[0].state}}" ng-model="uc.stateEditIn"><input type="text" placeholder="{{uc.memberToEdit.data[0].zipcode}}" ng-model="uc.zipcodeEditIn"> <input type="text" placeholder="{{uc.memberToEdit.data[0].country}}" ng-model="uc.countryEditIn"><br>
+                            <div ng-click="address=!address">
+                                <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button" class="btnCancel">Cancel</button>
+                            </div>
                         </div>
                     </div>
-
-                    <div ng-hide = "address2" ng-click="address2=!address2">
-                        City/State/Zip: {{uc.memberToEdit.data[0].city}} {{uc.memberToEdit.data[0].state}} {{uc.memberToEdit.data[0].zipcode}}
-                    </div>
-                    <div ng-hide ="!address2" >
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].city}}" ng-model="uc.cityEditIn">, <input type="text" placeholder="{{uc.memberToEdit.data[0].state}}" ng-model="uc.stateEditIn"> Zip: <input type="text" placeholder="{{uc.memberToEdit.data[0].zipcode}}" ng-model="uc.zipcodeEditIn"><br>
-                        <div ng-click="address2=!address2">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
-                        </div>
-                    </div>
-                
-                    <div ng-hide = "country" ng-click="country=!country">
-                        Country: {{uc.memberToEdit.data[0].country}}
-                    </div>
-                    <div ng-hide = "!country">
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].country}}" ng-model="uc.countryEditIn">
-                        <div ng-click="country=!country">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
-                        </div>
-                    </div>   
                     
-                    <div ng-hide = "phone" ng-click="phone=!phone">
+                    <div class="row">
+                        <div ng-hide = "phone" ng-click="phone=!phone">
                         Phone: {{uc.memberToEdit.data[0].phone}}
-                    </div>
-                    <div ng-hide = "!phone">
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].phone}}" ng-model="uc.phoneEditIn">
-                        <div ng-click="phone=!phone">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
                         </div>
-                    </div>  
-                        
-                    <div ng-hide = "email" ng-click="email=!email">
-                       Email: {{uc.memberToEdit.data[0].email}}
-                    </div>
-                    <div ng-hide = "!email">
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].email}}" ng-model="uc.emailEditIn"><br>
-                        <div ng-click="email=!email">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
+                        <div ng-hide = "!phone">
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].phone}}" ng-model="uc.phoneEditIn">
+                            <div ng-click="phone=!phone">
+                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button">Cancel</button>
+                            </div>
+                        </div>     
+                        <div ng-hide = "email" ng-click="email=!email">
+                        Email: {{uc.memberToEdit.data[0].email}}
                         </div>
-                    </div>   
-
-                    <div ng-hide = "website" ng-click="website=!website">
+                        <div ng-hide = "!email">
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].email}}" ng-model="uc.emailEditIn"><br>
+                            <div ng-click="email=!email">
+                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button">Cancel</button>
+                            </div>
+                        </div>   
+                        <div ng-hide = "website" ng-click="website=!website">
                         Website: {{uc.memberToEdit.data[0].website}}
-                    </div>
-                    <div ng-hide = "!website">
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].website}}" ng-model="uc.websiteEditIn">
-                        <div ng-click="website=!website">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
                         </div>
-                    </div>   
-                        
-                    <div ng-hide = "publications" ng-click="publications=!publications">
-                       Publications: {{uc.memberToEdit.data[0].publications}}
-                    </div>
-                    <div ng-hide = "!publications">
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].publications}}" ng-model="uc.publicationsEditIn">  
-                        <div ng-click="publications=!publications">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
+                        <div ng-hide = "!website">
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].website}}" ng-model="uc.websiteEditIn">
+                            <div ng-click="website=!website">
+                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button">Cancel</button>
+                             </div>
+                        </div>   
+                        <div ng-hide = "publications" ng-click="publications=!publications">
+                        Publications: {{uc.memberToEdit.data[0].publications}}
                         </div>
-                    </div>      
-
-                    <div ng-hide = "status" ng-click="status=!status">
+                        <div ng-hide = "!publications">
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].publications}}" ng-model="uc.publicationsEditIn">  
+                            <div ng-click="publications=!publications">
+                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button">Cancel</button>
+                            </div>
+                        </div>      
+                        <div ng-hide = "status" ng-click="status=!status">
                         Member Status: {{uc.memberToEdit.data[0].member_status}} {{uc.memberToEdit.data[0].member_year}}
-                    </div>
-                    <div ng-hide = "!status">
+                        </div>
+                        <div ng-hide = "!status">
                         Member Status: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_status}}" ng-model="uc.memberStatusEditIn">
                         Member Since: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_year}}" ng-model="uc.memberYearEditIn">
-                        <div ng-click="status=!status">
-                            <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                            <button type="button">Cancel</button>
-                        </div>
-                    </div>      
-                </div> <!-- end column 1, row 2, Column 2, Row 1 -->
-                    
-                <div class="col-md-6"> <!-- column 2, row 2, Column 2, Row 1 -->
+                            <div ng-click="status=!status">
+                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button">Cancel</button>
+                            </div>
+                        </div>      
+                    </div> <!-- end column 1, row 2, Column 2, Row 1 -->
+                </div>    
+                
+                <div class="col-md-5"> <!-- column 2, row 2, Column 2, Row 1 -->
                     <section class="row"> <!-- row 1, column 2, row 2, Column 2, Row 1 -->
                         Service:
                         <div ng-repeat="service in uc.serviceOnly.data"> 
@@ -242,9 +224,10 @@
                         </div>
                     </section>  <!-- end row 3, column 2, row 2, Column 2, Row 1 -->
                 </div>    <!-- column 2, row 2, Column 2, Row 1 -->
+                <div class="col-md-1"></div>
             </section> <!--row 2, Column 2, Row 1 -->
-        </div> <!--Column 2 Row 1 -->  
-    </section>
+        </div> <!--Column 2 Row 1 --> 
+    </div>
 </body>
             
                 
