@@ -1,11 +1,11 @@
 /* Global Sytles */
-.btnSave {
-  border: 2px solid rgba(0, 69, 14, 0.804);
+.btnAdd {
+  border: 2px solid rgb(43, 80, 145);
   border-radius: 4px;
   margin: 5px;
   font: black;
 }
-.btnSave:hover {
+.btnAdd:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 .btnCancel {
@@ -17,6 +17,44 @@
 .btnCancel:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
+.btnDelete { 
+  border: 2px solid rgba(157, 38, 38, 0.804);
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+}
+.btnDelete:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.btnEdit {
+  border: 2px solid rgba(14, 14, 92, 0.804);
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+}
+.btnEdit:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.btnSave {
+  border: 2px solid rgba(0, 69, 14, 0.804);
+  border-radius: 4px;
+  margin: 5px;
+  font: black;
+}
+.btnSave:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.dates {
+  float: left;
+}
+
+.heading {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-weight: bold; 
+  font-size: 15px;
+  font-variant: small-caps;
+}
 html {
   background-color: #1c4863;
   -webkit-background-size: cover;
@@ -24,7 +62,7 @@ html {
   -o-background-size: cover;
   background-size: cover;
 }
-input[type=text] {
+input {
   border: 2px solid black;
   border-radius: 4px;
   margin: 5px;
@@ -40,6 +78,10 @@ input[type=text] {
 .listItem {
   border-bottom: rgb(43, 80, 145) solid 2px;
 }
+.ngRepeatListItem {
+ display: inline-block;
+ margin-left: 10px;
+}
 /* Log-In/Registration views */
 
 #img1 {
@@ -51,12 +93,6 @@ input[type=text] {
   background-image: url("./redcow.jpg");
   background-size: cover;
   height: 420px 
-  }
-  input[type=password] {
-  border: 2px solid black;
-  border-radius: 4px;
-  margin: 5px;
-  font: black;
   }
   input[type=submit] {
   border: 2px solid black;
@@ -122,10 +158,10 @@ input[type=text] {
 }
 
 /* User view */
-#editAddress {
-  padding-top: 20px;
-  padding-bottom: 20px;
+#addBtnPosition {
+  float: right;
 }
+
 #editMembers {
   background: rgb(162, 186, 133);
   font-family: Arial, Helvetica, sans-serif;
@@ -134,6 +170,7 @@ input[type=text] {
   border-left-width:1px;
   border-color:  rgb(43, 80, 145);
   border-radius: 10px;
+  overflow: auto;
   }
 #editMemberName {
   padding: 20px;
@@ -154,9 +191,14 @@ input[type=text] {
   padding-bottom: 10px;
   border-bottom: 2px solid;
 }
-#row {
+#rowInList {
   background:  rgb(43, 80, 145)
 }
+
+
+
+
+
 
 
 
@@ -172,36 +214,7 @@ input[type=text] {
   text-transform: uppercase;
 }
 
-.deleteBtn { 
-  background-color: white;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  color: #485b32;
-  font-style: bold;
-  border: 2px solid #485b32;
-  border-radius: 10px;
-  margin: 10px;
-}
 
-.deleteBtn:hover {
-  background-color: rgb(232, 16, 16);
-  border-color: black;
-  color: black;
-}
-.editBtn {
-  background-color: white;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  color: #485b32;
-  font-style: bold;
-  border: 2px solid #485b32;
-  border-radius: 10px;
-  padding: 5px 15px;
-  margin: 10px;
-}
-.editBtn:hover {
-  background-color: #1c4863;
-  border: 2px solid #1c4863;
-  color: white;
-}
 
 
 

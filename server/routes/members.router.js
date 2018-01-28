@@ -260,6 +260,7 @@ router.delete('/deleteService/:id', function(req, res) {
           if (queryErr) {
             res.sendStatus(500);
           } else {
+            console.log('deleted')
             res.sendStatus(200);
           }
         }) // end query

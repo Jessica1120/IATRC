@@ -209,11 +209,13 @@ vm.addService = function(member_id, meetings_id) {
     }
   console.log('add service', objToSend)
   UserService.addService(objToSend)
+    vm.start_dateIn= '',
+    vm.end_dateIn='',
+    vm.addInfoIn=''
 }; //end addService
 
-vm.deleteService = function (service, memberId) {
-  console.log('delete', service, memberId)
-  UserService.deleteService(service, memberId)
+vm.deleteService = function (service) {
+  UserService.deleteService(service)
 }
 
 

@@ -114,14 +114,17 @@ self.addService = function(objToSend) {
   }); //end then
 }; //end addService
       
-self.deleteService = function (service) {
-  return $http ({
-    method: 'DELETE',
-    url: '/members/deleteService/' + service
-  }).then(function (res) {
-    console.log(res)
-  })
-}
+self.deleteService = function (objToSend) {
+  console.log('deleteService', objToSend)
+  $http({
+      method: 'DELETE',
+      url:    'members/deleteService/' + objToSend 
+  }).then(function(res) {
+      console.log('addService response:', res );
+      // self.getMember(res.data);
+    //need a confirmation alert or something here
+  }); //end then
+}; //end addService
 
 //addMember post Call 
 self.addMember = function(objToSend) {

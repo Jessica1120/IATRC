@@ -2,9 +2,9 @@
         <div ng-include="'views/partials/membersNav.html'"></div>
  
 <body class="container-fluid">      
-    <div class="row" id="row">
+    <div class="row" id="rowInList">
         
-        <div class="col-sm-5" id="fullList"> <!--Column 1 Row 1-->
+        <div class="col-sm-4" id="fullList"> <!--Column 1 Row 1-->
                 <section ng-init="uc.viewMembers()">
                     <div class="listItem" ng-repeat="member in uc.memberList.data">
                         <h5 class="names" ng-click="uc.getMember(member)">
@@ -16,7 +16,7 @@
                 </section>       
         </div> <!--end column 1 -->
        
-        <div class="col-sm-7" id="editMembers"> <!--Column 2 Row 1 --> 
+        <div class="col-sm-8" id="editMembers"> <!--Column 2 Row 1 --> 
             <section class="row" ng-hide ="fullName" ng-click="fullName=!fullName"> <!--row 1 Column 2 Row 1 -->
                 <div class="col-sm-6">
                         <h4 class="lead" id="memberName">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4>
@@ -38,8 +38,8 @@
             
             <section class="row"> <!--row 2, Column 2, Row 1 -->
                 <div class="col-md-1"></div>
-                <div class="col-md-5"> <!-- column 1, row 2, Column 2, Row 1 -->
-                    <div class="row" id="editAddress">
+                <div class="col-md-4" > <!-- column 1, row 2, Column 2, Row 1 -->
+                    <div class="row" >
                         <div ng-hide = "institution" ng-click="institution=!institution">
                         {{uc.memberToEdit.data[0].institution}}
                         </div>
@@ -133,28 +133,31 @@
                     </div> <!-- end column 1, row 2, Column 2, Row 1 -->
                 </div>    
                 
-                <div class="col-md-5"> <!-- column 2, row 2, Column 2, Row 1 -->
+                <div class="col-md-6"> <!-- column 2, row 2, Column 2, Row 1 -->
                     <section class="row"> <!-- row 1, column 2, row 2, Column 2, Row 1 -->
-                        Service:
-                        <div ng-repeat="service in uc.serviceOnly.data"> 
-                                {{service.service_type}}
-                            <div ng-click="mainService=!mainService">
-                                {{service.start_date}} - {{service.end_date}}
-                                {{service.add_info}}
-                            </div>
-                            <div ng-hide="!mainService">
-
-                                <input type="number" placeholder="start year" ng-model="uc.editStartYear">
-                                <input type="number" placeholder="end year" ng-model="uc.editEndYear">
-                                <input type="text" placeholder="additional information" ng-model="uc.editAddInfo">
+                        <h5 class="heading">Service:</h5>
+                        <ul>
+                            <li ng-repeat="service in uc.serviceOnly.data">
                                 <div ng-click="mainService=!mainService">
-                                    <button type="button" ng-click="uc.editService(service.primary_id, uc.memberToEdit.data[0].member_id)">Save</button>
-                                    <button type="button" ng-click="uc.deleteService(service.primary_id, uc.memberToEdit.data[0].member_id)">Delete Service</button>    
-                                    <button type="button">Cancel</button>
+                                    <div ng-hide="mainService" class="dates">{{service.start_date}} - {{service.end_date}}</div> 
+                                    <div class="ngRepeatListItem">{{service.service_type}} </div>
+                                    <div ng-hide="mainService">{{service.add_info}}</div>
                                 </div>
-                            </div>
-                        </div> <!--end ng-repeat for service info-->
-                        <button ng-click="addService=!addService">Add</button>
+                            
+                                <div ng-hide="!mainService">
+                                    <input type="number" placeholder="start year" ng-model="uc.editStartYear">
+                                    <input type="number" placeholder="end year" ng-model="uc.editEndYear">
+                                    <input type="text" placeholder="additional information" ng-model="uc.editAddInfo">
+                                    <div ng-click="mainService=!mainService">
+                                        <button type="button" class= "btnSave" ng-click="uc.editService(service.primary_id, uc.memberToEdit.data[0].member_id)">Save</button>
+                                        <button type="button" class= "btnDelete" ng-click="uc.deleteService(service.primary_id)">Delete</button>    
+                                        <button type="button" class = "btnCancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="row">
                         <div ng-hide="!addService">
                             <select ng-model="uc.serviceIn" class="dropdown">
                                 <option value=1>Executive Committee Member - Elected</option>
@@ -164,41 +167,53 @@
                             <input type="number" placeholder="start year" ng-model="uc.start_dateIn">
                             <input type="number" placeholder="end year" ng-model="uc.end_dateIn">
                             <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
-                            <div ng-click= "addService=!addService">
-                                <button ng-click="uc.addService(uc.memberToEdit.data[0].member_id)">Add</button>
-                                <button type="button">Cancel</button>   
-                            </div>                         
+                            <div ng-click= "addService=!addService" id="addBtnPosition">
+                                <button ng-click="uc.addService(uc.memberToEdit.data[0].member_id)" class="btnAdd">Add</button>
+                                <button type="button" class ="btnCancel">Cancel</button>   
+                            </div>                        
                         </div>
-                    </section>  <!-- end row 1, column 2, row 2, Column 2, Row 1 -->
+                        <button ng-click="addService=!addService" ng-hide="addService" class="btnAdd" id="addBtnPosition">Add</button>
+                    
+                    </section>  <!-- end row 1, column 2, row 2, Column 2, Row 1 end Add Service-->
                         
-                    <section class="row"> <!-- row 2, column 2, row 2, Column 2, Row 1 --> 
-                    <div class = "col-md">
-                        Meetings:
-                        <div ng-repeat="meeting in uc.meetings.data">
-                            <p ng-click="meetingService=!meetingService">{{meeting.year}} - {{meeting.topic}} {{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}}</p>
-                            {{meeting.service_type}}
-                            {{meeting.add_info}}
-                            <div ng-hide="!meetingService">
-                                <select ng-model="uc.editMeetingIn" class="dropdown">
-                                    <option value=6>Attendance Only</option>
-                                    <option value=3>Theme Day Organizer</option>
-                                    <option value=4>Non-Theme Day Organizer</option>
-                                    <option value=5>Other</option>
-                                </select>
-                                <div ng click = "meetingService=!meetingService">
-                                    <button type="button" ng-click="uc.editService(meeting.primary_id, uc.memberToEdit.data[0].member_id)">Save</button>
-                                    <button type="button" ng-click="uc.delete(service)">Delete Service</button>    
-                                    <button type="button">Cancel</button>
+                    <section class="row"> <!-- start meetings row 2, column 2, row 2, Column 2, Row 1 --> 
+                        <h5 class="heading">Meetings:</h5>
+                        <ul>
+                            <li ng-repeat="meeting in uc.meetings.data">
+                                <div ng-click="meetingService=!meetingService">
+                                    {{meeting.year}} - {{meeting.topic}} {{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}}
+                                    <div ng-hide="meetingService">
+                                        {{meeting.service_type}}
+                                        {{meeting.add_info}}
+                                    </div>
                                 </div>
-                            </div>
-                        </div> <!--end ng-repeat for meetings info -->
-                        <button ng-click="addtoMeeting=!addtoMeeting"> Add </button>
+                                <div ng-hide="!meetingService">
+                                    <select ng-model="uc.editMeetingIn" class="dropdown">
+                                        <option value=6>Attendance Only</option>
+                                        <option value=3>Theme Day Organizer</option>
+                                        <option value=4>Non-Theme Day Organizer</option>
+                                        <option value=5>Other</option>
+                                    </select>
+                                    <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
+                                    <div ng-click = "meetingService=!meetingService">
+                                        <button type="button" class= "btnSave" ng-click="uc.editService(meeting.primary_id, uc.memberToEdit.data[0].member_id)">Save</button>
+                                        <button type="button" class= "btnDelete" ng-click="uc.deleteService(meeting.primary_id)">Delete</button>    
+                                        <button type="button" class = "btnCancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul> <!--end ng-repeat for meetings info -->
+                        
+                    </section>
+                    <section class="row">  
+                        <button ng-click="addtoMeeting=!addtoMeeting" ng-hide="addtoMeeting" class="btnAdd" id="addBtnPosition"> Add </button>
                         <div ng-hide="!addtoMeeting">
                             Search for meeting by year:  <input type="number" placeholder="year" ng-model="uc.meetingYearIn">
-                            <button ng-click="uc.findMeetingsByYear(uc.meetingYearIn)">Search</button>
+                            <button class="btnEdit" ng-click="uc.findMeetingsByYear(uc.meetingYearIn)">Search</button>
+                            <button class="btnSave" ng-click="addtoMeeting=!addtoMeeting">Done</button>
                             <div ng-repeat="meeting in uc.meetingsByYear.data">
                                 <div ng-click = "addMeeting=!addMeeting">
-                                    {{meeting.topic}}, {{meeting.type}} {{meeting.month}}
+                                    {{meeting.topic}} - {{meeting.meeting_city}}, {{meeting.meeting_state}} {{meeting.meeting_country}}
                                 </div>
                                 <div ng-hide="!addMeeting">
                                     <select ng-model="uc.serviceIn" class="dropdown">
@@ -211,11 +226,10 @@
                                     <div ng-click="addtoMeeting=!addtoMeeting">
                                         <button ng-click="uc.addService(uc.memberToEdit.data[0].member_id, meeting.meeting_id)">Save</button>
                                         <button type="button">Cancel</button>
-                                    </div>
-                                </div>
+                                    </div> 
+                                </div>  
                             </div>
-                        </div>
-                    </div>    
+                        </div>   
                     </section><!-- end row 2, column 2, row 2, Column 2, Row 1 -->
                         
                     <section class = "row"> <!-- row 3, column 2, row 2, Column 2, Row 1 -->
