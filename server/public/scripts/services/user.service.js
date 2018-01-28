@@ -116,12 +116,12 @@ self.addService = function(objToSend) {
       
 self.deleteService = function (objToSend) {
   console.log('deleteService', objToSend)
-  $http({
+ return $http({
       method: 'DELETE',
       url:    'members/deleteService/' + objToSend 
   }).then(function(res) {
-      console.log('addService response:', res );
-      // self.getMember(res.data);
+      console.log('deleteService response:', res.data );
+      self.getMember(res.data[0]);
     //need a confirmation alert or something here
   }); //end then
 }; //end addService

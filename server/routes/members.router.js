@@ -254,15 +254,26 @@ router.delete('/deleteService/:id', function(req, res) {
         res.sendStatus(500);
       } else {
         var valueArray = [deleteService]
-        deleteQuery = 'DELETE FROM members_meetings WHERE primary_id = $1'
-        client.query(deleteQuery, valueArray, function (queryErr, resultObj) {
+        getQuery = "SELECT member_id, past_service FROM members INNER JOIN members_meetings ON members.member_id = members_meetings.members_id WHERE members_meetings.primary_id = $1";
+        client.query(getQuery, valueArray, function (queryErr, resultObjId) {
+          done();
+          if (queryErr) {
+            console.log('Select query error', queryErr)
+            res.sendStatus(500);
+          } else {
+            console.log('res after select:', resultObjId.rows)
+          deleteQuery = 'DELETE FROM members_meetings WHERE primary_id = $1'
+          client.query(deleteQuery, valueArray, function (queryErr, resultObj) {
           done();
           if (queryErr) {
             res.sendStatus(500);
+            console.log('delete error', queryErr)
           } else {
-            console.log('deleted')
-            res.sendStatus(200);
+            console.log('res after delete:', resultObjId.rows)
+            res.send(resultObjId.rows);
           }
+        })
+      }
         }) // end query
       } // end pool else
     }) // end pool connect
