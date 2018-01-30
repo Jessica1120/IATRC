@@ -9,7 +9,6 @@ myApp.service('UserService', function($http, $location){
     self.memberList = {data: []} //object for viewMembers get
     self.memberToEdit = {data:[]} // object for findMember
     self.meetingsByYear = {data: []} //object for findMeetingsByYear
-    
     //meetings objects
     self.allMeetings = {data: []} //object for ViewMeetings get
     self.meetingToEdit = {data: []}//object for getMeeting
@@ -17,23 +16,62 @@ myApp.service('UserService', function($http, $location){
     self.updatedMeeting = {data:[]} // object for findMember
     self.serviceOnly = {data: []}
     self.meetings = {data: []}
+    
 
+//MEMBER PAGE FUNCTIONS - user.html view
 
-//MEMBER PAGE FUNCTIONS
-self.viewMembers = function(){
-  console.log('viewMembers in Service running')
-  return $http({
-    method: 'GET',
-    url: '/members'
+//add service to existing member
+self.addService = function(objToSend) {
+  console.log('addService', objToSend)
+  $http({
+      method: 'POST',
+      url:    'members/addService',
+      data:   objToSend
+  }).then(function(res) {
+      console.log('addService response:', res );
+      self.getMember(res.data);
+    //need a confirmation alert or something here
+  }); //end then
+}; //end addService
+
+self.deleteMember = function(deleteMemberId) {
+  console.log('service delete running', deleteMemberId)
+  return $http ({
+    method: 'PUT',
+    url: '/members/delete/' + deleteMemberId 
+  }).then(function (res) {
+    console.log(res)
   })
-    .then(function (res) {
-      self.memberList.data = res.data;
-     console.log('allMembers in Service', self.memberList)
-    }) //end call back function
-  }// end view Members
-  //edit box functions
+}
 
-//get member to edit
+//deletes service from specific member
+self.deleteService = function (objToSend) {
+  console.log('deleteService', objToSend)
+ return $http({
+      method: 'DELETE',
+      url:    'members/deleteService/' + objToSend 
+  }).then(function(res) {
+      console.log('deleteService response:', res.data );
+      self.getMember(res.data[0]);
+    //need a confirmation alert or something here
+  }); //end then
+}; //end deleteService
+
+//edit service information
+self.editService = function(objToSend) {
+  console.log('service Obj', objToSend)
+  return $http({
+      method: 'PUT',
+      url:    '/members/service',
+      data:   objToSend
+  }).then(function(res) {
+      console.log('edit service res', res)
+      self.getMember(res.data);
+    // need a confirmation alert or something here
+  }); //end then
+}; //end editService
+
+//get member to Edit
 self.getMember = function(objToSend) {
   console.log('In findMember', objToSend)
   return $http({
@@ -46,6 +84,7 @@ self.getMember = function(objToSend) {
     self.memberService();
   })
 };
+
 //gets service information for getMember function
 self.memberService = function() { 
   self.serviceOnly.data = []
@@ -72,60 +111,20 @@ self.saveEditMember = function(objToSend) {
     // need a confirmation alert or something here
   }); //end then
 }; //end saveEditmember
-
-//edit service information
-self.editService = function(objToSend) {
-  console.log('service Obj', objToSend)
+//gets list of all members
+self.viewMembers = function(){
+  console.log('viewMembers in Service running')
   return $http({
-      method: 'PUT',
-      url:    '/members/service',
-      data:   objToSend
-  }).then(function(res) {
-      console.log('edit service res', res)
-      self.getMember(res.data);
-    // need a confirmation alert or something here
-  }); //end then
-}; //end editService
+    method: 'GET',
+    url: '/members'
+  })
+    .then(function (res) {
+      self.memberList.data = res.data;
+     console.log('allMembers in Service', self.memberList)
+    }) //end call back function
+}// end view Members
 
-//view Meetings by year
-self.findMeetingsByYear = function(meetingYear){
-      console.log('findMeetingByYear in Service running')
-      return $http({
-        method: 'GET',
-        url: '/members/meetingsByYear/' + meetingYear
-      })
-        .then(function (res) {
-          self.meetingsByYear.data = res.data;
-         console.log('meetings by year', self.meetingsByYear.data)
-        }) //end call back function
-};// end findMeetingsByYear
-
-//adding service
-self.addService = function(objToSend) {
-  console.log('addService', objToSend)
-  $http({
-      method: 'POST',
-      url:    'members/addService',
-      data:   objToSend
-  }).then(function(res) {
-      console.log('addService response:', res );
-      self.getMember(res.data);
-    //need a confirmation alert or something here
-  }); //end then
-}; //end addService
-      
-self.deleteService = function (objToSend) {
-  console.log('deleteService', objToSend)
- return $http({
-      method: 'DELETE',
-      url:    'members/deleteService/' + objToSend 
-  }).then(function(res) {
-      console.log('deleteService response:', res.data );
-      self.getMember(res.data[0]);
-    //need a confirmation alert or something here
-  }); //end then
-}; //end addService
-
+//MEMBER PAGE FUNCTIONS - addmembers.html view
 //addMember post Call 
 self.addMember = function(objToSend) {
   console.log('inserviceobjtosend', objToSend)
@@ -139,15 +138,28 @@ self.addMember = function(objToSend) {
   }); //end then
 }; //end addMember
 
-self.deleteMember = function(deleteMemberId) {
-  console.log('service delete running', deleteMemberId)
-  return $http ({
-    method: 'PUT',
-    url: '/members/delete/' + deleteMemberId 
-  }).then(function (res) {
-    console.log(res)
-  })
-}
+
+
+  //view Meetings by year
+self.findMeetingsByYear = function(meetingYear){
+      console.log('findMeetingByYear in Service running')
+      return $http({
+        method: 'GET',
+        url: '/members/meetingsByYear/' + meetingYear
+      })
+        .then(function (res) {
+          self.meetingsByYear.data = res.data;
+         console.log('meetings by year', self.meetingsByYear.data)
+        }) //end call back function
+};// end findMeetingsByYear
+
+
+      
+
+
+
+
+
 
 //MEETINGS PAGE FUNCTIONS
 

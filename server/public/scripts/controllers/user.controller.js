@@ -10,12 +10,76 @@ myApp.controller('UserController', function(UserService) {
     vm.defaultMeeting = {meeting_id: 1}
     vm.serviceOnly = UserService.serviceOnly
     vm.meetings = UserService.meetings
+    
 
-//page load
-vm.viewMembers = function() {
-  UserService.viewMembers();
-  console.log ('in controller viewMembers running')
-}; //end viewMembers
+//user.html view:
+
+
+//addService
+vm.addService = function(member_id, meetings_id) {
+  console.log(meetings_id)
+  var objToSend = {
+    member_id: member_id,
+    service_id: parseInt(vm.serviceIn),
+    meetings_id: meetings_id,
+    start_date: vm.start_dateIn,
+    end_date: vm.end_dateIn,
+    add_info: vm.addInfoIn
+    }
+    if (meetings_id == undefined) {
+      objToSend.meetings_id = 1
+    }
+  console.log('add service', objToSend)
+  UserService.addService(objToSend)
+    vm.start_dateIn= '',
+    vm.end_dateIn='',
+    vm.addInfoIn=''
+}; //end addService
+
+vm.deleteMember = function(deleteMemberId) {
+  console.log('in controller delete,', deleteMemberId)
+  UserService.deleteMember(deleteMemberId); 
+  } //delete member end
+
+
+vm.deleteService = function (service) {
+  UserService.deleteService(service)
+}
+//edit member's service
+vm.editService = function(primaryId, memberId) {
+  console.log('service', primaryId, memberId, vm.editMeetingIn)
+  
+  var editServiceObj = {
+    members_id: memberId,
+    primary_id: primaryId
+  }
+      if (vm.editStartYear !== undefined) {
+        editServiceObj.start_date = vm.editStartYear
+        if (vm.editStartYear == "") {
+          delete editServiceObj.start_date
+        }
+      }
+      if (vm.editEndYear !== undefined) {
+        editServiceObj.end_date = vm.editEndYear
+        if (vm.editEndYear == "") {
+          delete editServiceObj.end_date
+        }
+      }
+      if (vm.editMeetingIn !== undefined) {
+        editServiceObj.service_id = vm.editMeetingIn
+        if (vm.editMeetingIn == "") {
+          delete editServiceObj.service_id
+        }
+      }
+      if (vm.editAddInfo !== undefined) {
+        editServiceObj.add_info = vm.editAddInfo
+        if (vm.editAddInfo == "") {
+          delete objToSend.add_info
+        }
+      }
+      console.log('Edit', editServiceObj)
+      UserService.editService(editServiceObj);
+}; //end edit Service
 
 //Click on member to view/edit
 vm.getMember = function(member) {
@@ -150,151 +214,89 @@ vm.saveEditMember = function(editMemberId) {
     vm.memberYearEditIn = ""
     vm.publicationsEditIn = "" 
 }; //end saveEditMember
-  
-//edit Service
-vm.editService = function(primaryId, memberId) {
-    console.log('service', primaryId, memberId, vm.editMeetingIn)
-    
-    var editServiceObj = {
-      members_id: memberId,
-      primary_id: primaryId
-    }
-        if (vm.editStartYear !== undefined) {
-          editServiceObj.start_date = vm.editStartYear
-          if (vm.editStartYear == "") {
-            delete editServiceObj.start_date
-          }
-        }
-        if (vm.editEndYear !== undefined) {
-          editServiceObj.end_date = vm.editEndYear
-          if (vm.editEndYear == "") {
-            delete editServiceObj.end_date
-          }
-        }
-        if (vm.editMeetingIn !== undefined) {
-          editServiceObj.service_id = vm.editMeetingIn
-          if (vm.editMeetingIn == "") {
-            delete editServiceObj.service_id
-          }
-        }
-        if (vm.editAddInfo !== undefined) {
-          editServiceObj.add_info = vm.editAddInfo
-          if (vm.editAddInfo == "") {
-            delete objToSend.add_info
-          }
-        }
-        console.log('Edit', editServiceObj)
-        UserService.editService(editServiceObj);
-}; //end edit Service
 
-//adding member to meeting pt 1 - search for meeting
+//gets member list on page load
+vm.viewMembers = function() {
+  UserService.viewMembers();
+  console.log ('in controller viewMembers running')
+}; //end viewMembers
+//edit Service
+
+
+//ADDMEMBERS.HTML view
+
+vm.addMember = function() {
+  console.log ('in controller addMember running')
+  var objToSend = {
+    first_name: vm.firstIn,
+    last_name: vm.lastIn,
+    institution: vm.InstitutionIn,
+    department: vm.departmentIn,
+    address_1: vm.address1In,
+    address_2:  vm.address2In,
+    address_3: vm.address3In,
+    city: vm.cityIn,
+    state: vm.stateIn,
+    zipcode: vm.zipIn,
+    country: vm.countryIn,
+    phone: vm.phoneIn,
+    email:  vm.emailIn,
+    website: vm.websiteIn,
+    member_status: vm.statusIn,
+    member_year: vm.sinceIn,
+    publications: vm.publicationsIn,
+    serviceArray: vm.serviceArray,
+  };
+  UserService.addMember(objToSend)
+  vm.firstIn = '',
+  vm.lastIn = ''  
+  vm.InstitutionIn = '',
+  vm.departmentIn = '',
+  vm.address1In = '',
+  vm.address2In = '',
+  vm.address3In = '',
+  vm.cityIn = '',
+  vm.stateIn = '',
+  vm.zipIn = '',
+  vm.countryIn = '',
+  vm.phoneIn = '',
+  vm.emailIn = '',
+  vm.websiteIn = '',
+  vm.statusIn = '',
+  vm.sinceIn = '',
+  vm.publicationsIn = '',
+  vm.serviceArray = []
+} //end add Member
+
+//search for meeting to add member to
 vm.findMeetingsByYear = function(meetingYear) {
   console.log('meetingYear', meetingYear)
   UserService.findMeetingsByYear(meetingYear)
 }; //end findMeetingsByYear
 
-//addService
-vm.addService = function(member_id, meetings_id) {
-  console.log(meetings_id)
-  var objToSend = {
-    member_id: member_id,
-    service_id: parseInt(vm.serviceIn),
-    meetings_id: meetings_id,
-    start_date: vm.start_dateIn,
-    end_date: vm.end_dateIn,
-    add_info: vm.addInfoIn
+vm.serviceItem = function(service) {
+    console.log(service)
+    serviceObj = {
+      meeting_id: service.meeting_id,
+      service_id: vm.serviceIn,
+      start_date: vm.startYearIn,
+      end_date: vm.endYearIn,
+      add_info: vm.addInfoIn
     }
-    if (meetings_id == undefined) {
-      objToSend.meetings_id = 1
-    }
-  console.log('add service', objToSend)
-  UserService.addService(objToSend)
-    vm.start_dateIn= '',
-    vm.end_dateIn='',
-    vm.addInfoIn=''
-}; //end addService
-
-vm.deleteService = function (service) {
-  UserService.deleteService(service)
+    if (vm.serviceIn !== undefined) {
+      serviceObj.service_id = vm.serviceIn
+      if (vm.serviceIn == "") {
+        delete serviceObj.service_id
+      }
+    vm.serviceArray.push(serviceObj)
+    console.log(vm.serviceArray)
+  };
 }
 
 
-vm.addMember = function() {
-      console.log ('in controller addMember running')
-      var objToSend = {
-        first_name: vm.firstIn,
-        last_name: vm.lastIn,
-        institution: vm.InstitutionIn,
-        department: vm.departmentIn,
-        address_1: vm.address1In,
-        address_2:  vm.address2In,
-        address_3: vm.address3In,
-        city: vm.cityIn,
-        state: vm.stateIn,
-        zipcode: vm.zipIn,
-        country: vm.countryIn,
-        phone: vm.phoneIn,
-        email:  vm.emailIn,
-        website: vm.websiteIn,
-        member_status: vm.statusIn,
-        member_year: vm.sinceIn,
-        publications: vm.publicationsIn,
-        serviceArray: vm.serviceArray,
-      };
-      UserService.addMember(objToSend)
-      vm.firstIn = '',
-      vm.lastIn = ''  
-      vm.InstitutionIn = '',
-      vm.departmentIn = '',
-      vm.address1In = '',
-      vm.address2In = '',
-      vm.address3In = '',
-      vm.cityIn = '',
-      vm.stateIn = '',
-      vm.zipIn = '',
-      vm.countryIn = '',
-      vm.phoneIn = '',
-      vm.emailIn = '',
-      vm.websiteIn = '',
-      vm.statusIn = '',
-      vm.sinceIn = '',
-      vm.publicationsIn = '',
-      vm.serviceArray = []
-    } //end then
-    
+}); //end controller
 
 
 
 
-
-
-vm.deleteMember = function(deleteMemberId) {
-  console.log('in controller delete,', deleteMemberId)
-  UserService.deleteMember(deleteMemberId); 
-  }
-    
-
-      
-          //delete member
-
-        
-
-
-  
-
-
-
-
-  
-
-  
-
-
-
-
-
-  
-
-
-  }); //end controller
   

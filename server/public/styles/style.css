@@ -191,28 +191,33 @@ input {
   padding-bottom: 10px;
   border-bottom: 2px solid;
 }
+.names {
+  margin: 10px;
+  font-size: 15px;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+.names:hover {
+  color: blue;
+}
 #rowInList {
   background:  rgb(43, 80, 145)
 }
 
+/* add member view */
 
-
-
-
-
-
-
-.addMargin {
-  margin: 20px;
+#addMemberInfo {
+  background-color: rgba(225, 205, 140, .6)
 }
 
-#buttons {
-  float: right;
-}
 
-.capitalize {
-  text-transform: uppercase;
-}
+
+
+
+v
+
+
+
+
 
 
 
@@ -238,14 +243,7 @@ input {
 
 
 
-.names {
-  margin: 10px;
-  font-size: 15px;
-  font-family: Tahoma, Geneva, sans-serif;
-}
-.names:hover {
-  color: blue;
-}
+
 
 
 

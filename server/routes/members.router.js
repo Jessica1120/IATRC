@@ -3,7 +3,33 @@ var path = require('path');
 var pool = require('../modules/pool.js');
 
 //on View Members Load
-
+router.get('/', function (req, res) {
+  console.log('in Get for view members');
+  // check if logged in
+  if (req.isAuthenticated()) {
+    pool.connect(function (conErr, client, done) {
+      if (conErr) {
+        console.log(conErr)
+        res.sendStatus(500);
+      } else {
+        console.log('running query')
+        client.query('SELECT member_id, first_name, last_name, past_service FROM members ORDER BY last_name;', function (queryErr, resultObj) {
+          done();
+          if (queryErr) {
+            console.log('query Error', queryErr)
+            res.sendStatus(500);
+          } else {
+            console.log(resultObj.rows)
+            res.send(resultObj.rows);
+          }
+        });
+      }
+    })
+  } else {
+    console.log('not logged in');
+    res.send(false);
+  }
+});//end view members Get call
 //Request for view members
 router.get('/', function (req, res) {
   console.log('in Get for view members');
@@ -285,8 +311,6 @@ router.delete('/deleteService/:id', function(req, res) {
   } //end else
 }); //end get member to edit get call
 
-
-
 //add member Post
 router.post('/', function (req, res) {
   var newMember = req.body;
@@ -313,7 +337,7 @@ router.post('/', function (req, res) {
       } //end if no arrays
         else {
           console.log('serviceArray running')  
-          var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year, past_service) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) returning id';
+          var gQuery = 'INSERT INTO members (first_name, last_name, institution, department, address_1, address_2, address_3, city, state, zipcode, country, phone, email, website, member_status, member_year, past_service) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17) returning member_id';
             var valueArray = [newMember.first_name, newMember.last_name, newMember.institution, newMember.department, newMember.address_1, newMember.address_2, newMember.address_3, newMember.city, newMember.state, newMember.zipcode, newMember.country, newMember.phone, newMember.email, newMember.website, newMember.member_status, newMember.member_year, true];
           client.query(gQuery, valueArray, function (queryError, resultObj) {
             done();
