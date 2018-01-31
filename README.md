@@ -35,7 +35,7 @@ These instructions will get you a copy of the project up and running on your loc
 
  ## Screenshots
 
- Log-in Screen: (https://github.com/Jessica1120/IATRC/blob/master/server/public/images/LogIn.png)
+ Log-in Screen: (./server/public/images/LogIn.png)
 
 
 
