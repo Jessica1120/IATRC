@@ -1,16 +1,16 @@
-#International Agricultural Trade Research Consortium
+# International Agricultural Trade Research Consortium
 
 An application built for the conference organizer of the IATRC. The application will allow the user to input data on members of the IATRC and IATRC conferences, manipulate that data and create reports. (in progress)
 
-##Built With
+## Built With
 
 Angular.js, Bootstrap, CSS3, Express.js, HTML5,Node.js, Passport, PostgreSQL, and Sweet Alerts
 
-##Getting Started
+## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. Clone these files to your local machine, ensure that you have a PostgreSQL database correctly configured, and make sure to install the required dependencies via Node.js.
 
-##Pre-requisites
+## Pre-requisites
 
 * Node.js
 * PostgreSQL
@@ -29,11 +29,13 @@ These instructions will get you a copy of the project up and running on your loc
     * pg
     * sweetalert
 
- ##Installing
+ ## Installing
 
  After the dependencies are installed, use npm start to start the server, which will run on port 5000.
 
- ##Screenshots
+ ## Screenshots
+
+ Log-in Screen: (server/public/images/LogIn.png)
 
 
 
