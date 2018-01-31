@@ -1,6 +1,6 @@
 # International Agricultural Trade Research Consortium
 
-An application built for the conference organizer of the IATRC. The application will allow the user to input data on members of the IATRC and IATRC conferences, manipulate that data and create reports. (in progress)
+An application built for the conference organizer of the IATRC. The application will allow the user to input data on members of the IATRC and IATRC conferences, manipulate that data and create reports. *project in progress*
 
 ## Built With
 
@@ -37,6 +37,12 @@ These instructions will get you a copy of the project up and running on your loc
 
  Log-in Screen: (https://github.com/Jessica1120/IATRC/blob/master/server/public/images/LogIn.png)
 
+Member List/Edit Page:
+(https://github.com/Jessica1120/IATRC/blob/master/server/public/images/memberList.png)
 
-Member-s 
+Add Member Page:
+(https://github.com/Jessica1120/IATRC/blob/master/server/public/images/addMember.png)
+
+Meetings List:
+(https://github.com/Jessica1120/IATRC/blob/master/server/public/images/meetingsList.png)
  
