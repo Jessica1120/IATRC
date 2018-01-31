@@ -41,6 +41,7 @@ self.deleteMember = function(deleteMemberId) {
     url: '/members/delete/' + deleteMemberId 
   }).then(function (res) {
     console.log(res)
+    self.viewMembers()  
   })
 }
 
@@ -134,8 +135,12 @@ self.addMember = function(objToSend) {
       data:   objToSend
   }).then(function(res) {
       console.log('addMember response:', res );
+    }).swal({
+        text: "New Member Added",
+        icon: "success",
+      });
     //need a confirmation alert or something here
-  }); //end then
+   //end then
 }; //end addMember
 
 

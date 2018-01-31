@@ -1,16 +1,16 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div ng-include="'views/partials/meetingsNav.html'"></div>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-6"  ng-init="ic.viewMeetings()" >
-        <div ng-hide="selected" ng-click="selected=!selected">   <div ng-repeat="meeting in ic.allMeetings.data" class="meetingItem">
-                <div ng-click="ic.getMeeting(meeting.meeting_id)">
-                   {{meeting.month}}, {{meeting.year}} - {{meeting.topic}}
-                   {{meeting.hotel}}, {{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}} 
-                    
-                </div>
-            </div> <!-- end ng-repeat meeting -->
-        </div> 
+        <div class="col-md-6"  ng-init="ic.viewMeetings()" id="fullmeetingList">
+            <div>   
+                <div ng-repeat="meeting in ic.allMeetings.data" class="listItem">
+                    <div class= "names" ng-click="ic.getMeeting(meeting.meeting_id)">
+                        <b>{{meeting.year}}</b> <div>{{meeting.topic}} </div>
+                        <div>{{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}} </div>
+                    </div>
+                </div> <!-- end ng-repeat meeting -->
+            </div> 
         </div> 
         <div class="col-md-6" ng-hide="!selected">
             <div ng-hide="edit" class="editMeeting">
@@ -61,9 +61,9 @@
                         
                     </div>
 
-           </div>
-        </div>
+    </div>
+</div>
 
         
 
-    </div>
+    

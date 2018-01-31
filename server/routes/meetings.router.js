@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
         if (conErr) {
           res.sendStatus(500);
         } else {
-          client.query('SELECT * FROM meetings', function (queryErr, resultObj) {
+          client.query('SELECT * FROM meetings ORDER BY year DESC', function (queryErr, resultObj) {
             done();
             if (queryErr) {
               res.sendStatus(500);

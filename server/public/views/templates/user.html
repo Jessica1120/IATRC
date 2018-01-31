@@ -15,7 +15,7 @@
                     </div>
                 </section>       
         </div> <!--end column 1 -->
-       
+    
         <div class="col-sm-8" id="editMembers"> <!--Column 2 Row 1 --> 
             <section class="row" ng-hide ="fullName" ng-click="fullName=!fullName"> <!--row 1 Column 2 Row 1 -->
                 <div class="col-sm-6">
@@ -85,8 +85,8 @@
                         <div ng-hide = "!phone">
                             <input type="text" placeholder="{{uc.memberToEdit.data[0].phone}}" ng-model="uc.phoneEditIn">
                             <div ng-click="phone=!phone">
-                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                                <button type="button">Cancel</button>
+                                <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button" class="btnCancel">Cancel</button>
                             </div>
                         </div>     
                         <div ng-hide = "email" ng-click="email=!email">
@@ -95,8 +95,8 @@
                         <div ng-hide = "!email">
                             <input type="text" placeholder="{{uc.memberToEdit.data[0].email}}" ng-model="uc.emailEditIn"><br>
                             <div ng-click="email=!email">
-                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                                <button type="button">Cancel</button>
+                                <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button" class="btnCancel">Cancel</button>
                             </div>
                         </div>   
                         <div ng-hide = "website" ng-click="website=!website">
@@ -105,8 +105,8 @@
                         <div ng-hide = "!website">
                             <input type="text" placeholder="{{uc.memberToEdit.data[0].website}}" ng-model="uc.websiteEditIn">
                             <div ng-click="website=!website">
-                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                                <button type="button">Cancel</button>
+                                <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button" class="btnCancel">Cancel</button>
                              </div>
                         </div>   
                         <div ng-hide = "publications" ng-click="publications=!publications">
@@ -115,8 +115,8 @@
                         <div ng-hide = "!publications">
                             <input type="text" placeholder="{{uc.memberToEdit.data[0].publications}}" ng-model="uc.publicationsEditIn">  
                             <div ng-click="publications=!publications">
-                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                                <button type="button">Cancel</button>
+                                <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button" class="btnCancel">Cancel</button>
                             </div>
                         </div>      
                         <div ng-hide = "status" ng-click="status=!status">
@@ -126,8 +126,8 @@
                         Member Status: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_status}}" ng-model="uc.memberStatusEditIn">
                         Member Since: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_year}}" ng-model="uc.memberYearEditIn">
                             <div ng-click="status=!status">
-                                <button type="button" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
-                                <button type="button">Cancel</button>
+                                <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
+                                <button type="button" class="btnCancel">Cancel</button>
                             </div>
                         </div>      
                     </div> <!-- end column 1, row 2, Column 2, Row 1 -->
@@ -241,6 +241,7 @@
                 <div class="col-md-1"></div>
             </section> <!--row 2, Column 2, Row 1 -->
         </div> <!--Column 2 Row 1 --> 
+    
     </div>
 </body>
             
