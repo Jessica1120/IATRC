@@ -9,7 +9,7 @@
                     <div class="listItem" ng-repeat="member in uc.memberList.data">
                         <h5 class="names" ng-click="uc.getMember(member)">
                             <div class="names">
-                                <span class = "capitalize">{{member.last_name}}</span>, {{member.first_name}}
+                                <span id = "capitalize">{{member.last_name}}</span>, {{member.first_name}}
                             </div> 
                         </h5>
                     </div>
@@ -19,9 +19,11 @@
         <div class="col-sm-8" id="editMembers"> <!--Column 2 Row 1 --> 
             <section class="row" ng-hide ="fullName" ng-click="fullName=!fullName"> <!--row 1 Column 2 Row 1 -->
                 <div class="col-sm-6">
-                        <h4 class="lead" id="memberName">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4>
+                        <h4 class="itemViewed">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4>
                 </div>
-                <div class="col-sm-6"></div>
+                <div class="col-sm-6">
+                    <button class="btnDelete" id =deleteMember ng-click="uc.deleteMember(uc.memberToEdit.data[0].member_id)">Delete</button>
+                </div>
             </section>    
             <section class="row" ng-hide = "!fullName"  id="editMemberName">
                     <div class="col-sm-6">
@@ -234,7 +236,7 @@
                         
                     <section class = "row"> <!-- row 3, column 2, row 2, Column 2, Row 1 -->
                         <div class="col-md">
-                            <button class="deleteBtn" ng-click="uc.deleteMember(uc.memberToEdit.data[0].member_id)">Delete</button>
+                           
                         </div>
                     </section>  <!-- end row 3, column 2, row 2, Column 2, Row 1 -->
                 </div>    <!-- column 2, row 2, Column 2, Row 1 -->

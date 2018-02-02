@@ -35,7 +35,6 @@
 .btnEdit:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
-
 .btnSave {
   border: 2px solid rgba(0, 69, 14, 0.804);
   border-radius: 4px;
@@ -68,7 +67,14 @@ input {
   margin: 5px;
   font: black;
 }
-
+.itemViewed {
+  padding-left: 25px;
+  padding-top: 10px;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-style: bold; 
+  font-size: 25px;
+  font-variant: small-caps;
+}
 .lead {
   font-family: Tahoma, Geneva, sans-serif;
   font-style: bold; 
@@ -77,6 +83,16 @@ input {
 }
 .listItem {
   border-bottom: rgb(43, 80, 145) solid 2px;
+}
+.names {
+  margin: 10px;
+  padding-left: 25px;
+  font-size: 15px;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+.names:hover {
+  color:  rgb(43, 80, 145);
+  text-decoration: underline;
 }
 .ngRepeatListItem {
  display: inline-block;
@@ -161,7 +177,14 @@ input {
 #addBtnPosition {
   float: right;
 }
-
+#capitalize {
+  text-transform: uppercase;
+}
+#deleteMember {
+  float: right;
+  margin-top: 30px;
+  margin-right: 50px;
+}
 #editMembers {
   background: rgb(162, 186, 133);
   font-family: Arial, Helvetica, sans-serif;
@@ -185,20 +208,8 @@ input {
     border-radius: 10px;
     overflow: auto;
 }
-#memberName {
-  padding-left: 50px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid;
-}
-.names {
-  margin: 10px;
-  font-size: 15px;
-  font-family: Tahoma, Geneva, sans-serif;
-}
-.names:hover {
-  color: blue;
-}
+
+
 #rowInList {
   background:  rgb(43, 80, 145)
 }
@@ -209,13 +220,22 @@ input {
   background-color: rgba(225, 205, 140, .6);
   padding: 20px;
 }
-
 #saveMember {
   float: right;
 }
 
 /* meetings/info.html view */
-
+.mtgInfo {
+ padding-top: 10px;
+ padding-bottom: 5px;
+ padding-left: 30px;
+ font-size: 15px;
+}
+#deleteMeeting {
+  float:right;
+  margin-top: 25px;
+  margin-right: 50px;
+}
 #editMeeting {
   background: rgb(162, 186, 133);
   font-family: Arial, Helvetica, sans-serif;
@@ -238,26 +258,20 @@ input {
   color: black
 }
 
-
-
-
-
-
-
-.editMeeting {
-  color: black;
+#topicIn {
+  margin-top: 25px;
+  margin-left: 50px;
+  border-bottom: 2px solid black;
 }
 
-.meetingItem {
-  border: solid 1px;
-  border-color: #a2ba85;
-  color: black;
 
- }
 
- #meetingsbyYear{
-   color: white;
- }
+
+
+
+
+
+
 
  #memberInfo {
    padding: 10px;

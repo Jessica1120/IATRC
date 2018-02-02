@@ -1,68 +1,80 @@
 <div ng-include="'views/partials/nav.html'"></div>
 <div ng-include="'views/partials/meetingsNav.html'"></div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6"  ng-init="ic.viewMeetings()" id="fullmeetingList">
-            <div>   
-                <div ng-repeat="meeting in ic.allMeetings.data" class="listItem">
-                    <div class= "names" ng-click="ic.getMeeting(meeting.meeting_id)">
-                        <b>{{meeting.year}}</b> <div>{{meeting.topic}} </div>
-                        <div>{{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}} </div>
-                    </div>
+<body class="container-fluid">
+    <section class="row" id="rowInList">
+        <div class="col-md-5"  ng-init="ic.viewMeetings()" id="fullmeetingList">
+           <div ng-repeat="meeting in ic.allMeetings.data" class="listItem">
+                <div class= "names" ng-click="ic.getMeeting(meeting.meeting_id)">
+                    <b>{{meeting.year}}</b> 
+                    <div>{{meeting.topic}} </div>
+                    <div>{{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}}</div>
                 </div> <!-- end ng-repeat meeting -->
-            </div> 
+            </div>
         </div> 
-        <div class="col-md-6" ng-hide="!selected">
-            <div ng-hide="edit" class="editMeeting">
-                {{ic.meetingToEdit.data[0].type}}<br>
-                {{ic.meetingToEdit.data[0].topic}}<br>
-                {{ic.meetingToEdit.data[0].month}}<br>
-                {{ic.meetingToEdit.data[0].year}}<br>
-                {{ic.meetingToEdit.data[0].hotel}}<br>
-                {{ic.meetingToEdit.data[0].meeting_city}}<br>
-                {{ic.meetingToEdit.data[0].meeting_state}}<br>
-                {{ic.meetingToEdit.data[0].meeting_country}}<br>
-                Participants: <div ng-repeat="participant in ic.meetingToEdit.data">
-                        {{participant.last_name}}, {{participant.first_name}}
-                        </div>                     
-                <div ng-click="edit=!edit"><button ng-click="ic.editMembers(ic.meetingToEdit.data[0].meeting_id)">Edit</button></div>
-                <div ng-click="selected=!selected"><button ng-click="ic.deleteMeeting(ic.meetingToEdit.data[0].meeting_id)">Delete</button></div>
-                <button ng-click="selected=!selected">Back</button>
-            </div>   
-                    
-            <div ng-hide="!edit" class="editMeeting">
-                <div>
-                Type: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].type}}" ng-model="ic.editTypeIn"><br>
-                Topic: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].topic}}" ng-model="ic.editTopicIn"><br>
-                Month: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].month}}" ng-model="ic.editMonthIn"><br>
-                Year: <input class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].year}}" ng-model="ic.editYearIn"><br>
-                City: <input type="text" placeholder="{{ic.meetingToEdit.data[0].meeting_city}}" ng-model="ic.editCityIn"><br>
-                State: <input type="text" placeholder="{{ic.meetingToEdit.data[0].meeting_state}}" ng-model="ic.editStateIn"><br>
-                Country: <input type="text" placeholder="{{ic.meetingToEdit.data[0].meeting_country}}" ng-model="ic.editCountryIn"><br>
-                Hotel: <input type="text" placeholder="{{ic.meetingToEdit.data[0].hotel}}" ng-model="ic.editHotelIn"><br>
-
+        <div class="col-md-7" id="editMeeting">
+            <section class="row">
+                <div class="col-sm-6" style="border-bottom:1px solid black">
+                    <h5 ng-hide="edit" class = "itemViewed">{{ic.meetingToEdit.data[0].topic}}</h5>
+                    <input ng-hide="!edit" style="margin:20px; padding-right:100px" type="text" placeholder="{{ic.meetingToEdit.data[0].topic}}" ng-model="ic.editTopicIn">
                 </div>
-                Participants: <div ng-repeat="participant in ic.meetingToEdit.data">
-                   <input type="checkbox" ng-model="participant.Selected" ng-init="participant.Selected=true"> 
-                   {{participant.last_name}}, {{participant.first_name}}                         
+                <div class="col-sm-6">
+                    <button class="btnDelete" id =deleteMeeting ng-click="uc.deleteMember(uc.memberToEdit.data[0].member_id)">Delete</button>
                 </div>
-                        <div ng-repeat="member in ic.allMembers.data">
-                        <input type="checkbox" ng-model="member.Selected" ng-init="member.Selected=false"> 
-                        {{member.last_name}}, {{member.first_name}} 
-                        </div>
-                <div ng-click="selected=!selected">
-                    <div ng-click="edit=!edit">
-                <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].meeting_id)">Save</button>
-            </div>
-            </div>
+            </section>
                 
-                <button type="button" ng-click="edit=!edit">Cancel</button>
+            <section class ="row">
+                <div class="col-sm-6">
+                    <section class="row">
+                        <div ng-hide="edit" class="mtgInfo">{{ic.meetingToEdit.data[0].month}}, {{ic.meetingToEdit.data[0].year}}</div>
+                        <input ng-hide="!edit" class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].month}}" ng-model="ic.editMonthIn"> <input class="input" ng-hide="!edit" type="text" placeholder="{{ic.meetingToEdit.data[0].year}}" ng-model="ic.editYearIn">
+                    </section>
+                    <section class="row">
+                        <div ng-hide="edit" class="mtgInfo">{{ic.meetingToEdit.data[0].hotel}}</div>
+                        <input type="text" ng-hide="!edit" placeholder="{{ic.meetingToEdit.data[0].hotel}}" ng-model="ic.editHotelIn">
+                    </section>
+                    <section class="row">
+                        <div ng-hide="edit" class="mtgInfo">{{ic.meetingToEdit.data[0].meeting_city}}, {{ic.meetingToEdit.data[0].meeting_state}} 
+                                {{ic.meetingToEdit.data[0].meeting_country}}
+                        </div>
+                            <input type="text" ng-hide="!edit" placeholder="{{ic.meetingToEdit.data[0].meeting_city}}" ng-model="ic.editCityIn">
+                            <input type="text" ng-hide="!edit" placeholder="{{ic.meetingToEdit.data[0].meeting_state}}" ng-model="ic.editStateIn">
+                            <input type="text" ng-hide="!edit" placeholder="{{ic.meetingToEdit.data[0].meeting_country}}" ng-model="ic.editCountryIn">
+                    </section>
+                    <section class="row">
+                        <div ng-hide="edit" class="mtgInfo">{{ic.meetingToEdit.data[0].type}}</div>
+                        <input class="input" ng-hide="!edit" type="text" placeholder="{{ic.meetingToEdit.data[0].type}}" ng-model="ic.editTypeIn">
+                    </section>
                 </div>
-                        
-                    </div>
-
-    </div>
-</div>
+                <div class="col-sm-6">
+                    <section class="row">
+                        Participants: 
+                    </section>
+                    <section class="row">
+                        <div ng-repeat="participant in ic.meetingToEdit.data">
+                            <input type="checkbox" ng-hide="!edit" ng-model="participant.Selected" ng-init="participant.Selected=true">
+                            {{participant.last_name}}, {{participant.first_name}}
+                        </div>  
+                        <div ng-hide="!edit">
+                            <div ng-repeat="member in ic.allMembers.data">
+                                <input type="checkbox" ng-model="member.Selected" ng-init="member.Selected=false"> 
+                                    {{member.last_name}}, {{member.first_name}} 
+                            </div> 
+                        </div>
+                    </section>
+                    <section class="row">                  
+                        <div ng-click="edit=!edit" ng-hide="edit">
+                            <button ng-click="ic.editMembers(ic.meetingToEdit.data[0].meeting_id)">Edit</button>
+                        </div>    
+                        <div ng-click="edit=!edit" ng-hide="!edit">
+                            <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].meeting_id)">Save</button>
+                            <button>Back</button>
+                        </div>
+                    </section>
+                </div> 
+            </section>
+        </div>                        
+    </section>
+</body>
 
         
 
