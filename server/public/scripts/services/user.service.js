@@ -241,9 +241,10 @@ self.addMeeting = function(objToSend) {
       data:   objToSend
   }).then(function(res) {
       console.log('add meeting response:', res );
+      self.viewMembers();
     //need a confirmation alert or something here
   }); //end then
-}; //end deleteMeeting
+}; //end addMeeting
 
 self.deleteMeeting = function(meetingId) {
   console.log('In Delete meeting', meetingId) 

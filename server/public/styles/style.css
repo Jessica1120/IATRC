@@ -265,7 +265,16 @@ input {
 /*  what is this? */
 
 /* add meetings view */
+#addAttendants {
+  padding: 5px;
+}
+#globe {
+  background-image: url("./globe.jpg");
+  background-size: cover;
+  height: 320px;
+  color: black;
 
+}
 #topicInput {
   margin-top: 20px;
   padding-right: 200px;

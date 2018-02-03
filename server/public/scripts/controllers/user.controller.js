@@ -14,7 +14,6 @@ myApp.controller('UserController', function(UserService) {
 
 //user.html view:
 
-
 //addService
 vm.addService = function(member_id, meetings_id) {
   console.log(meetings_id)

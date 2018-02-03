@@ -129,6 +129,7 @@ vm.addMeeting = function() {
     vm.stateIn= '',
     vm.countryIn= '',
     vm.hotelIn= ''
+    vm.participants = []
   }; //end addMeeting
 
 //delete Meeting
