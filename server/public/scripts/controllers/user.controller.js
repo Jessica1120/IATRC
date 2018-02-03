@@ -6,7 +6,7 @@ myApp.controller('UserController', function(UserService) {
     vm.memberList = UserService.memberList;
     vm.memberToEdit = UserService.memberToEdit;
     vm.meetingsByYear = UserService.meetingsByYear;
-    vm.serviceArray = [] // array to send to Database
+    vm.serviceArray = [ ] // array to send to Database
     vm.defaultMeeting = {meeting_id: 1}
     vm.serviceOnly = UserService.serviceOnly
     vm.meetings = UserService.meetings
@@ -14,7 +14,7 @@ myApp.controller('UserController', function(UserService) {
 
 //user.html view:
 
-//addService
+//addService to existing member
 vm.addService = function(member_id, meetings_id) {
   console.log(meetings_id)
   var objToSend = {
@@ -282,15 +282,29 @@ vm.serviceItem = function(service) {
       end_date: vm.endYearIn,
       add_info: vm.addInfoIn
     }
-    if (vm.serviceIn !== undefined) {
+    if (vm.serviceIn == "1") {
+      console.log('serviceIn', vm.serviceIn)
+      serviceObj.type = "Elected Member"
+    } else if (vm.serviceIn == "2") {
+       serviceObj.type = "Funding Agency Representative"
+    } else if (vm.serviceIn == "4") {
+      serviceObj.type = "Other"
+    } else if (vm.serviceIn !== undefined) {
       serviceObj.service_id = vm.serviceIn
-      if (vm.serviceIn == "") {
+      if (vm.serviceIn == '') {
         delete serviceObj.service_id
       }
+    }
     vm.serviceArray.push(serviceObj)
     console.log(vm.serviceArray)
+ 
+    vm.serviceIn = '',
+    vm.startYearIn = '',
+    vm.endYearIn = '',
+    vm.addInfoIn = ''
   };
-}
+ 
+
 
 
 }); //end controller

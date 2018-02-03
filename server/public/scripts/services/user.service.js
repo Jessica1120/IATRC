@@ -41,7 +41,7 @@ self.deleteMember = function(deleteMemberId) {
     url: '/members/delete/' + deleteMemberId 
   }).then(function (res) {
     console.log(res)
-    self.viewMembers()  
+    self.viewMembers()
   })
 }
 
@@ -120,9 +120,11 @@ self.viewMembers = function(){
     url: '/members'
   })
     .then(function (res) {
-      self.memberList.data = res.data;
-     console.log('allMembers in Service', self.memberList)
-    }) //end call back function
+    self.memberList.data = res.data
+     self.getMember( self.memberList.data[0])
+    })
+  //   .then((self.memberList.data[0].member_id)
+  //  ); //end call back function
 }// end view Members
 
 //MEMBER PAGE FUNCTIONS - addmembers.html view

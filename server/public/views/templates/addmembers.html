@@ -41,9 +41,7 @@
                 <input type="number" placeholder="start year" ng-model="uc.startYearIn">
                 <input type="number" placeholder="end year" ng-model="uc.endYearIn">
                 <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
-            <button class="btnAdd"ng-click="uc.serviceItem(uc.defaultMeeting)">Add</button>
-            
-
+                <button class="btnAdd"ng-click="uc.serviceItem(uc.defaultMeeting)">Add</button>
         </section>
         <section class = "row">
             <h5 class="heading">Add Meetings:</h5>
@@ -67,10 +65,18 @@
                         <button ng-click="uc.serviceItem(meeting.meeting_id)" class= "btnAdd">Add</button>
                     </div>
                 </div>
+                
                 </li>
             </ul>
         </section>
-
+        <section class="row">
+                <ul>
+                    <li ng-repeat="years in uc.serviceArray">{{years.type}}
+                        {{years.start_date}} - {{years.end_date}}
+                        <p>{{years.add_info}}</p>
+                        </li>
+                    </ul>
+        </section>
         <section class = "row">
             <button type="button" class="btnSave" id="saveMember" ng-click="uc.addMember()">Save </button>
         </section>

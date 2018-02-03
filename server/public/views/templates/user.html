@@ -17,8 +17,8 @@
         </div> <!--end column 1 -->
     
         <div class="col-sm-8" id="editMembers"> <!--Column 2 Row 1 --> 
-            <section class="row" ng-hide ="fullName" ng-click="fullName=!fullName"> <!--row 1 Column 2 Row 1 -->
-                <div class="col-sm-6">
+            <section class="row" ng-hide ="fullName" > <!--row 1 Column 2 Row 1 -->
+                <div class="col-sm-6" ng-click="fullName=!fullName">
                         <h4 class="itemViewed">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4>
                 </div>
                 <div class="col-sm-6">
