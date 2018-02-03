@@ -30,34 +30,6 @@ router.get('/', function (req, res) {
     res.send(false);
   }
 });//end view members Get call
-//Request for view members
-router.get('/', function (req, res) {
-  console.log('in Get for view members');
-  // check if logged in
-  if (req.isAuthenticated()) {
-    pool.connect(function (conErr, client, done) {
-      if (conErr) {
-        console.log(conErr)
-        res.sendStatus(500);
-      } else {
-        console.log('running query')
-        client.query('SELECT member_id, first_name, last_name, past_service FROM members ORDER BY last_name;', function (queryErr, resultObj) {
-          done();
-          if (queryErr) {
-            console.log('query Error', queryErr)
-            res.sendStatus(500);
-          } else {
-            console.log(resultObj.rows)
-            res.send(resultObj.rows);
-          }
-        });
-      }
-    })
-  } else {
-    console.log('not logged in');
-    res.send(false);
-  }
-});//end view members Get call
 
 //get member to edit
 router.post('/getmember', function (req, res) {

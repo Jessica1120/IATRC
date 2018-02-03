@@ -135,10 +135,11 @@ self.addMember = function(objToSend) {
       data:   objToSend
   }).then(function(res) {
       console.log('addMember response:', res );
-    }).swal({
-        text: "New Member Added",
-        icon: "success",
-      });
+    })
+    // .swal({
+    //     text: "New Member Added",
+    //     icon: "success",
+    //   });
     //need a confirmation alert or something here
    //end then
 }; //end addMember
@@ -228,8 +229,7 @@ self.saveEditMeeting = function(objToSend) {
       url:    '/meetings',
       data:   objToSend
   }).then(function(res) {
-    console.log(res)
-    self.viewMeetings()
+    self.getMeeting(objToSend.meeting_id)
     //need a confirmation alert or something here
   }); //end then
 }; //end  saveEdit Meeting

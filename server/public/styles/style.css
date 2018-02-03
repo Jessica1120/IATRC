@@ -231,10 +231,9 @@ input {
  padding-left: 30px;
  font-size: 15px;
 }
-#deleteMeeting {
-  float:right;
-  margin-top: 25px;
-  margin-right: 50px;
+.editMeetingBtn {
+  padding-left: 100px;
+  padding-top: 15px;
 }
 #editMeeting {
   background: rgb(162, 186, 133);

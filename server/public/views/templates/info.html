@@ -13,13 +13,11 @@
         </div> 
         <div class="col-md-7" id="editMeeting">
             <section class="row">
-                <div class="col-sm-6" style="border-bottom:1px solid black">
+                <div style="border-bottom:1px solid black">
                     <h5 ng-hide="edit" class = "itemViewed">{{ic.meetingToEdit.data[0].topic}}</h5>
                     <input ng-hide="!edit" style="margin:20px; padding-right:100px" type="text" placeholder="{{ic.meetingToEdit.data[0].topic}}" ng-model="ic.editTopicIn">
                 </div>
-                <div class="col-sm-6">
-                    <button class="btnDelete" id =deleteMeeting ng-click="uc.deleteMember(uc.memberToEdit.data[0].member_id)">Delete</button>
-                </div>
+                
             </section>
                 
             <section class ="row">
@@ -47,7 +45,7 @@
                 </div>
                 <div class="col-sm-6">
                     <section class="row">
-                        Participants: 
+                        <h5 class="heading">Participants:</h5> 
                     </section>
                     <section class="row">
                         <div ng-repeat="participant in ic.meetingToEdit.data">
@@ -61,16 +59,25 @@
                             </div> 
                         </div>
                     </section>
-                    <section class="row">                  
-                        <div ng-click="edit=!edit" ng-hide="edit">
-                            <button ng-click="ic.editMembers(ic.meetingToEdit.data[0].meeting_id)">Edit</button>
-                        </div>    
-                        <div ng-click="edit=!edit" ng-hide="!edit">
-                            <button type="button" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].meeting_id)">Save</button>
-                            <button>Back</button>
-                        </div>
+                    <section class="row">
+                            <div class="col-sm-6">
+                                    <div ng-click="edit=!edit" ng-hide="edit" style="padding-left:100px; padding-top:15px">
+                                        <button class="btnEdit" ng-click="ic.editMembers(ic.meetingToEdit.data[0].meeting_id)">Edit</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6"> 
+                                    <div ng-hide="edit" style="padding-top:15px">
+                                        <button class="btnDelete"  ng-click="ic.deleteMeeting(ic.meetingToEdit.data[0].meeting_id)">Delete</button>    
+                                    </div>  
+                                </div>
+                                    <div class="editMeetingBtn" ng-click="edit=!edit" ng-hide="!edit">
+                                        <button type="button" class="btnSave" ng-click="ic.saveEditMeeting(ic.meetingToEdit.data[0].meeting_id)">Save</button>
+                                        <button class="btnCancel">Back</button>
+                                    </div> 
+                                </div>
                     </section>
                 </div> 
+                
             </section>
         </div>                        
     </section>
