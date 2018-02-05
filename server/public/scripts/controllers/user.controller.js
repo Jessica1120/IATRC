@@ -36,9 +36,22 @@ vm.addService = function(member_id, meetings_id) {
 }; //end addService
 
 vm.deleteMember = function(deleteMemberId) {
-  console.log('in controller delete,', deleteMemberId)
-  UserService.deleteMember(deleteMemberId); 
-  } //delete member end
+  
+   if (confirm("Are you sure you want to delete this member from the database?")) {
+    console.log('willDelete')
+    UserService.deleteMember(deleteMemberId)
+    }
+     else {
+       console.log("cancelled")
+     }
+    }
+  
+
+  
+
+  
+ ; 
+   //delete member end
 
 
 vm.deleteService = function (service) {
@@ -273,9 +286,10 @@ vm.findMeetingsByYear = function(meetingYear) {
   UserService.findMeetingsByYear(meetingYear)
 }; //end findMeetingsByYear
 
-vm.serviceItem = function(service) {
-    console.log(service)
+vm.serviceItem = function(service, topic) {
+    console.log(service, topic)
     serviceObj = {
+      topic: topic,
       meeting_id: service.meeting_id,
       service_id: vm.serviceIn,
       start_date: vm.startYearIn,
@@ -284,11 +298,17 @@ vm.serviceItem = function(service) {
     }
     if (vm.serviceIn == "1") {
       console.log('serviceIn', vm.serviceIn)
-      serviceObj.type = "Elected Member"
+      serviceObj.member_type = "Elected Member"
     } else if (vm.serviceIn == "2") {
-       serviceObj.type = "Funding Agency Representative"
+       serviceObj.member_type = "Funding Agency Representative"
+    } else if (vm.serviceIn == "3") {
+      serviceObj.member_type = "Theme Day Organizer"
     } else if (vm.serviceIn == "4") {
-      serviceObj.type = "Other"
+      serviceObj.member_type = "Non-Theme Day Organizer"
+    } else if (vm.serviceIn == "5") {
+      serviceObj.member_type = "Other"
+    } else if (vm.serviceIn == "6") {
+      serviceObj.member_type = "Attendance Only"
     } else if (vm.serviceIn !== undefined) {
       serviceObj.service_id = vm.serviceIn
       if (vm.serviceIn == '') {
@@ -302,10 +322,12 @@ vm.serviceItem = function(service) {
     vm.startYearIn = '',
     vm.endYearIn = '',
     vm.addInfoIn = ''
-  };
+};
  
-
-
+vm.remove = function(index) {
+  console.log('indexof', index)
+  vm.serviceArray.splice(index, 1)
+}
 
 }); //end controller
 

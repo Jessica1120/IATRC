@@ -181,6 +181,14 @@ input {
     font-family: Garamond;
     font-variant: small-caps;
 }
+.navLi {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 5px 5px;
+  text-decoration: none;
+}
 
 /* User view */
 #addBtnPosition {
@@ -280,7 +288,7 @@ input {
 #globe {
   background-image: url("./globe.jpg");
   background-size: cover;
-  height: 320px;
+  height: 350px;
   color: black;
 
 }
@@ -359,14 +367,6 @@ input {
     overflow: hidden;
   }
   
-  li {
-    float: left;
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 5px 5px;
-    text-decoration: none;
-  }
   
   /* Change the link color to #111 (black) on hover */
   li a:hover {

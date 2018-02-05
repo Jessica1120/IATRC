@@ -72,7 +72,60 @@
                             <input type="text" placeholder="{{uc.memberToEdit.data[0].address_1}}" ng-model="uc.address_1EditIn"><br>
                             <input type="text" placeholder="{{uc.memberToEdit.data[0].address_2}}" ng-model="uc.address_2EditIn"><br>
                             <input type="text" placeholder="{{uc.memberToEdit.data[0].address_3}}" ng-model="uc.address_3EditIn"><br>
-                            <input type="text" placeholder="{{uc.memberToEdit.data[0].city}}" ng-model="uc.cityEditIn">, <input type="text" placeholder="{{uc.memberToEdit.data[0].state}}" ng-model="uc.stateEditIn"><input type="text" placeholder="{{uc.memberToEdit.data[0].zipcode}}" ng-model="uc.zipcodeEditIn"> <input type="text" placeholder="{{uc.memberToEdit.data[0].country}}" ng-model="uc.countryEditIn"><br>
+                            <input type="text" placeholder="{{uc.memberToEdit.data[0].city}}" ng-model="uc.cityEditIn">,
+                            <select placeholder="State" ng-model="uc.stateEditIn">
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Alaska</option>
+                                    <option value="MA">Alaska</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                                <input type="text" placeholder="{{uc.memberToEdit.data[0].zipcode}}" ng-model="uc.zipcodeEditIn"> <input type="text" placeholder="{{uc.memberToEdit.data[0].country}}" ng-model="uc.countryEditIn"><br>
                             <div ng-click="address=!address">
                                 <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
                                 <button type="button" class="btnCancel">Cancel</button>

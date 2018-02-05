@@ -185,6 +185,7 @@ self.viewMeetings = function(){
           self.allMeetings.data.splice(self.allMeetings.data.indexOf(self.allMeetings.data[i]), 1)
         }
       }
+      self.getMeeting(self.allMeetings.data[0].meeting_id)
      console.log('allMeetings in Service', self.allMeetings.data)
     }) //end call back function
 }// end view Meetings
