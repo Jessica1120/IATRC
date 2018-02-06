@@ -130,6 +130,7 @@ vm.addMeeting = function() {
     vm.countryIn= '',
     vm.hotelIn= ''
     vm.participants = []
+    alert("Meeting added successfully.")
   }; //end addMeeting
 
 //delete Meeting
@@ -139,8 +140,13 @@ vm.viewMembers = function() {
   console.log('in controller:', vm.memberList)
 }
 vm.deleteMeeting = function(meetingId) {
-  console.log('in controller delete,', meetingId)
-  UserService.deleteMeeting(meetingId);
+  if (confirm("Are you sure you want to delete this meeting from the database?")) {
+    console.log('in controller delete,', meetingId)
+    UserService.deleteMeeting(meetingId);
+    }
+     else {
+       console.log("cancelled")
+     };
 }
 
 });

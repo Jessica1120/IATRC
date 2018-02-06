@@ -127,6 +127,7 @@ self.viewMembers = function(){
   //  ); //end call back function
 }// end view Members
 
+
 //MEMBER PAGE FUNCTIONS - addmembers.html view
 //addMember post Call 
 self.addMember = function(objToSend) {
@@ -136,17 +137,9 @@ self.addMember = function(objToSend) {
       url:    '/members',
       data:   objToSend
   }).then(function(res) {
-      console.log('addMember response:', res );
-    })
-    // .swal({
-    //     text: "New Member Added",
-    //     icon: "success",
-    //   });
-    //need a confirmation alert or something here
-   //end then
+      console.log('addMember response:', res )
+    })   
 }; //end addMember
-
-
 
   //view Meetings by year
 self.findMeetingsByYear = function(meetingYear){
@@ -160,13 +153,6 @@ self.findMeetingsByYear = function(meetingYear){
          console.log('meetings by year', self.meetingsByYear.data)
         }) //end call back function
 };// end findMeetingsByYear
-
-
-      
-
-
-
-
 
 
 //MEETINGS PAGE FUNCTIONS

@@ -19,7 +19,7 @@
         <div class="col-sm-8" id="editMembers"> <!--Column 2 Row 1 --> 
             <section class="row" ng-hide ="fullName" > <!--row 1 Column 2 Row 1 -->
                 <div class="col-sm-6" ng-click="fullName=!fullName">
-                        <h4 class="itemViewed">{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4>
+                        <h4 class="itemViewed editfield" >{{uc.memberToEdit.data[0].first_name}} {{uc.memberToEdit.data[0].last_name}}</h4>
                 </div>
                 <div class="col-sm-6">
                     <button class="btnDelete" id =deleteMember ng-click="uc.deleteMember(uc.memberToEdit.data[0].member_id)">Delete</button>
@@ -27,7 +27,7 @@
             </section>    
             <section class="row" ng-hide = "!fullName"  id="editMemberName">
                     <div class="col-sm-6">
-                        <input type="text" placeholder="{{uc.memberToEdit.data[0].first_name}}" ng-model="uc.firstEditIn">
+                        <input type="text"  placeholder="{{uc.memberToEdit.data[0].first_name}}" ng-model="uc.firstEditIn">
                         <input type="text" placeholder="{{uc.memberToEdit.data[0].last_name}}" ng-model="uc.lastEditIn">
                     </div>
                     <div class="col-sm-6">
@@ -42,7 +42,7 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-4" > <!-- column 1, row 2, Column 2, Row 1 -->
                     <div class="row" >
-                        <div ng-hide = "institution" ng-click="institution=!institution">
+                        <div class="editfield" ng-hide = "institution" ng-click="institution=!institution">
                         {{uc.memberToEdit.data[0].institution}}
                         </div>
                         <div ng-hide = "!institution">
@@ -52,7 +52,7 @@
                                 <button type="button" class="btnCancel">Cancel</button>
                             </div>
                         </div>
-                        <div ng-hide = "department" ng-click="department=!department">
+                        <div class="editfield" ng-hide = "department" ng-click="department=!department">
                         {{uc.memberToEdit.data[0].department}}
                         </div>
                         <div ng-hide = "!department">
@@ -62,7 +62,7 @@
                                 <button type="button" class="btnCancel">Cancel</button>
                             </div>
                         </div>
-                        <div ng-hide ="address" ng-click="address=!address">
+                        <div class="editfield" ng-hide ="address" ng-click="address=!address">
                         {{uc.memberToEdit.data[0].address_1}}<br>
                         {{uc.memberToEdit.data[0].address_2}}<br>
                         {{uc.memberToEdit.data[0].address_3}}<br>
@@ -134,7 +134,7 @@
                     </div>
                     
                     <div class="row">
-                        <div ng-hide = "phone" ng-click="phone=!phone">
+                        <div class="editfield" ng-hide = "phone" ng-click="phone=!phone">
                         Phone: {{uc.memberToEdit.data[0].phone}}
                         </div>
                         <div ng-hide = "!phone">
@@ -144,7 +144,7 @@
                                 <button type="button" class="btnCancel">Cancel</button>
                             </div>
                         </div>     
-                        <div ng-hide = "email" ng-click="email=!email">
+                        <div class="editfield" ng-hide = "email" ng-click="email=!email">
                         Email: {{uc.memberToEdit.data[0].email}}
                         </div>
                         <div ng-hide = "!email">
@@ -154,7 +154,7 @@
                                 <button type="button" class="btnCancel">Cancel</button>
                             </div>
                         </div>   
-                        <div ng-hide = "website" ng-click="website=!website">
+                        <div class="editfield" ng-hide = "website" ng-click="website=!website">
                         Website: {{uc.memberToEdit.data[0].website}}
                         </div>
                         <div ng-hide = "!website">
@@ -164,7 +164,7 @@
                                 <button type="button" class="btnCancel">Cancel</button>
                              </div>
                         </div>   
-                        <div ng-hide = "publications" ng-click="publications=!publications">
+                        <div class="editfield" ng-hide = "publications" ng-click="publications=!publications">
                         Publications: {{uc.memberToEdit.data[0].publications}}
                         </div>
                         <div ng-hide = "!publications">
@@ -174,7 +174,7 @@
                                 <button type="button" class="btnCancel">Cancel</button>
                             </div>
                         </div>      
-                        <div ng-hide = "status" ng-click="status=!status">
+                        <div ng-hide = "status" class="editfield" ng-click="status=!status">
                         Member Status: {{uc.memberToEdit.data[0].member_status}} {{uc.memberToEdit.data[0].member_year}}
                         </div>
                         <div ng-hide = "!status">
@@ -193,7 +193,7 @@
                         <h5 class="heading">Service:</h5>
                         <ul>
                             <li ng-repeat="service in uc.serviceOnly.data">
-                                <div ng-click="mainService=!mainService">
+                                <div class="editfield" ng-click="mainService=!mainService">
                                     <div ng-hide="mainService" class="dates">{{service.start_date}} - {{service.end_date}}</div> 
                                     <div class="ngRepeatListItem">{{service.service_type}} </div>
                                     <div ng-hide="mainService">{{service.add_info}}</div>
@@ -234,8 +234,8 @@
                     <section class="row"> <!-- start meetings row 2, column 2, row 2, Column 2, Row 1 --> 
                         <h5 class="heading">Meetings:</h5>
                         <ul>
-                            <li ng-repeat="meeting in uc.meetings.data">
-                                <div ng-click="meetingService=!meetingService">
+                            <li  ng-repeat="meeting in uc.meetings.data">
+                                <div class="editfield" ng-click="meetingService=!meetingService">
                                     {{meeting.year}} - {{meeting.topic}} {{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}}
                                     <div ng-hide="meetingService">
                                         {{meeting.service_type}}

@@ -43,15 +43,8 @@ vm.deleteMember = function(deleteMemberId) {
     }
      else {
        console.log("cancelled")
-     }
-    }
-  
-
-  
-
-  
- ; 
-   //delete member end
+     };
+};//delete member end
 
 
 vm.deleteService = function (service) {
@@ -278,6 +271,7 @@ vm.addMember = function() {
   vm.sinceIn = '',
   vm.publicationsIn = '',
   vm.serviceArray = []
+  alert("Member added successfully.")
 } //end add Member
 
 //search for meeting to add member to
