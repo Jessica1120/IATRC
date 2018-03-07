@@ -189,10 +189,10 @@
                 </div>    
                 
                 <div class="col-md-6"> <!-- column 2, row 2, Column 2, Row 1 -->
-                    <section class="row"> <!-- row 1, column 2, row 2, Column 2, Row 1 -->
+                    <section class="row" ng-init="uc.runYears()"> <!-- row 1, column 2, row 2, Column 2, Row 1 -->
                         <h5 class="heading">Service:</h5>
                         <ul>
-                            <li ng-repeat="service in uc.serviceOnly.data">
+                            <li ng-repeat="service in uc.serviceOnly.data" style="margin:10px">
                                 <div class="editfield" ng-click="mainService=!mainService">
                                     <div ng-hide="mainService" class="dates">{{service.start_date}} - {{service.end_date}}</div> 
                                     <div class="ngRepeatListItem">{{service.service_type}} </div>
@@ -200,8 +200,12 @@
                                 </div>
                             
                                 <div ng-hide="!mainService">
-                                    <input type="number" placeholder="start year" ng-model="uc.editStartYear">
-                                    <input type="number" placeholder="end year" ng-model="uc.editEndYear">
+                                    <select ng-model="uc.editStartYear">
+                                        <option ng-repeat= "year in uc.yearOptions" value="{{year}}" >{{year}}</option>
+                                    </select>
+                                    <select ng-model="uc.editEndYear">
+                                        <option ng-repeat= "year in uc.yearOptions" value="{{year}}" >{{year}}</option>
+                                    </select>
                                     <input type="text" placeholder="additional information" ng-model="uc.editAddInfo">
                                     <div ng-click="mainService=!mainService">
                                         <button type="button" class= "btnSave" ng-click="uc.editService(service.primary_id, uc.memberToEdit.data[0].member_id)">Save</button>
@@ -219,8 +223,12 @@
                                 <option value=2>Executive Committee Member - Representing Funding Agency</option>
                                 <option value=5>Other</option>
                             </select>
-                            <input type="number" placeholder="start year" ng-model="uc.start_dateIn">
-                            <input type="number" placeholder="end year" ng-model="uc.end_dateIn">
+                            <select ng-model="uc.start_dateIn">
+                                <option ng-repeat= "year in uc.yearOptions" value="{{year}}" >{{year}}</option>
+                            </select>
+                            <select ng-model="uc.end_dateIn">
+                                <option ng-repeat= "year in uc.yearOptions" value="{{year}}" >{{year}}</option>
+                            </select>
                             <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
                             <div ng-click= "addService=!addService" id="addBtnPosition">
                                 <button ng-click="uc.addService(uc.memberToEdit.data[0].member_id)" class="btnAdd">Add</button>
@@ -234,7 +242,7 @@
                     <section class="row"> <!-- start meetings row 2, column 2, row 2, Column 2, Row 1 --> 
                         <h5 class="heading">Meetings:</h5>
                         <ul>
-                            <li  ng-repeat="meeting in uc.meetings.data">
+                            <li  ng-repeat="meeting in uc.meetings.data" style="margin:10px">
                                 <div class="editfield" ng-click="meetingService=!meetingService">
                                     {{meeting.year}} - {{meeting.topic}} {{meeting.meeting_city}}, {{meeting.meeting_state}}, {{meeting.meeting_country}}
                                     <div ng-hide="meetingService">
@@ -263,7 +271,10 @@
                     <section class="row">  
                         <button ng-click="addtoMeeting=!addtoMeeting" ng-hide="addtoMeeting" class="btnAdd" id="addBtnPosition"> Add </button>
                         <div ng-hide="!addtoMeeting">
-                            Search for meeting by year:  <input type="number" placeholder="year" ng-model="uc.meetingYearIn">
+                            Search for meeting by year:
+                            <select ng-model="uc.meetingYearIn">
+                                <option ng-repeat= "year in uc.yearOptions" value="{{year}}" >{{year}}</option>
+                            </select>
                             <button class="btnEdit" ng-click="uc.findMeetingsByYear(uc.meetingYearIn)">Search</button>
                             <button class="btnSave" ng-click="addtoMeeting=!addtoMeeting">Done</button>
                             <div ng-repeat="meeting in uc.meetingsByYear.data">

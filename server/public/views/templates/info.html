@@ -22,9 +22,26 @@
                 
             <section class ="row">
                 <div class="col-sm-6">
-                    <section class="row">
+                    <section class="row" ng-init="ic.runYears()">
                         <div ng-hide="edit" class="mtgInfo">{{ic.meetingToEdit.data[0].month}}, {{ic.meetingToEdit.data[0].year}}</div>
-                        <input ng-hide="!edit" class="input" type="text" placeholder="{{ic.meetingToEdit.data[0].month}}" ng-model="ic.editMonthIn"> <input class="input" ng-hide="!edit" type="text" placeholder="{{ic.meetingToEdit.data[0].year}}" ng-model="ic.editYearIn">
+                        <select ng-hide="!edit" ng-model="ic.editMonthIn" placeholder="Month" style="margin-left:5px; margin-top:10px">
+                            <option value="January">January</option>
+                            <option value="February">February</option>
+                            <option value="March">March</option>
+                            <option value="April">April</option>
+                            <option value="May">May</option>
+                            <option value="June">June</option>
+                            <option value="July">July</option>
+                            <option value="August">August</option>
+                            <option value="September">September</option>
+                            <option value="October">October</option>
+                            <option value="November">November</option>
+                            <option value="December">December</option>
+                        </select>
+                        
+                        <select ng-hide="!edit" ng-model="ic.editYearIn">
+                            <option ng-repeat= "year in ic.yearOptions" value="{{year}}" >{{year}}</option>
+                        </select>
                     </section>
                     <section class="row">
                         <div ng-hide="edit" class="mtgInfo">{{ic.meetingToEdit.data[0].hotel}}</div>

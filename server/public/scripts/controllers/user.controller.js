@@ -10,10 +10,15 @@ myApp.controller('UserController', function(UserService) {
     vm.defaultMeeting = {meeting_id: 1}
     vm.serviceOnly = UserService.serviceOnly
     vm.meetings = UserService.meetings
-    
+    vm.yearOptions = []//populates year select
 
 //user.html view:
-
+vm.runYears = function() {
+  for(i=1979; i<2051; i++) {
+    vm.yearOptions.push(i);
+  }
+  console.log('yearOptions', vm.yearOptions)
+}
 //addService to existing member
 vm.addService = function(member_id, meetings_id) {
   console.log(meetings_id)

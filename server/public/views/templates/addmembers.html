@@ -81,7 +81,7 @@
         <input type="text" placeholder="Publications" ng-model="uc.publicationsIn"><br>
         </section>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5" ng-init="uc.runYears()">
         <section class="row">
             <h5 class="heading">Add Service:</h5>
         
@@ -90,14 +90,21 @@
                     <option value=2>Executive Committee Member - Representing Funding Agency</option>
                     <option value=5>Other</option>
             </select>
-                <input type="number" placeholder="start year" ng-model="uc.startYearIn">
-                <input type="number" placeholder="end year" ng-model="uc.endYearIn">
+            <select ng-model="uc.startYearIn">
+					<option ng-repeat= "year in uc.yearOptions" value="{{year}}" >{{year}}</option>
+				</select>
+                <select ng-model="uc.endYearIn">
+					<option ng-repeat= "year in uc.yearOptions" value="{{year}}" >{{year}}</option>
+				</select>
                 <input type="text" placeholder="additional information" ng-model="uc.addInfoIn">
                 <button class="btnAdd"ng-click="uc.serviceItem(uc.defaultMeeting)">Add</button>
         </section>
         <section class = "row">
             <h5 class="heading">Add Meetings:</h5>
-                <input type="number" placeholder="year" ng-model="uc.meetingYearIn">
+                <select ng-model="uc.meetingYearIn">
+					<option ng-repeat= "year in uc.yearOptions" value="{{year}}" >{{year}}</option>
+				</select>
+                
                 <button class="btnEdit" ng-click="uc.findMeetingsByYear(uc.meetingYearIn)">Search</button>
         </section>
         <section class="row">

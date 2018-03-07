@@ -9,6 +9,7 @@ myApp.controller('InfoController', function(UserService) {
     vm.attended = [] //holds members added to edited meeting
     vm.absent = [] //holds members removed from meeting
     vm.participants= [] //holds members added to new meeting
+    vm.yearOptions = []//populates year select
     
   //loads all meeting on Page Load
     vm.viewMeetings= function() {
@@ -102,6 +103,12 @@ vm.saveEditMeeting = function(meeting) {
 } //end saveEditMeeting
 
 
+vm.runYears = function() {
+  for(i=1979; i<2051; i++) {
+    vm.yearOptions.push(i);
+  }
+  console.log('yearOptions', vm.yearOptions)
+}
 vm.addMeeting = function() {
     console.log ('in controller addMeeting running')
     var objToSend = {

@@ -1,7 +1,7 @@
 <div ng-include="'views/partials/nav.html'"></div>
 
 <div ng-include="'views/partials/meetingsNav.html'"></div>
-<body >
+<body>
 	<section class = "row" style="background-color: rgba(255, 253, 248, .9)">
 		<div class="col-md-3">
 			<div id="globe"></div>
@@ -10,7 +10,7 @@
 			<section class="row">
 				<input type="text" id="topicInput" placeholder="Topic" ng-model="ic.topicIn">
 			</section>
-			<section class="row">
+			<section class="row" ng-init="ic.runYears()">
 				<input type="text" placeholder="Type" ng-model="ic.typeIn"><br>
 				<select ng-model="ic.monthIn" placeholder="Month">
 					<option value="January">January</option>
@@ -26,8 +26,10 @@
 					<option value="November">November</option>
 					<option value="December">December</option>
 				</select>
-				<input type="text" style="padding-left:15px;" placeholder="Year" ng-model="ic.yearIn"><br>
 				
+				<select ng-model="ic.yearIn" placeholder="Year">
+					<option ng-repeat= "year in ic.yearOptions" value="{{year}}" >{{year}}</option>
+				</select>
 				<input type="text" style="padding-right:150px" placeholder="Hotel" ng-model="ic.hotelIn"><br>
 				<input type="text" placeholder="City" style="padding-right:20px" ng-model="ic.cityIn">
 				<select placeholder="State" ng-model="ic.stateIn">
