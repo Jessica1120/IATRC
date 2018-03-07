@@ -175,11 +175,20 @@
                             </div>
                         </div>      
                         <div ng-hide = "status" class="editfield" ng-click="status=!status">
-                        Member Status: {{uc.memberToEdit.data[0].member_status}} {{uc.memberToEdit.data[0].member_year}}
+                        Member Status: {{uc.memberToEdit.data[0].member_status}} </br> 
+                        Member Since: {{uc.memberToEdit.data[0].member_year}}
                         </div>
                         <div ng-hide = "!status">
-                        Member Status: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_status}}" ng-model="uc.memberStatusEditIn">
-                        Member Since: <input type="text" placeholder="{{uc.memberToEdit.data[0].member_year}}" ng-model="uc.memberYearEditIn">
+                        Member Status:
+                        <select ng-model="uc.memberStatusEditIn" class="dropdown">
+                            <option value="Active">Active</option>
+                            <option value="Inactive"> Inactive</option>
+                            <option value="Non-Member">Non-Member</option>
+                        </select>
+                        Member Since:
+                        <select ng-model="uc.memberYearEditIn">
+                            <option ng-repeat= "year in uc.yearOptions" value="{{year}}" >{{year}}</option>
+                        </select>
                             <div ng-click="status=!status">
                                 <button type="button" class="btnSave" ng-click="uc.saveEditMember(uc.memberToEdit.data[0].member_id)">Save</button>
                                 <button type="button" class="btnCancel">Cancel</button>

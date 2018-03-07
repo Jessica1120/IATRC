@@ -22,7 +22,7 @@ CREATE TABLE "members" (
 "website" text,
 "publication" text,
 "member_status" text,
-"member_year" int,
+"member_year" text,
 "past-service" boolean SET DEFAULT FALSE
 );
 
