@@ -129,6 +129,7 @@ vm.addMeeting = function() {
     }
     UserService.addMeeting(objToSend);
     vm.typeIn = '',
+   vm.otherTypeIn = '',
     vm.topicIn = '',
     vm.monthIn = '',
     vm.yearIn = '',

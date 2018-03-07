@@ -11,7 +11,13 @@
 				<input type="text" id="topicInput" placeholder="Topic" ng-model="ic.topicIn">
 			</section>
 			<section class="row" ng-init="ic.runYears()">
-				<input type="text" placeholder="Type" ng-model="ic.typeIn"><br>
+				<select ng-model="ic.typeIn">
+					<option value="Annual Meeting">Annual Meeting</option>
+					<option value="Symposium">Symposium</option>
+					<option value="Outreach">Outreach</option>
+					<option value="Other">Other</option>
+				</select>
+				If Other: <input type="text" ng-model="ic.typeIn">
 				<select ng-model="ic.monthIn" placeholder="Month">
 					<option value="January">January</option>
 					<option value="February">February</option>
