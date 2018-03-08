@@ -61,7 +61,7 @@ myApp.config(function($routeProvider, $locationProvider) {
     })
     .when('/queries', {
       templateUrl: '/views/templates/queries.html',
-      controller: 'InfoController as ic',
+      controller: 'QueryController as qc',
       resolve: {
         getuser : function(UserService){
           return UserService.getuser();

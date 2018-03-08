@@ -1,5 +1,29 @@
 <div ng-include="'views/partials/nav.html'"></div>
 
 <div ng-include="'views/partials/meetingsNav.html'"></div>
+<body>
+    <section class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-5" ng-init="qc.getInstitutions()">
+            <h2>Search Members</h2>
+            <p>By:
+                <select ng-model="selectSearch">
+                    <option value="institution">Institution</option>
+                    <option value="state">State</option>
+                    <option value="status">Member Status</option>
+                    <option value="year">Member Year</option>
+                </select>
+            </p>
+            <div  ng-show="selectSearch=='institution'">
+                <select>
+                    <option ng-repeat="institution in qc.institutions.data">{{institution.institution}}</option>
+                </select>
+            </div>
+            <div ng-show="selectSearch=='state'">state</div>
+            <div ng-show="selectSearch=='status'">status</div>
+            <div ng-show="selectSearch=='year'">year</div>
+        </div>
 
-In queries
+    </section>
+</body>
+

@@ -11,6 +11,7 @@ var userRouter = require('./routes/user.router');
 var registerRouter = require('./routes/register.router');
 var membersRouter = require('./routes/members.router');
 var meetingsRouter = require('./routes/meetings.router')
+var queriesRouter = require('./routes/queries.router')
 
 var port = process.env.PORT || 5000;
 
@@ -32,7 +33,8 @@ app.use(passport.session());
 app.use('/register', registerRouter);
 app.use('/user', userRouter);
 app.use('/members', membersRouter);
-app.use('/meetings', meetingsRouter)
+app.use('/meetings', meetingsRouter);
+app.use('/queries', queriesRouter);
 
 // Catch all bucket, must be last!
 app.use('/', indexRouter);

@@ -16,6 +16,8 @@ myApp.service('UserService', function($http, $location){
     self.updatedMeeting = {data:[]} // object for findMember
     self.serviceOnly = {data: []}
     self.meetings = {data: []}
+    //QUERY OBJECTS
+    self.institutions = {data: []}//object for Insitution list dropdown
     
 
 //MEMBER PAGE FUNCTIONS - user.html view
@@ -44,7 +46,6 @@ self.deleteMember = function(deleteMemberId) {
     self.viewMembers()
   })
 }
-
 //deletes service from specific member
 self.deleteService = function (objToSend) {
   console.log('deleteService', objToSend)
@@ -57,7 +58,6 @@ self.deleteService = function (objToSend) {
     //need a confirmation alert or something here
   }); //end then
 }; //end deleteService
-
 //edit service information
 self.editService = function(objToSend) {
   console.log('service Obj', objToSend)
@@ -71,7 +71,6 @@ self.editService = function(objToSend) {
     // need a confirmation alert or something here
   }); //end then
 }; //end editService
-
 //get member to Edit
 self.getMember = function(objToSend) {
   console.log('In findMember', objToSend)
@@ -85,7 +84,6 @@ self.getMember = function(objToSend) {
     self.memberService();
   })
 };
-
 //gets service information for getMember function
 self.memberService = function() { 
   self.serviceOnly.data = []
@@ -128,7 +126,7 @@ self.viewMembers = function(){
 }// end view Members
 
 
-//MEMBER PAGE FUNCTIONS - addmembers.html view
+//ADDMEMBER PAGE FUNCTIONS
 //addMember post Call 
 self.addMember = function(objToSend) {
   console.log('inserviceobjtosend', objToSend)
@@ -140,7 +138,6 @@ self.addMember = function(objToSend) {
       console.log('addMember response:', res )
     })   
 }; //end addMember
-
   //view Meetings by year
 self.findMeetingsByYear = function(meetingYear){
       console.log('findMeetingByYear in Service running')
@@ -175,7 +172,6 @@ self.viewMeetings = function(){
      console.log('allMeetings in Service', self.allMeetings.data)
     }) //end call back function
 }// end view Meetings
-
 //get Meeting to edit
 self.getMeeting = function(meeting) {
   console.log('In getMeeting Service', meeting);
@@ -187,7 +183,6 @@ self.getMeeting = function(meeting) {
     self.meetingToEdit.data = res.data; 
   })
 }; //end get Meeting to edit
-
 //get to edit attendees
 self.editMembers = function(meeting){
   return $http({
@@ -209,7 +204,6 @@ self.editMembers = function(meeting){
       }
     }) //end call back function
 }   //end get attendees to edit
-
 //save edited meeting
 self.saveEditMeeting = function(objToSend) {
   console.log('saveEdit running in Service')
@@ -222,7 +216,6 @@ self.saveEditMeeting = function(objToSend) {
     //need a confirmation alert or something here
   }); //end then
 }; //end  saveEdit Meeting
-
 self.addMeeting = function(objToSend) {
   $http({
       method: 'POST',
@@ -234,7 +227,6 @@ self.addMeeting = function(objToSend) {
     //need a confirmation alert or something here
   }); //end then
 }; //end addMeeting
-
 self.deleteMeeting = function(meetingId) {
   console.log('In Delete meeting', meetingId) 
     return $http({
@@ -246,6 +238,19 @@ self.deleteMeeting = function(meetingId) {
     })
 } // end deleteMeeting
 
+//QUERIES
+
+self.getInstitutions = function() {
+  console.log('getInstitutions in Service running')
+  return $http({
+    method: 'GET',
+    url: '/queries'
+  })
+    .then(function (res) {
+      self.institutions.data = res.data
+      console.log('res', self.institutions.data)
+    }) //end call back function
+}// end view Meetings
 
 
 //PASSPORT AUTHENTICATION FUNCTIONS
