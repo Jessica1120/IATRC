@@ -16,11 +16,14 @@
             </p>
             <div  ng-show="selectSearch=='institution'">
                 <ul >
-                    <li ng-click="qc.membersBy($index)" ng-repeat="institution in qc.institutions.data">{{institution.institution}}</li>
+                    <li ng-click="qc.membersByInstitution($index)" ng-repeat="institution in qc.institutions.data">{{institution.institution}}</li>
                     <button >Search</button>
                 </ul>
-                
-                
+                <div>
+                    <ul>
+                        <li ng-repeat="member in qc.members.data">{{member.last_name}}, {{member.first_name}}</li>
+                    </ul>
+                </div>
             </div>
             <div ng-show="selectSearch=='state'">state</div>
             <div ng-show="selectSearch=='status'">status</div>
