@@ -22,6 +22,7 @@ myApp.service('UserService', function($http, $location){
     self.insitutionArray = {data: []}
     self.stateArray = {data:[]}
     self.statusArray = {data: []}
+    self.yearArray = {data: []}
     
 
 //MEMBER PAGE FUNCTIONS - user.html view
@@ -275,10 +276,18 @@ self.membersBy = function(objToSend) {
         res.data.shift()
         self.stateArray.data=res.data
       }
-     
-    }) //end call back function
-}// end view Meetings
-
+    }) 
+}
+self.membersByYear = function(objToSend) {
+  return $http({
+    method: 'POST',
+    url: '/queries/membersByYear',
+    data: objToSend
+  })
+    .then(function (res) {
+      self.yearArray.data = res.data
+    })
+  }
 //PASSPORT AUTHENTICATION FUNCTIONS
 
 self.getuser = function(){

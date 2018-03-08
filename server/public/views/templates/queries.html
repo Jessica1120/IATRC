@@ -107,7 +107,12 @@
                 <select ng-model="qc.endYearIn" >
                     <option ng-repeat= "year in qc.yearOptions" value="{{year}}" >{{year}}</option>
                 </select>
-                <button ng-click="qc.membersByYear()">Search</button>       
+                <button ng-click="qc.membersByYear()">Search</button> 
+                <div>
+                    <ul>
+                        <li ng-repeat="member in qc.yearArray.data">{{member.last_name}}, {{member.first_name}} - {{member.member_year}}</li>
+                    </ul>
+                </div>      
             </div>
         </div>
 

@@ -6,6 +6,8 @@ myApp.controller('QueryController', function(UserService) {
     vm.insitutionArray = UserService.insitutionArray
     vm.statusArray = UserService.statusArray
     vm.stateArray = UserService.stateArray
+    vm.yearArray = UserService.yearArray
+
 vm.getInstitutions= function() {
    UserService.getInstitutions()
     console.log('in getInstitutions')
@@ -35,8 +37,8 @@ vm.membersByStatus=function() {
 
 vm.membersByYear = function() {
     objToSend = {
-        startYearIn: vm.startYearIn,
-        endYearIn: vm.endYearIn,
+        startYearIn: parseInt(vm.startYearIn),
+        endYearIn: parseInt(vm.endYearIn),
     }
     UserService.membersByYear(objToSend)
 }

@@ -64,4 +64,35 @@ router.post('/membersBy', function(req,res) {
       res.send(false);
     }
 }) //end membersBy
+
+router.post('/membersByYear', function(req,res) {
+  var membersByYear = req.body;
+  console.log('membersBy', membersByYear)
+   if(req.isAuthenticated()) {
+    pool.connect(function (connectionError, client, done) {
+      if (connectionError) {
+        console.log(connectionError);
+        res.sendStatus(500);
+      } else {
+        var query = "SELECT member_id, first_name, last_name, member_year FROM members WHERE member_year >= $1 AND member_year <= $2 ORDER BY member_year"
+        var valueArray = Object.values(membersByYear)
+        console.log('value', valueArray)
+        client.query(query, valueArray, function (queryError, resultObj) {
+          done();
+          if (queryError) {
+            console.log(queryError);
+            res.sendStatus(500);
+          } else {
+            res.send(resultObj.rows)            
+            console.log(resultObj.rows)
+          }
+        })
+      } //end connection else
+    })//end pool.connect
+  }//end Auth if 
+    else {
+      console.log('not logged in');
+      res.send(false);
+    }
+}) //end membersBy
 module.exports = router;
