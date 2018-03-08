@@ -15,6 +15,11 @@ vm.membersByInstitution=function(index) {
     
 };
 
-
+vm.memberByState=function() {
+    objToSend = {
+        state: vm.stateIn
+    }
+    UserService.membersBy(objToSend)
+}
 
 }); //end controller
