@@ -1,6 +1,7 @@
 myApp.controller('QueryController', function(UserService) {
     console.log('QueryController created');
     var vm = this; 
+    vm.yearOptions = []//populates year select
     vm.institutions = UserService.institutions
     vm.members = UserService.members
 
@@ -30,4 +31,18 @@ vm.membersByStatus=function() {
         }
     UserService.membersBy(objToSend);
 };
+
+vm.membersByYear = function() {
+    objToSend = {
+        startYearIn: vm.startYearIn,
+        endYearIn: vm.endYearIn,
+    }
+    UserService.membersByYear(objToSend)
+}
+vm.runYears = function() {
+    for(i=1979; i<2019; i++) {
+      vm.yearOptions.push(i);
+    }
+    console.log('yearOptions', vm.yearOptions)
+  }
 }); //end controller

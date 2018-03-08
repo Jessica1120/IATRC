@@ -98,9 +98,16 @@
                     </ul>
                 </div>
             </div>
-            <div ng-show="selectSearch=='year'">
-        
-                       
+            <div ng-show="selectSearch=='year'" ng-init="qc.runYears()">
+               Start Year: 
+               <select ng-model="qc.startYearIn">
+                    <option ng-repeat= "year in qc.yearOptions" value="{{year}}" >{{year}}</option>
+                </select>
+                End Year: 	
+                <select ng-model="qc.endYearIn" >
+                    <option ng-repeat= "year in qc.yearOptions" value="{{year}}" >{{year}}</option>
+                </select>
+                <button ng-click="qc.membersByYear()">Search</button>       
             </div>
         </div>
 

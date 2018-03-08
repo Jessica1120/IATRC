@@ -104,7 +104,7 @@ vm.saveEditMeeting = function(meeting) {
 
 
 vm.runYears = function() {
-  for(i=1979; i<2051; i++) {
+  for(i=1979; i<2019; i++) {
     vm.yearOptions.push(i);
   }
   console.log('yearOptions', vm.yearOptions)
