@@ -2,8 +2,9 @@ myApp.controller('QueryController', function(UserService) {
     console.log('QueryController created');
     var vm = this; 
     vm.institutions = UserService.institutions
-    vm.members = UserService.members
-
+    vm.insitutionArray = UserService.insitutionArray
+    vm.statusArray = UserService.statusArray
+    vm.stateArray = UserService.stateArray
 vm.getInstitutions= function() {
    UserService.getInstitutions()
     console.log('in getInstitutions')

@@ -21,7 +21,7 @@
                 <button ng-click="qc.membersByInstitution()">Search</button>
                 <div>
                     <ul>
-                        <li ng-repeat="member in qc.members.data">{{member.last_name}}, {{member.first_name}}</li>
+                        <li ng-repeat="member in qc.insitutionArray.data">{{member.last_name}}, {{member.first_name}}</li>
                     </ul>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                 <button ng-click="qc.memberByState()">Search</button>
                 <div>
                     <ul>
-                        <li ng-repeat="member in qc.members.data">{{member.last_name}}, {{member.first_name}}</li>
+                        <li ng-repeat="member in qc.stateArray.data">{{member.last_name}}, {{member.first_name}}</li>
                     </ul>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                 <button ng-click="qc.membersByStatus()">Search</button>
                 <div>
                     <ul>
-                        <li ng-repeat="member in qc.members.data">{{member.last_name}}, {{member.first_name}}</li>
+                        <li ng-repeat="member in qc.statusArray.data">{{member.last_name}}, {{member.first_name}}</li>
                     </ul>
                 </div>
             </div>
