@@ -18,7 +18,10 @@ myApp.service('UserService', function($http, $location){
     self.meetings = {data: []}
     //QUERY OBJECTS
     self.institutions = {data: []}//object for Insitution list dropdown
-    self.members = {data: []}//object for membersBy search
+    //object for membersBy search
+    self.insitutionArray = {data: []}
+    self.stateArray = {data:[]}
+    self.statusArray = {data: []}
     
 
 //MEMBER PAGE FUNCTIONS - user.html view
@@ -254,6 +257,7 @@ self.getInstitutions = function() {
 }// end view Meetings
 
 self.membersBy = function(objToSend) {
+  
   console.log('membersBy')
   return $http({
     method: 'POST',
@@ -261,8 +265,17 @@ self.membersBy = function(objToSend) {
     data: objToSend
   })
     .then(function (res) {
-      self.members.data = res.data
-      console.log('res', self.members.data)
+      if (res.data[0] == "member_status") {
+        res.data.shift()
+        self.statusArray.data = res.data
+      } else if (res.data[0] == "institution") {
+        res.data.shift()
+        self.insitutionArray.data = res.data
+      } else {
+        res.data.shift()
+        self.stateArray.data=res.data
+      }
+     
     }) //end call back function
 }// end view Meetings
 

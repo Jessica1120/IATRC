@@ -3,8 +3,9 @@ myApp.controller('QueryController', function(UserService) {
     var vm = this; 
     vm.yearOptions = []//populates year select
     vm.institutions = UserService.institutions
-    vm.members = UserService.members
-
+    vm.insitutionArray = UserService.insitutionArray
+    vm.statusArray = UserService.statusArray
+    vm.stateArray = UserService.stateArray
 vm.getInstitutions= function() {
    UserService.getInstitutions()
     console.log('in getInstitutions')

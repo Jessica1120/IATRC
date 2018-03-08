@@ -51,6 +51,7 @@ router.post('/membersBy', function(req,res) {
             console.log(queryError);
             res.sendStatus(500);
           } else {
+            resultObj.rows.unshift(property[0])
             res.send(resultObj.rows)            
             console.log(resultObj.rows)
           }

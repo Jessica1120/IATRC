@@ -14,7 +14,7 @@ myApp.controller('UserController', function(UserService) {
 
 //user.html view:
 vm.runYears = function() {
-  for(i=1979; i<2051; i++) {
+  for(i=1979; i<2028; i++) {
     vm.yearOptions.push(i);
   }
   console.log('yearOptions', vm.yearOptions)
@@ -253,7 +253,7 @@ vm.addMember = function() {
     email:  vm.emailIn,
     website: vm.websiteIn,
     member_status: vm.statusIn,
-    member_year: vm.sinceIn,
+    member_year: parseInt(vm.sinceIn),
     publications: vm.publicationsIn,
     serviceArray: vm.serviceArray,
   };
@@ -291,8 +291,8 @@ vm.serviceItem = function(service, topic) {
       topic: topic,
       meeting_id: service.meeting_id,
       service_id: vm.serviceIn,
-      start_date: vm.startYearIn,
-      end_date: vm.endYearIn,
+      start_date: parseInt(vm.startYearIn),
+      end_date: parseInt(vm.endYearIn),
       add_info: vm.addInfoIn
     }
     if (vm.serviceIn == "1") {

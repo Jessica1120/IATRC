@@ -104,7 +104,7 @@ vm.saveEditMeeting = function(meeting) {
 
 
 vm.runYears = function() {
-  for(i=1979; i<2019; i++) {
+  for(i=1979; i<2028; i++) {
     vm.yearOptions.push(i);
   }
   console.log('yearOptions', vm.yearOptions)
@@ -115,7 +115,7 @@ vm.addMeeting = function() {
       type: vm.typeIn,
       topic: vm.topicIn,
       month: vm.monthIn,
-      year: vm.yearIn,
+      year: parseInt(vm.yearIn),
       meeting_city: vm.cityIn,
       meeting_state: vm.stateIn,
       meeting_country: vm.countryIn,
