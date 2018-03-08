@@ -9,17 +9,25 @@ vm.getInstitutions= function() {
     console.log('in getInstitutions')
   };
 
-vm.membersByInstitution=function(index) {
-   
-    UserService.membersBy(vm.institutions.data[index])
+vm.membersByInstitution=function() {
+    objToSend = {
+        institution: vm.institutionIn
+        }
+    UserService.membersBy(objToSend);
     
 };
 
 vm.memberByState=function() {
     objToSend = {
         state: vm.stateIn
-    }
+        }
     UserService.membersBy(objToSend)
 }
 
+vm.membersByStatus=function() {
+    objToSend = {
+        member_status: vm.statusIn
+        }
+    UserService.membersBy(objToSend);
+};
 }); //end controller

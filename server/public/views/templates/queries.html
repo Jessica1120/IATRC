@@ -14,11 +14,11 @@
                     <option value="year">Member Year</option>
                 </select>
             </p>
-            <div  ng-show="selectSearch=='institution'">
-                <ul >
-                    <li ng-click="qc.membersByInstitution($index)" ng-repeat="institution in qc.institutions.data">{{institution.institution}}</li>
-                    <button >Search</button>
-                </ul>
+            <div ng-show="selectSearch=='institution'">
+                <select ng-model="qc.institutionIn">
+                    <option ng-repeat="institution in qc.institutions.data">{{institution.institution}}</option>
+                </select>
+                <button ng-click="qc.membersByInstitution()">Search</button>
                 <div>
                     <ul>
                         <li ng-repeat="member in qc.members.data">{{member.last_name}}, {{member.first_name}}</li>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div ng-show="selectSearch=='state'">
-                <select placeholder="State" ng-model="qc.stateIn">
+                <select ng-model="qc.stateIn">
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
                     <option value="AZ">Arizona</option>
@@ -85,8 +85,23 @@
                     </ul>
                 </div>
             </div>
-            <div ng-show="selectSearch=='status'">status</div>
-            <div ng-show="selectSearch=='year'">year</div>
+            <div ng-show="selectSearch=='status'">
+                <select ng-model="qc.statusIn" class="dropdown">
+                    <option value="Active">Active</option>
+                    <option value="Inactive"> Inactive</option>
+                    <option value="Non-Member">Non-Member</option>
+                </select>
+                <button ng-click="qc.membersByStatus()">Search</button>
+                <div>
+                    <ul>
+                        <li ng-repeat="member in qc.members.data">{{member.last_name}}, {{member.first_name}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div ng-show="selectSearch=='year'">
+        
+                       
+            </div>
         </div>
 
     </section>
