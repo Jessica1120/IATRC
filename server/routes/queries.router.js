@@ -28,5 +28,39 @@ router.get('/', function (req, res) {
       console.log('not logged in');
       res.send(false);
     }
-  });//en
+});//end Get Institutions
+router.post('/membersBy', function(req,res) {
+  var membersBy = req.body;
+  console.log('membersBy', membersBy)
+  var property = Object.keys(membersBy)
+  console.log('property', property);
+ 
+  if(req.isAuthenticated()) {
+    pool.connect(function (connectionError, client, done) {
+      if (connectionError) {
+        console.log(connectionError);
+        res.sendStatus(500);
+      } else {
+        var query = "SELECT member_id, first_name, last_name FROM members WHERE " + property[0] + " = $1"
+        console.log('query', query)
+        var valueArray = Object.values(membersBy)
+        console.log('value', valueArray)
+        client.query(query, valueArray, function (queryError, resultObj) {
+          done();
+          if (queryError) {
+            console.log(queryError);
+            res.sendStatus(500);
+          } else {
+            res.send(resultObj.rows)            
+            console.log(resultObj.rows)
+          }
+        })
+      } //end connection else
+    })//end pool.connect
+  }//end Auth if 
+    else {
+      console.log('not logged in');
+      res.send(false);
+    }
+}) //end membersBy
 module.exports = router;

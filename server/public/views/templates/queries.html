@@ -15,9 +15,12 @@
                 </select>
             </p>
             <div  ng-show="selectSearch=='institution'">
-                <select>
-                    <option ng-repeat="institution in qc.institutions.data">{{institution.institution}}</option>
-                </select>
+                <ul >
+                    <li ng-click="qc.membersBy($index)" ng-repeat="institution in qc.institutions.data">{{institution.institution}}</li>
+                    <button >Search</button>
+                </ul>
+                
+                
             </div>
             <div ng-show="selectSearch=='state'">state</div>
             <div ng-show="selectSearch=='status'">status</div>

@@ -8,4 +8,12 @@ vm.getInstitutions= function() {
     console.log('in getInstitutions')
   };
 
+vm.membersBy=function(index) {
+   
+    UserService.membersBy(vm.institutions.data[index])
+    
+};
+
+
+
 }); //end controller

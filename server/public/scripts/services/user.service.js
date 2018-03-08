@@ -18,6 +18,7 @@ myApp.service('UserService', function($http, $location){
     self.meetings = {data: []}
     //QUERY OBJECTS
     self.institutions = {data: []}//object for Insitution list dropdown
+    self.members = {data: []}//object for membersBy search
     
 
 //MEMBER PAGE FUNCTIONS - user.html view
@@ -252,6 +253,18 @@ self.getInstitutions = function() {
     }) //end call back function
 }// end view Meetings
 
+self.membersBy = function(objToSend) {
+  console.log('membersBy')
+  return $http({
+    method: 'POST',
+    url: '/queries/membersBy',
+    data: objToSend
+  })
+    .then(function (res) {
+      self.members.data = res.data
+      console.log('res', self.members.data)
+    }) //end call back function
+}// end view Meetings
 
 //PASSPORT AUTHENTICATION FUNCTIONS
 
