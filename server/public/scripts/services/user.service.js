@@ -280,7 +280,6 @@ self.membersBy = function(objToSend) {
       }
     })
       .then(function() {
-        self.serviceArray.data.sort()
         for (let i=0; i<self.serviceArray.data.length; i++) {
           for (let j= i+1; j<self.serviceArray.data.length; j++) {
            if (self.serviceArray.data[i].member_id == self.serviceArray.data[j].member_id) {

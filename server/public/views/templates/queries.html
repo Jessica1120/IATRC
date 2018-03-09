@@ -126,7 +126,7 @@
                 <button ng-click="qc.membersByService()">Search</button>
                 <div>
                     <ul>
-                    <li ng-repeat="member in qc.serviceArray.data">{{member.last_name}}, {{member.first_name}}<br>
+                    <li ng-repeat="member in qc.serviceArray.data">{{member.last_name}}, {{member.first_name}}, {{member.start_date}}-{{member.end_date}}<br>
                         {{member.add_info}}</li>
                     </ul>
                 </div>

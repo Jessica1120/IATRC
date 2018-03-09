@@ -42,7 +42,7 @@ router.post('/membersBy', function(req,res) {
         res.sendStatus(500);
       } else {
         if (property[0] == "service_id") { 
-          var query = "SELECT member_id, first_name, last_name FROM members FULL JOIN members_meetings ON members.member_id = members_meetings.members_id FULL JOIN meetings ON meetings.meeting_id = members_meetings.meetings_id WHERE members_meetings.service_id = $1 Order By member_id"
+          var query = "SELECT member_id, first_name, last_name, start_date, end_date FROM members FULL JOIN members_meetings ON members.member_id = members_meetings.members_id FULL JOIN meetings ON meetings.meeting_id = members_meetings.meetings_id WHERE members_meetings.service_id = $1 Order By last_name"
         } else {
         var query = "SELECT member_id, first_name, last_name FROM members WHERE " + property[0] + " = $1"
         }
