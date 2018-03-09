@@ -4,9 +4,11 @@ myApp.controller('QueryController', function(UserService) {
     vm.yearOptions = []//populates year select
     vm.institutions = UserService.institutions
     vm.insitutionArray = UserService.insitutionArray
+    vm.serviceArray = UserService.serviceArray
     vm.statusArray = UserService.statusArray
     vm.stateArray = UserService.stateArray
     vm.yearArray = UserService.yearArray
+
 
 vm.getInstitutions= function() {
    UserService.getInstitutions()
@@ -20,7 +22,12 @@ vm.membersByInstitution=function() {
     UserService.membersBy(objToSend);
     
 };
-
+vm.membersByService=function() {
+    objToSend = {
+        service_id: vm.serviceIn
+    }
+    UserService.membersBy(objToSend)
+}
 vm.memberByState=function() {
     objToSend = {
         state: vm.stateIn

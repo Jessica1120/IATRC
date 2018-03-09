@@ -12,6 +12,7 @@
                     <option value="state">State</option>
                     <option value="status">Member Status</option>
                     <option value="year">Member Year</option>
+                    <option value="service">Service</option>
                 </select>
             </p>
             <div ng-show="selectSearch=='institution'">
@@ -113,6 +114,22 @@
                         <li ng-repeat="member in qc.yearArray.data">{{member.last_name}}, {{member.first_name}} - {{member.member_year}}</li>
                     </ul>
                 </div>      
+            </div>
+            <div ng-show="selectSearch=='service'">
+                <select ng-model="qc.serviceIn">
+                    <option value=1>Executive Committee Member - Elected</option>
+                    <option value=2>Executive Committee Member - Representing Funding Agency</option>
+                    <option value=3>Theme Day Organizer</option>
+                    <option value=4>Non-Theme Day Organizer</option>
+                    <option value=5>Other</option>
+                </select>
+                <button ng-click="qc.membersByService()">Search</button>
+                <div>
+                    <ul>
+                    <li ng-repeat="member in qc.serviceArray.data">{{member.last_name}}, {{member.first_name}}<br>
+                        {{member.add_info}}</li>
+                    </ul>
+                </div>
             </div>
         </div>
 

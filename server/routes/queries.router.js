@@ -41,7 +41,11 @@ router.post('/membersBy', function(req,res) {
         console.log(connectionError);
         res.sendStatus(500);
       } else {
+        if (property[0] == "service_id") { 
+          var query = "SELECT member_id, first_name, last_name FROM members FULL JOIN members_meetings ON members.member_id = members_meetings.members_id FULL JOIN meetings ON meetings.meeting_id = members_meetings.meetings_id WHERE members_meetings.service_id = $1 Order By member_id"
+        } else {
         var query = "SELECT member_id, first_name, last_name FROM members WHERE " + property[0] + " = $1"
+        }
         console.log('query', query)
         var valueArray = Object.values(membersBy)
         console.log('value', valueArray)
@@ -56,7 +60,8 @@ router.post('/membersBy', function(req,res) {
             console.log(resultObj.rows)
           }
         })
-      } //end connection else
+       //end connection else
+    }
     })//end pool.connect
   }//end Auth if 
     else {

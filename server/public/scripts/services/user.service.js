@@ -23,6 +23,7 @@ myApp.service('UserService', function($http, $location){
     self.stateArray = {data:[]}
     self.statusArray = {data: []}
     self.yearArray = {data: []}
+    self.serviceArray = []
     
 
 //MEMBER PAGE FUNCTIONS - user.html view
@@ -258,8 +259,6 @@ self.getInstitutions = function() {
 }// end view Meetings
 
 self.membersBy = function(objToSend) {
-  
-  console.log('membersBy')
   return $http({
     method: 'POST',
     url: '/queries/membersBy',
@@ -272,12 +271,26 @@ self.membersBy = function(objToSend) {
       } else if (res.data[0] == "institution") {
         res.data.shift()
         self.insitutionArray.data = res.data
-      } else {
+      } else if (res.data[0] =="state") {
         res.data.shift()
         self.stateArray.data=res.data
+      } else {
+        res.data.shift()
+        self.serviceArray.data=res.data
       }
-    }) 
+    })
+      .then(function() {
+        self.serviceArray.data.sort()
+        for (let i=0; i<self.serviceArray.data.length; i++) {
+          for (let j= i+1; j<self.serviceArray.data.length; j++) {
+           if (self.serviceArray.data[i].member_id == self.serviceArray.data[j].member_id) {
+            self.serviceArray.data.splice(j, 1)
+            } 
+          }
+        }
+      })
 }
+
 self.membersByYear = function(objToSend) {
   return $http({
     method: 'POST',
