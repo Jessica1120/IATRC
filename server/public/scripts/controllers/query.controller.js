@@ -10,6 +10,21 @@ myApp.controller('QueryController', function(UserService) {
     vm.yearArray = UserService.yearArray
 
 
+vm.clearAll = function() {
+    vm.institutionIn = ''
+    vm.endYearIn = ''
+    vm.serviceIn = ''
+    vm.startYearIn = ''
+    vm.stateIn = ''
+    vm.statusIn = ''
+    vm.endYearIn = ''
+    vm.insitutionArray = []
+    vm.serviceArray = []
+    vm.stateArray = []
+    vm.statusArray = []
+    vm.yearArray = []
+}
+
 vm.getInstitutions= function() {
    UserService.getInstitutions()
     console.log('in getInstitutions')
@@ -23,10 +38,22 @@ vm.membersByInstitution=function() {
     
 };
 vm.membersByService=function() {
-    objToSend = {
+    console.log(vm.serviceIn, vm.startYearIn, vm.endYearIn)
+    if (vm.serviceIn == 6 && vm.startYearIn == undefined && vm.endYearIn == undefined) {
+        alert('You must enter a start date and/or an end date for this query.')
+    } else {
+    var objToSend = {
         service_id: vm.serviceIn
     }
+        if (vm.startYearIn !== undefined) {
+        objToSend.start_date = parseInt(vm.startYearIn);
+        }
+        if (vm.endYearIn !== undefined) {
+        objToSend.end_date = parseInt(vm.endYearIn);
+        }
+    console.log('obj', objToSend)
     UserService.membersBy(objToSend)
+    }
 }
 vm.memberByState=function() {
     objToSend = {
@@ -43,11 +70,18 @@ vm.membersByStatus=function() {
 };
 
 vm.membersByYear = function() {
-    objToSend = {
-        startYearIn: parseInt(vm.startYearIn),
-        endYearIn: parseInt(vm.endYearIn),
+    objToSend = {}
+    if (vm.startYearIn == undefined && vm.endYearIn == undefined){
+        alert("please enter a Start Year and/or an End Year")
+    } else {
+        if (vm.startYearIn !== undefined) {
+        objToSend.start_date = parseInt(vm.startYearIn);
+        }
+        if (vm.endYearIn !== undefined) {
+        objToSend.end_date = parseInt(vm.endYearIn);
+        }
     }
-    UserService.membersByYear(objToSend)
+        UserService.membersByYear(objToSend)
 }
 vm.runYears = function() {
     for(i=1979; i<2019; i++) {

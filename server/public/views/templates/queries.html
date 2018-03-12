@@ -20,6 +20,7 @@
                     <option ng-repeat="institution in qc.institutions.data">{{institution.institution}}</option>
                 </select>
                 <button ng-click="qc.membersByInstitution()">Search</button>
+                <button ng-click = "qc.clearAll()">Clear</button>
                 <div>
                     <ul>
                         <li ng-repeat="member in qc.insitutionArray.data">{{member.last_name}}, {{member.first_name}}</li>
@@ -80,6 +81,7 @@
                     <option value="WY">Wyoming</option>
                 </select>
                 <button ng-click="qc.memberByState()">Search</button>
+                <button ng-click = "qc.clearAll()">Clear</button>
                 <div>
                     <ul>
                         <li ng-repeat="member in qc.stateArray.data">{{member.last_name}}, {{member.first_name}}</li>
@@ -108,7 +110,8 @@
                 <select ng-model="qc.endYearIn" >
                     <option ng-repeat= "year in qc.yearOptions" value="{{year}}" >{{year}}</option>
                 </select>
-                <button ng-click="qc.membersByYear()">Search</button> 
+                <button ng-click="qc.membersByYear()">Search</button>
+                <button ng-click="qc.clearAll()">Clear</button> 
                 <div>
                     <ul>
                         <li ng-repeat="member in qc.yearArray.data">{{member.last_name}}, {{member.first_name}} - {{member.member_year}}</li>
@@ -122,8 +125,19 @@
                     <option value=3>Theme Day Organizer</option>
                     <option value=4>Non-Theme Day Organizer</option>
                     <option value=5>Other</option>
+                    <option value=6>Any</option>
+                </select>
+                From: 
+                <select ng-model="qc.startYearIn">
+                    <option ng-repeat= "year in qc.yearOptions" value="{{year}}" >{{year}}</option>
+                </select>
+                To:
+                <select ng-model="qc.endYearIn" >
+                    <option ng-repeat= "year in qc.yearOptions" value="{{year}}" >{{year}}</option>
                 </select>
                 <button ng-click="qc.membersByService()">Search</button>
+                <button ng-click = "qc.clearAll()">Clear</button>
+    
                 <div>
                     <ul>
                     <li ng-repeat="member in qc.serviceArray.data">{{member.last_name}}, {{member.first_name}}, {{member.start_date}}-{{member.end_date}}<br>

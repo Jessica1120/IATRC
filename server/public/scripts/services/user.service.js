@@ -265,6 +265,12 @@ self.membersBy = function(objToSend) {
     data: objToSend
   })
     .then(function (res) {
+      console.log(res.data)
+      if (res.data.length <= 0) {
+        alert("No results found.")
+      } else if (res.data.length == 1 && res.data[0] == "service_id") {
+        alert("No results found.")
+      } else {
       if (res.data[0] == "member_status") {
         res.data.shift()
         self.statusArray.data = res.data
@@ -278,8 +284,10 @@ self.membersBy = function(objToSend) {
         res.data.shift()
         self.serviceArray.data=res.data
       }
-    })
+    }
+  })
       .then(function() {
+        if (self.serviceArray.data != undefined) {
         for (let i=0; i<self.serviceArray.data.length; i++) {
           for (let j= i+1; j<self.serviceArray.data.length; j++) {
            if (self.serviceArray.data[i].member_id == self.serviceArray.data[j].member_id) {
@@ -287,7 +295,9 @@ self.membersBy = function(objToSend) {
             } 
           }
         }
-      })
+      }
+    })
+    
 }
 
 self.membersByYear = function(objToSend) {
@@ -298,6 +308,9 @@ self.membersByYear = function(objToSend) {
   })
     .then(function (res) {
       self.yearArray.data = res.data
+      if (self.yearArray.data.length <= 0 ) {
+        alert("No results found.")
+      }
     })
   }
 //PASSPORT AUTHENTICATION FUNCTIONS
