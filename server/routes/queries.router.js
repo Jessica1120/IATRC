@@ -29,7 +29,47 @@ router.get('/', function (req, res) {
       res.send(false);
     }
 });//end Get Institutions
-
+router.post('/meetingsBy', function(req,res) {
+  var meetingsBy = req.body;
+  console.log('meetsBy', meetingsBy)
+  var property = Object.keys(meetingsBy)
+  console.log('property', property);
+ 
+  if(req.isAuthenticated()) {
+    pool.connect(function (connectionError, client, done) {
+      if (connectionError) {
+        console.log(connectionError);
+        res.sendStatus(500);
+      } else {
+        if (meetingsBy.type == "Other") {
+        var query="SELECT * FROM meetings WHERE " + property[0] + " NOT in ($1, $2, $3)"
+        var valueArray = ["Annual", "Symposium", "Outreach"]
+        } else {
+        var query="SELECT * FROM meetings WHERE " + property[0] + " = $1"
+        var valueArray = Object.values(meetingsBy)
+        }
+        console.log('query', query)
+        console.log('value', valueArray)
+        client.query(query, valueArray, function (queryError, resultObj) {
+          done();
+          if (queryError) {
+            console.log(queryError);
+            res.sendStatus(500);
+          } else {
+            resultObj.rows.unshift(property[0])
+            res.send(resultObj.rows)             
+            console.log(resultObj.rows)
+          }
+        })
+      //  end connection else
+    }
+    })//end pool.connect
+  }//end Auth if 
+    else {
+      console.log('not logged in');
+      res.send(false);
+    }
+}) //end membersBy
 router.get('/countries', function (req, res) {
   console.log('in Get for query');
   // check if logged in

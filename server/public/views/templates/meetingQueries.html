@@ -5,15 +5,13 @@
 <body>
     <section class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-5" ng-init="qc.getInstitutions()">
+        <div class="col-md-5" ng-init="qc.getCountries()">
             <h2>Search Meetings</h2>
-            <p ng-init="qc.getCountries()">By:
+            <p >By:
                 <select ng-model="selectSearch">
                     <option value="country">Country</option>
-                    <option value="institution">Institution</option>
                     <option value="state">State</option>
                     <option value="type">Type</option>
-                    <option value="year">Year</option>
                 </select>
             </p>
             <div ng-show = "selectSearch=='country'">
@@ -28,18 +26,6 @@
                             {{meeting.hotel}} <br>
                             {{meeting.meeting_city}}, {{meeting.state}} {{meeting.country}}
                         </li>
-                    </ul>
-                </div>
-            </div>
-            <div ng-show="selectSearch=='institution'">
-                <select ng-model="qc.institutionIn">
-                    <option ng-repeat="institution in qc.institutions.data">{{institution.institution}}</option>
-                </select>
-                <button ng-click="qc.membersByInstitution()">Search</button>
-                <button ng-click = "qc.clearAll()">Clear</button>
-                <div>
-                    <ul>
-                        <li ng-repeat="member in qc.insitutionArray.data">{{member.last_name}}, {{member.first_name}}</li>
                     </ul>
                 </div>
             </div>
@@ -96,14 +82,35 @@
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                 </select>
-                <button ng-click="qc.memberByState()">Search</button>
+                <button ng-click="qc.meetingByState()">Search</button>
+                <button ng-click = "qc.clearAll()">Clear</button>
+                <div>
+                        <ul>
+                            <li ng-repeat="meeting in qc.stateArray.data">{{meeting.topic}}, {{meeting.year}}<br>
+                                {{meeting.hotel}} <br>
+                                {{meeting.meeting_city}}, {{meeting.meeting_state}} {{meeting.meeting_country}}
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+            <div ng-show="selectSearch=='type'">
+                <select ng-model="qc.typeIn">
+                    <option value="Annual">Annual Meeting</option>
+                    <option value="Symposium">Symposium</option>
+                    <option value="Outreach">Outreach</option>
+                    <option value="Other">Other</option>
+                </select>
+                <button ng-click="qc.meetingByType()">Search</button>
                 <button ng-click = "qc.clearAll()">Clear</button>
                 <div>
                     <ul>
-                        <li ng-repeat="member in qc.stateArray.data">{{member.last_name}}, {{member.first_name}}</li>
+                        <li ng-repeat="meeting in qc.typeArray.data">{{meeting.topic}}, {{meeting.year}}<br>
+                            {{meeting.hotel}} <br>
+                            {{meeting.meeting_city}}, {{meeting.state}} {{meeting.country}}
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-        </section>
-        </body>
+    </section>
+</body>

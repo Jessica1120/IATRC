@@ -5,37 +5,65 @@ myApp.controller('QueryController', function(UserService) {
     vm.institutions = UserService.institutions
     vm.countries = UserService.countries
     vm.insitutionArray = UserService.insitutionArray
+    vm.countryArray= UserService.countryArray
     vm.serviceArray = UserService.serviceArray
     vm.statusArray = UserService.statusArray
     vm.stateArray = UserService.stateArray
+    vm.typeArray = UserService.typeArray
     vm.yearArray = UserService.yearArray
 
 vm.clearAll = function() {
+    vm.countryIn= ''
     vm.institutionIn = ''
     vm.endYearIn = ''
     vm.serviceIn = ''
     vm.startYearIn = ''
     vm.stateIn = ''
     vm.statusIn = ''
+    vm.typeIn = ''
     vm.endYearIn = ''
+    vm.countryArray = []
     vm.insitutionArray = []
     vm.serviceArray = []
     vm.stateArray = []
     vm.statusArray = []
+    vm.typeArray = []
     vm.yearArray = []
 }
+
+
 //Search meetings functions
 vm.getCountries = function() {
     UserService.getCountries()
      console.log(vm.countries)     
-   };
+};
+vm.meetingByCountry = function() {
+    
+    objToSend = {
+        meeting_country: vm.countryIn
+        }
+    console.log('by country controller', objToSend)
+    UserService.meetingsBy(objToSend);    
+};
+
+vm.meetingByState=function() {
+    objToSend = {
+        meeting_state: vm.stateIn
+        }
+    UserService.meetingsBy(objToSend);
+};
+vm.meetingByType=function() {
+    objToSend = {
+        type: vm.typeIn
+        }
+    UserService.meetingsBy(objToSend);
+};
 
 //Search members functions
 vm.getInstitutions= function() {
-   UserService.getInstitutions()
-   console.log(vm.institutions)
-  };
-
+    UserService.getInstitutions()
+    console.log(vm.institutions)
+};
 vm.membersByInstitution=function() {
     objToSend = {
         institution: vm.institutionIn
@@ -67,14 +95,12 @@ vm.memberByState=function() {
         }
     UserService.membersBy(objToSend)
 }
-
 vm.membersByStatus=function() {
     objToSend = {
         member_status: vm.statusIn
         }
     UserService.membersBy(objToSend);
 };
-
 vm.membersByYear = function() {
     objToSend = {}
     if (vm.startYearIn == undefined && vm.endYearIn == undefined){
