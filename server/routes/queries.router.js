@@ -29,6 +29,34 @@ router.get('/', function (req, res) {
       res.send(false);
     }
 });//end Get Institutions
+
+router.get('/countries', function (req, res) {
+  console.log('in Get for query');
+  // check if logged in
+  if (req.isAuthenticated()) {
+    pool.connect(function (conErr, client, done) {
+      if (conErr) {
+        console.log(conErr)
+        res.sendStatus(500);
+      } else {
+        console.log('running query')
+        client.query('SELECT meeting_country FROM meetings ORDER BY meeting_country Asc;', function (queryErr, resultObj) {
+          done();
+          if (queryErr) {
+            console.log('query Error', queryErr)
+            res.sendStatus(500);
+          } else {
+            console.log(resultObj.rows)
+            res.send(resultObj.rows);
+          }
+        });
+      }
+    })
+  } else {
+    console.log('not logged in');
+    res.send(false);
+  }
+});//end Get Countries
 router.post('/membersBy', function(req,res) {
   var membersBy = req.body;
   console.log('membersBy', membersBy)

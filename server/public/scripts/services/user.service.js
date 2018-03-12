@@ -18,6 +18,7 @@ myApp.service('UserService', function($http, $location){
     self.meetings = {data: []}
     //QUERY OBJECTS
     self.institutions = {data: []}//object for Insitution list dropdown
+    self.countries = {data: []} //object for Countries list dropdown
     //object for membersBy search
     self.insitutionArray = {data: []}
     self.stateArray = {data:[]}
@@ -245,6 +246,23 @@ self.deleteMeeting = function(meetingId) {
 } // end deleteMeeting
 
 //QUERIES
+self.getCountries = function() {
+  console.log('getCountries in Service running')
+  return $http({
+    method: 'GET',
+    url: '/queries/countries'
+  })
+    .then(function (res) {
+      self.countries.data = res.data.map(function(object) {
+          return object.meeting_country
+        }).filter(function(value, index, array){
+          return array.indexOf(value) ===index;
+        }).filter(function(country) {
+          return country !== null && country !== undefined
+        })
+        
+      })
+}// end view Meetings
 
 self.getInstitutions = function() {
   console.log('getInstitutions in Service running')

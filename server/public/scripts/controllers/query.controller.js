@@ -3,12 +3,12 @@ myApp.controller('QueryController', function(UserService) {
     var vm = this; 
     vm.yearOptions = []//populates year select
     vm.institutions = UserService.institutions
+    vm.countries = UserService.countries
     vm.insitutionArray = UserService.insitutionArray
     vm.serviceArray = UserService.serviceArray
     vm.statusArray = UserService.statusArray
     vm.stateArray = UserService.stateArray
     vm.yearArray = UserService.yearArray
-
 
 vm.clearAll = function() {
     vm.institutionIn = ''
@@ -24,10 +24,16 @@ vm.clearAll = function() {
     vm.statusArray = []
     vm.yearArray = []
 }
+//Search meetings functions
+vm.getCountries = function() {
+    UserService.getCountries()
+     console.log(vm.countries)     
+   };
 
+//Search members functions
 vm.getInstitutions= function() {
    UserService.getInstitutions()
-    console.log('in getInstitutions')
+   console.log(vm.institutions)
   };
 
 vm.membersByInstitution=function() {
