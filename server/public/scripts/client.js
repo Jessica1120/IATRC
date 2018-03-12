@@ -59,8 +59,17 @@ myApp.config(function($routeProvider, $locationProvider) {
         }
       }
     })
-    .when('/queries', {
-      templateUrl: '/views/templates/queries.html',
+    .when('/memberQueries', {
+      templateUrl: '/views/templates/memberQueries.html',
+      controller: 'QueryController as qc',
+      resolve: {
+        getuser : function(UserService){
+          return UserService.getuser();
+        }
+      }
+    })
+    .when('/meetingQueries', {
+      templateUrl: '/views/templates/meetingQueries.html',
       controller: 'QueryController as qc',
       resolve: {
         getuser : function(UserService){
